@@ -48,7 +48,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         host: 'https://www.machineservant.com',
-        sitemap: 'https://www.machineservant.com/sitemap/sitemap-index.xml',
+        sitemap: 'https://www.machineservant.com/sitemap-index.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },

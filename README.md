@@ -1,7 +1,9 @@
-<p align="center">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p align="center">
  <a href="https://www.machineservant.com">
     <img alt="MachineServant Logo" src="./static/logo.jpg" width="500" />
   </a>
@@ -64,7 +66,7 @@ Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cl
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.machineservant.com/"><img src="https://avatars.githubusercontent.com/u/264836?v=4?s=100" width="100px;" alt="Evan Stern"/><br /><sub><b>Evan Stern</b></sub></a><br /><a href="#design-evanstern" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.machineservant.com/"><img src="https://avatars.githubusercontent.com/u/264836?v=4?s=100" width="100px;" alt="Evan Stern"/><br /><sub><b>Evan Stern</b></sub></a><br /><a href="#design-evanstern" title="Design">🎨</a> <a href="#content-evanstern" title="Content">🖋</a> <a href="https://github.com/Machine-Servant/machineservant-4.0/commits?author=evanstern" title="Code">💻</a> <a href="#blog-evanstern" title="Blogposts">📝</a></td>
     </tr>
   </tbody>
   <tfoot>

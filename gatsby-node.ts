@@ -32,6 +32,7 @@ exports.createPages = async ({
 
   const BlogPaginated = path.resolve('./src/templates/BlogPaginated.tsx');
   const TaggedPosts = path.resolve('./src/templates/TaggedPosts.tsx');
+  const BlogPost = path.resolve('./src/templates/BlogPost.tsx');
 
   const result = await graphql<Queries.GatsbyNodeQuery>(`
     query GatsbyNode {
@@ -43,6 +44,9 @@ exports.createPages = async ({
           id
           fields {
             slug
+          }
+          frontmatter {
+            relatedPosts
           }
         }
         group(field: { frontmatter: { tags: SELECT } }) {
@@ -59,6 +63,22 @@ exports.createPages = async ({
     );
     return;
   }
+
+  result.data?.allMarkdownRemark.nodes.forEach((node) => {
+    const relatedPosts =
+      node.frontmatter?.relatedPosts?.map(
+        (rp) => `${__dirname}/src/content/${rp}/index.md`
+      ) || [];
+    createPage({
+      path: `/blog${node.fields?.slug}`,
+      component: BlogPost,
+      context: {
+        id: node.id,
+        relatedPosts,
+      },
+    });
+    reporter.log(`Created blog post: /blog${node.fields?.slug}`);
+  });
 
   const posts = result.data?.allMarkdownRemark?.nodes || [];
   const postsPerPage = 5;
@@ -97,7 +117,7 @@ exports.createPages = async ({
         renderTagList: true,
       },
     });
-    reporter.log(`Created blog page ${paginatedPath}`);
+    reporter.log(`Created blog paginated page: ${paginatedPath}`);
   });
 
   result.data?.allMarkdownRemark.group.forEach((tag) => {

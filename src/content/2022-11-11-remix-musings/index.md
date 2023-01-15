@@ -8,9 +8,20 @@ imageCredits: 'Photo by eberhard grossgasteiger from Pexels'
 tags: ['React', 'Remix', 'Web Development', 'Tech']
 keywords: ['Remix', 'Remix.run', 'React', 'ReactJS']
 published: true
+relatedPosts:
+  [
+    '2023-01-15-angular-vs-react',
+    '2022-11-12-remix-optimistic-with-ui-multiple-destinations',
+  ]
 ---
 
 About a year ago, a little project by the team that brought us [React Router](https://reactrouter.com/) was made open source. The project, [Remix](https://remix.run/), had been gathering a lot of buzz in the ReactJS community; particularly when ReactJS evangelist [Kent C. Dodds](https://kentcdodds.com/) (Creator of the [Testing Library](https://testing-library.com/) suite of test tools) got involved as a co-founder.
+
+## Table of Contents
+
+```toc
+
+```
 
 ## So, What is Remix?
 

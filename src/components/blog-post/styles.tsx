@@ -27,7 +27,7 @@ export const MainContent = styled.article`
       }
 
       a {
-        ${tw`text-black no-underline`}
+        ${tw`text-black no-underline text-sm`}
       }
 
       li {

@@ -8,11 +8,18 @@ imageCredits: 'Photo by Jacob Colvin from Pexels'
 tags: ['React', 'Tech', 'Remix', 'Web Development']
 keywords: ['Remix', 'Remix.run', 'React', 'ReactJS']
 published: true
+relatedPosts: ['2022-11-11-remix-musings', '2023-01-15-angular-vs-react']
 ---
 
 One of Remix's coolest features is the `useTransition` hook, which provides the basis for an "Optimistic UI" experience. You can read about this [in the official Optimistic UI guide](https://remix.run/docs/en/v1/guides/optimistic-ui).
 
 In this post, I'm going to run through a specific use-case that isn't really touched upon in the official guide.
+
+## Table of Contents
+
+```toc
+
+```
 
 ## The setup
 

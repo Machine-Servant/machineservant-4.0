@@ -1,5 +1,5 @@
 import { DiscussionEmbed } from 'disqus-react';
-import { graphql, HeadFC, PageProps } from 'gatsby';
+import { PageProps } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import rehypeParse from 'rehype-parse';
@@ -7,9 +7,9 @@ import rehypeReact from 'rehype-react';
 import { unified } from 'unified';
 import { components, MainContent } from '../../components/blog-post';
 import { ByLine } from '../../components/by-line';
-import { CustomHead } from '../../components/custom-head';
 import { Layout } from '../../components/layout';
 import { Tag } from '../../components/tag';
+import { RelatedPost } from './components/related-post';
 
 function isParentWithRelativeDirectory(
   parent?: any
@@ -18,12 +18,14 @@ function isParentWithRelativeDirectory(
   return !!(parent as any).relativeDirectory;
 }
 
-const BlogPostPage: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
+export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
   data,
 }) => {
   const [PageContent, SetPageContent] = useState<React.ReactElement | null>(
     null
   );
+
+  console.log(data.relatedPosts);
 
   const featuredImage = data.markdownRemark?.frontmatter?.featuredImage
     ? getImage(data.markdownRemark.frontmatter.featuredImage.childImageSharp)
@@ -89,62 +91,21 @@ const BlogPostPage: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
           ))}
         </div>
         <hr className="mb-8" />
+        {data.relatedPosts.edges.length > 0 && (
+          <div>
+            <span className="mb-4 block text-lg font-bold text-black">
+              Read Next
+            </span>
+            <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {data.relatedPosts.edges.map(({ node }) => (
+                <RelatedPost key={node.id} post={node} />
+              ))}
+            </div>
+            <hr className="mb-8" />
+          </div>
+        )}
         <DiscussionEmbed {...disqusConfig} />
       </MainContent>
     </Layout>
-  );
-};
-
-export default BlogPostPage;
-
-export const pageQuery = graphql`
-  query BlogPostPage($id: String) {
-    markdownRemark(id: { eq: $id }) {
-      id
-      html
-      excerpt(pruneLength: 160)
-      parent {
-        ... on File {
-          id
-          relativeDirectory
-        }
-      }
-      frontmatter {
-        author
-        date(formatString: "MMMM DD, YYYY")
-        fromNow: date(fromNow: true)
-        featuredImage {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH)
-          }
-        }
-        imageAlt
-        imageCredits
-        imageCreditsUrl
-        socialImage: featuredImage {
-          childImageSharp {
-            gatsbyImageData
-          }
-        }
-        title
-        tags
-      }
-      timeToRead
-    }
-  }
-`;
-
-export const Head: HeadFC<Queries.BlogPostPageQuery, unknown> = ({ data }) => {
-  const imgUrl =
-    data.markdownRemark?.frontmatter?.featuredImage?.childImageSharp
-      ?.gatsbyImageData.images.fallback?.src;
-
-  return (
-    <CustomHead
-      title={data.markdownRemark?.frontmatter?.title || ''}
-      description={data.markdownRemark?.excerpt || ''}
-      image={imgUrl}
-      article
-    />
   );
 };

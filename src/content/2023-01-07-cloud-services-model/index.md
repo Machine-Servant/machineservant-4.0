@@ -17,6 +17,7 @@ tags:
   ]
 keywords: ['Web Development']
 published: true
+relatedPosts: ['2023-01-15-angular-vs-react']
 ---
 
 The use of cloud services has exploded in recent years, and it's easy to see why.

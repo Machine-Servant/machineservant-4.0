@@ -18,6 +18,12 @@ tags:
     'Information',
   ]
 published: true
+relatedPosts:
+  [
+    '2023-01-13-what-is-python',
+    '2022-11-11-remix-musings',
+    '2020-07-18-how-to-bring-a-project-to-life',
+  ]
 ---
 
 When it comes to building web and mobile applications, developers have a variety of frameworks to choose from. Two of the most popular options are Angular and React.

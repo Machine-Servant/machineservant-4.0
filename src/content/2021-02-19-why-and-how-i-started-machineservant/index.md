@@ -20,6 +20,12 @@ published: true
 
 Working for a small to large-sized tech company as a web application developer has some very appealing perks: You can expect good hours, benefits, paid time off, and a host of other niceties such as meal services or gym memberships, depending on the company.
 
+## Table of Contents
+
+```toc
+
+```
+
 So, why leave all that behind and strike out on your own? And why start a company instead of merely freelancing?
 
 Those are great questions! I'm glad you asked them because it's what I want to talk about in this post. This post is about why (and how) I started MachineServant. It is biographical, so I hope it doesn't come off as some guy talking about himself for several pages. But I think there are some universal truths about how life can take us down one path and then take an unexpected turn to deliver us somewhere even better.

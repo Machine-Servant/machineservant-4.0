@@ -34,7 +34,7 @@ export const MainContent = styled.article`
         ${tw`mb-0`}
 
         > p {
-          ${tw`mb-0`}
+          ${tw`text-sm mb-0`}
         }
       }
 
@@ -61,12 +61,18 @@ export const H4 = styled.h4`
   ${tw`mb-4 uppercase text-sm font-bold`}
 `;
 
-export const H5 = styled.h5``;
+export const H5 = styled.h5`
+  ${tw`font-bold text-sm`}
+`;
 
 export const H6 = styled.h6``;
 
 export const Paragraph = styled.p`
   ${tw`mb-8 text-lg leading-relaxed`};
+`;
+
+export const Blockquote = styled.blockquote`
+  ${tw`pl-4 text-gray-700 border-l-2 border-lochmara-500`}
 `;
 
 export const Pre = styled.pre`
@@ -102,6 +108,12 @@ export const OrderedList = styled.ol`
   }
 `;
 
+export const ListElement = styled.li`
+  > p {
+    ${tw`mb-0`};
+  }
+`;
+
 export const Anchor = styled.a`
   ${tw`underline text-lochmara-500`};
 `;
@@ -117,5 +129,7 @@ export const components = {
   pre: Pre,
   ol: OrderedList,
   ul: UnorderedList,
+  li: ListElement,
   a: Anchor,
+  blockquote: Blockquote,
 };

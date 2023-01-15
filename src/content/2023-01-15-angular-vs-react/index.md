@@ -1,0 +1,383 @@
+---
+date: '2023-01-15'
+title: 'Angular vs React: What should you choose?'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Seashore with angry clouds and lightning'
+imageCredits: 'Photo by Dương Nhân'
+imageCreditsUrl: 'https://www.pexels.com/photo/milky-way-on-blue-starry-sky-2232979/'
+tags:
+  [
+    'Tech',
+    'Web Development',
+    'Framework',
+    'Angular',
+    'React',
+    'GatsbyJS',
+    'Remix',
+    'Information',
+  ]
+published: true
+---
+
+When it comes to building web and mobile applications, developers have a variety of frameworks to choose from. Two of the most popular options are Angular and React.
+
+Angular, developed and maintained by Google, is a comprehensive framework for building web applications. React, on the other hand, is a JavaScript library for building user interfaces that was developed and maintained by Facebook/Meta.
+
+Both Angular and React have their own set of features and benefits, but which one is better for your project? This article aims to compare Angular and React in terms of performance, features, and popularity, and to help you make an informed decision when it comes to choosing a framework for your next project.
+
+## Table of Contents
+
+```toc
+exclude: Table of Contents
+toHeading: 4
+```
+
+## What is Angular?
+
+[Angular](https://angular.io) is a comprehensive framework for building web applications, developed and maintained by Google. It is built on TypeScript, a strongly-typed superset of JavaScript, and uses a component-based architecture.
+
+This means that Angular applications are composed of reusable components, each with its own logic and view, which work together to create a cohesive whole.
+
+### Two-way Data binding
+
+One of the key features of Angular is its [two-way data binding](https://angular.io/guide/two-way-binding), which allows for real-time updates to the view whenever there is a change in the model.
+
+Two-way data binding makes it easy for developers to create dynamic, responsive user interfaces. Angular also includes a powerful template system, which allows developers to define the structure and layout of their components using HTML.
+
+### Dependency injection
+
+Angular also comes with a rich set of built-in directives and services, such as [dependency injection](https://angular.io/guide/dependency-injection) and routing, that make it easy to build complex applications.
+
+Dependency injection (DI) is a design pattern that allows a developer to provide an external dependency to a class or component, rather than creating it within the class itself. This is useful because it allows for better separation of concerns, making the code more modular and easier to test and maintain.
+
+DI also allows for more flexibility in how dependencies are provided to a class or component, which can make it easier to switch out different implementations of a dependency.
+
+For example, a developer can easily replace a mock service with a real service for testing or replace a development service with a production service without having to change the code that uses the service. This can make the codebase more flexible and adaptable, and also makes it easy to switch out different implementations of a dependency for different environments, such as development and production.
+
+### Community
+
+Angular has a large and active community and a wealth of resources and tutorials available to help developers learn and work with the framework.
+
+### Frameworks built using Angular
+
+Compared to React, Angular is a much more full-fledged framework. As such, there are fewer frameworks built using Angular. But, there are some projects that are worth knowing about when looking at Angular vs React.
+
+#### NestJS
+
+NestJS is a framework for building scalable and efficient server-side applications. NestJS is built on top of TypeScript and Express.js, and it follows the principles of Angular to provide a powerful and easy-to-use development experience. NestJS offers a powerful CLI, and it's opinionated, it allows developers to easily create and manage controllers, services, pipes, guards, and more.
+
+If you are considering building a new project in Angular and want to use a NodeJS back-end, NestJS is a good choice because it will feel very familiar to any front-end developers using Angular.
+
+#### Angular Universal
+
+Angular Universal is a framework for building server-side rendered (SSR) Angular applications. It provides a set of tools and features for rendering Angular applications on the server, which can improve the loading performance of web applications.
+
+Angular Universal allows developers to build SEO-friendly applications and improve the user experience for users on low-end devices and slow internet connections.
+
+### Types of projects that use Angular
+
+Some of the types of projects that commonly use Angular include:
+
+#### Enterprise Applications
+
+Angular's component-based architecture, two-way data binding, and built-in directives and services make it well-suited for building large, complex enterprise applications. These applications often require a lot of functionality and scalability and Angular provides a robust and flexible framework to build them.
+
+#### Progressive Web Applications
+
+Angular supports building progressive web applications (PWA) which are web applications that can be installed on the user's device and work offline. Angular provides a set of tools and libraries to help developers build PWAs, such as the Angular Service Worker.
+
+#### E-Commerce Applications
+
+Angular's powerful template system and two-way data binding make it well-suited for building e-commerce applications. These applications often require a lot of dynamic content and Angular's component-based architecture makes it easy to manage and update large amounts of data.
+
+#### Business Applications
+
+Angular can be used to build a wide range of business applications such as CRM, ERP, and project management systems. Angular's component-based architecture and two-way data binding make it easy to create complex forms, manage data, and build reusable components.
+
+#### Mobile Applications
+
+Angular can be used to build mobile applications using Angular mobile toolkit, although it's not as popular as React Native.
+
+### Projects built with Angular
+
+There are many real-world applications that have been built using Angular. Here are a few examples:
+
+- **Google AdWords**: Google's online advertising platform, AdWords, is built using Angular. The platform allows businesses to create and manage advertising campaigns across various Google properties, such as Google search, YouTube, and Gmail.
+- **[Netflix](https://www.netflix.com)**: Netflix's website, which allows users to stream movies and TV shows, is built using Angular. The website's user interface is highly interactive and responsive, making it easy for users to browse and discover content.
+- **[Upwork](https://www.upwork.com/)**: Upwork is a platform for freelance work, which connects businesses with freelancers for various projects. The platform's website is built using Angular, and it allows businesses to search for and hire freelancers, and for freelancers to find and apply for projects.
+- **IBM**: IBM, one of the largest technology companies in the world, uses Angular to build many of its web applications. IBM's internal tools and customer-facing applications are built using Angular.
+- **Xbox**: Xbox's website, which allows users to purchase and download games, is built using Angular. The website's user interface is highly interactive, making it easy for users to browse and purchase games.
+- **[Freelancer.com](http://freelancer.com)**: Freelancer is a platform for online work, which connects businesses with freelancers for various projects. The platform's website is built using Angular, and it
+
+## What is React?
+
+[React](https://reactjs.org/) is a JavaScript library for building user interfaces, developed and maintained by Facebook. It focuses on the view layer of web applications and allows developers to build reusable UI components.
+
+### React components
+
+React follows a component-based architecture, where the application is divided into small, independent pieces called components, each with its own logic and view. This makes it easy for developers to manage the state and behavior of their application and allows for better code reusability.
+
+### Virtual DOM
+
+Probably the most important feature of React is its [virtual DOM](https://reactjs.org/docs/faq-internals.html#what-is-the-virtual-dom) (Document Object Model). The virtual DOM is a lightweight copy of the actual DOM and allows React to efficiently update the view when the state of the application changes. This makes it fast and efficient, even for large and complex applications. React also uses JSX, a syntax extension for JavaScript, which allows developers to embed HTML-like elements in their JavaScript code.
+
+### Environments
+
+React is also highly flexible and can be used in a variety of environments, including web, mobile, and desktop applications.
+
+### Community
+
+It also has a large and active community and a wealth of resources available for developers to learn and work with the library.
+
+### Frameworks built using React
+
+There are different frameworks that are built on top of React and provide additional features and functionality.
+
+#### Next.jS
+
+Next.js is a framework for building server-rendered React applications. It provides a set of features for server-side rendering, including automatic code splitting, server-side rendering, and static site generation. Next.js also provides a development environment with hot-reloading and automatic transpilation and bundling.
+
+#### Gatsby
+
+Gatsby is a framework for building fast and performant web applications. Gatsby uses React, Webpack, and GraphQL to build websites that load quickly and provide a smooth user experience. Gatsby also has a plugin ecosystem that allows developers to add functionality to their projects using community-built plugins.
+
+> As an aside, this website is built using Gatsby.
+
+#### Create React App (CRA)
+
+CRA is a toolset that is built and maintained by Facebook and provides a set of features for building React applications. It provides a development environment with hot-reloading and automatic transpilation and bundling. CRA also includes a set of scripts for building and deploying your application.
+
+#### Remix
+
+The Remix framework is a newcomer to the React framework ecosystem but it has attracted a lot of attention. It is very similar to Next.js as it provides a set of features for server-side rendering, but it aims to leverage native browser features over complex custom interaction layers. It is designed to blur the line between the front-end and back-end of a web application.
+
+### Types of projects that use React
+
+#### Single-page applications (SPAs)
+
+React's component-based architecture and virtual DOM make it well**\-**suited for building single-page applications (SPAs). These are web applications that update dynamically, as the user interacts with the application, without requiring a full page reload. This provides a smooth and responsive user experience.
+
+#### Progressive Web Applications (PWAs)
+
+React can be used to build progressive web applications (PWAs), which are web applications that can be installed on the user's device and work offline. React provides a set of tools and libraries to help developers build PWAs, such as the React PWA library.
+
+#### Mobile Applications
+
+React Native is a framework that allows developers to build mobile applications using React. It allows developers to use the same codebase for both web and mobile applications, which can save time and improve code reusability.
+
+#### E-commerce Applications
+
+React's component-based architecture and virtual DOM make it well-suited for building e-commerce applications. These applications often require a lot of dynamic content and React's component-based architecture makes it easy to manage and update large amounts of data.
+
+#### Social Media Applications
+
+React's component-based architecture and virtual DOM make it well-suited for building social media applications. These applications often have a lot of dynamic content, such as user-generated posts and comments, and React's component-based architecture makes it easy to manage and update this content.
+
+#### Gaming Applications
+
+React's component-based architecture and virtual DOM make it well-suited for building gaming applications. These applications often have a lot of dynamic content and React's component-based architecture makes it easy to manage and update the game state.
+
+### Projects built with React
+
+Here are a few examples:
+
+- **Facebook**: React was developed and is used by Facebook to build the user interface of its web application. Facebook's web application is one of the most popular and heavily used web applications in the world, and it serves as a testament to the power and scalability of React.
+- **Instagram**: Instagram, which is owned by Facebook, also uses React to build its web application. The Instagram web application allows users to browse and interact with their friends' photos and videos, and it serves as another example of a large and popular web application built using React.
+- **Airbnb**: Airbnb's website, which allows users to book and list vacation rentals, is built using React. The website's user interface is highly interactive and responsive, making it easy for users to browse and book rentals.
+- **Dropbox**: Dropbox, the file hosting service, uses React to build its web application. The Dropbox web application allows users to upload, share, and collaborate on files, and it serves as an example of a business-critical web application built using React.
+- **Uber**: Uber's website, which allows users to book rides, is built using React. The website's user interface is highly interactive, making it easy for users to request and manage rides.
+- **Netflix**: Netflix's website, which allows users to stream movies and TV shows, uses React to build some of its features. React allows Netflix to create a smooth and responsive user experience for its customers.
+- **Twitter**: Twitter's web application uses React to build its user interface. React allows Twitter to create a dynamic and responsive experience for its users.
+- **Microsoft**: Microsoft has been using React to build some of its web applications and services, such as Office365 and the new version of [Outlook.com](http://Outlook.com).
+- **PayPal**: PayPal's web application uses React to build its user interface. React allows PayPal to create a dynamic and responsive experience for its customers.
+- **Asana**: Asana is a project management tool that uses React to build its user interface. React allows Asana to create a dynamic and responsive experience for its users, making it easier to manage and organize projects and tasks.
+- **Tesla**: Tesla's web application uses React to build its user interface. React allows Tesla to create a dynamic and responsive experience for its customers.
+
+## Angular vs React: A Comparison
+
+### Performance
+
+Angular and React differ in terms of performance in a few key ways.
+
+#### Two-Way Data Binding
+
+Firstly, Angular uses a two-way data binding, which allows for real-time updates to the view whenever there is a change in the model. This makes it easy for developers to create dynamic, responsive user interfaces, but can lead to increased memory usage and slower performance in large or complex applications.
+
+#### Virtual dom implementation
+
+React, on the other hand, uses a virtual DOM (Document Object Model) which is a lightweight copy of the actual DOM. This allows React to efficiently update the view when the state of the application changes, leading to faster and more efficient performance.
+
+#### React components vs Angular framework
+
+Another difference is that React uses a component-based architecture, which allows for better code reusability and improved performance in large and complex applications. Angular, on the other hand, uses a more comprehensive framework, which can lead to increased overhead and slower performance in some cases.
+
+#### Server-side rendering
+
+Additionally, React allows for server-side rendering, which can greatly improve the initial load time of a web page, whereas Angular does not.
+
+#### In summary
+
+React performance is generally faster than Angular due to its virtual DOM and component-based architecture, but Angular provides a comprehensive framework that can help to ease the development of large and complex applications with its two-way data binding feature.
+
+### Features
+
+#### Angular
+
+Angular comes with a variety of features to help developers build web applications. Some of the key features of Angular include:
+
+- **Component-based architecture**: Angular uses a component-based architecture, where the application is divided into small, independent pieces called components, each with its own logic and view. This makes it easy for developers to manage the state and behavior of their application and allows for better code reusability.
+- **Two-way data binding**: Angular's two-way data binding allows for real-time updates to the view whenever there is a change in the model, which makes it easy to create dynamic, responsive user interfaces.
+- **Template system**: Angular includes a powerful template system, which allows developers to define the structure and layout of their components using HTML. This makes it easy to create reusable and consistent UI elements.
+- **Directives**: Angular comes with a set of built-in directives, such as ngIf, ngFor, and ngSwitch, which allow developers to add dynamic behavior to their templates.
+- **Services**: Angular provides a way to define services, which are reusable classes that can be used to share data and logic across different components of an application.
+- **Dependency injection**: Angular has a built-in dependency injection system, which allows developers to easily manage the dependencies of their components.
+- **Routing**: Angular provides a powerful routing system, which allows developers to define different routes for different parts of their application.
+- **Forms**: Angular has built-in support for forms, which allows developers to easily create and validate forms.
+- **Internationalization (i18n)**: Angular provides built-in support for internationalization (i18n), which allows developers to create applications that can be easily translated into different languages.
+- **Testing**: Angular has built-in support for testing, which makes it easy to test components and services.
+
+#### React
+
+React is a JavaScript library that focuses on the view layer of web applications and comes with a variety of features to help developers build user interfaces. Some of the key features of React include:
+
+- **Components**: Similarly to Angular, React uses a component-based architecture to describe its logic and views.
+- **Virtual DOM**: React uses a virtual DOM (Document Object Model), which is a lightweight copy of the actual DOM. This allows React to efficiently update the view when the state of the application changes, leading to faster and more efficient performance.
+- **JSX**: React uses JSX, a syntax extension for JavaScript, which allows developers to embed HTML-like elements in their JavaScript code. This makes it easy to create reusable and consistent UI elements. JSX allows developers to write HTML-like elements and components in JavaScript, which allows them to use the full power of JavaScript inside the components.
+- **Props**: React uses props, which are properties passed down to a component, to manage data flow between components.
+- **State**: React uses state, which is used to manage the local state of a component.
+- **Hooks**: React introduced Hooks, a new way to manage state and side-effects in functional components.
+- **Server-side rendering**: React allows for server-side rendering, which can greatly improve the initial load time of a web page.
+- **Flexibility**: React is highly flexible and can be used in a variety of environments, including web, mobile, and desktop applications.
+- **Community**: React has a large and active community and a wealth of resources available for developers to learn and work with the library.
+
+#### Comparison
+
+Angular and React differ in terms of features in a few key ways:
+
+- **Architecture**: Angular is a comprehensive framework that provides a wide range of features for building web applications, including a component-based architecture, two-way data binding, a template system, built-in directives, services, dependency injection, routing, forms, and internationalization (i18n). React, on the other hand, focuses on the view layer and provides a more minimal set of features, including a component-based architecture, a virtual DOM, JSX, and hooks.
+- **Data Flow**: Angular uses two-way data binding, which allows for real-time updates to the view whenever there is a change in the model. React, on the other hand, uses a unidirectional data flow, where data is passed down from parent components to child components via props.
+- **Testing**: Angular has built-in support for testing, which makes it easy to test components and services. React, on the other hand, does not have a built-in testing framework, but it can be used with popular testing libraries such as Jest and React Testing Library.
+- **Mobile Development**: Angular has limited support for mobile development, it can be used with Angular mobile toolkit to create mobile apps, but React has React Native which allows developers to create native mobile apps using React.
+
+### Angular vs React: Popularity
+
+Angular and React are both popular among the developer community, but they have slightly different levels of popularity.
+
+#### Developers use react more
+
+According to the [Stack Overflow 2022 developer survey](https://survey.stackoverflow.co/2022/#section-most-popular-technologies-web-frameworks-and-technologies), React is the most popular front-end framework, with 42.6% of developers saying that they have used it, while Angular is the third most popular, with 20.4% of developers saying that they have used it. This indicates that React is more popular than Angular among the developers surveyed.
+
+#### Developers dread Angular
+
+The same survey also shows that Angular [tops the list](https://survey.stackoverflow.co/2022/#section-most-loved-dreaded-and-wanted-web-frameworks-and-technologies) of "Most Dreaded Web Frameworks and Technologies" with 79% of respondents claiming they dread working with Angular. For comparison, React comes in at 32% of respondents claiming they dread working with it.
+
+#### in summary
+
+It's worth noting that Angular has been around for a longer time than React, and it has a more established presence in the enterprise world. It's used by many large companies such as IBM, Microsoft, and Google. React, on the other hand, is more popular among smaller companies and start-ups.
+
+Both frameworks have a large and active community, and both are suitable for building web applications, but React may be more popular among developers and start-ups while Angular may be more popular among large companies.
+
+## Choosing the right framework
+
+The choice between Angular vs React is going to depend on your project's scope and needs. Here, we explore some of the reasons you might choose one over the other.
+
+### Why should I choose Angular vs React?
+
+#### Development process
+
+Angular is a comprehensive framework that provides a wide range of features for building web applications, including:
+
+- a component-based architecture
+- two-way data binding
+- a template system
+- built-in directives and services
+- dependency injection
+- routing
+- forms
+- internationalization (i18n)
+
+Angular uses TypeScript, a strongly-typed superset of JavaScript, which can help to improve code quality and maintainability.
+
+Angular has built-in support for testing which makes it easy to test components and services.
+
+#### Project type
+
+Angular has a more established presence in the enterprise world and is used by many large companies such as IBM, Microsoft, and Google.
+
+Angular's component-based architecture and two-way data binding make it well-suited for building complex and large enterprise applications, progressive web apps, and e-commerce applications.
+
+Angular's mobile development option, Angular mobile toolkit, allows developers to create mobile apps.
+
+### Why should I choose React vs Angular?
+
+#### Development process
+
+- React uses a component-based architecture and virtual DOM, which allows for building highly interactive and responsive user interfaces.
+- React's unidirectional data flow makes it easy to manage and update large amounts of data.
+- React's JSX syntax allows for a more intuitive and expressive way of describing the UI, making it easier for developers to understand the codebase.
+- React provides a set of tools and libraries to help developers build Progressive Web Applications (PWA)
+- React has a large and active community and it is widely adopted by many companies and start-ups, making it easier to find developers with React experience.
+- React can be paired with popular testing libraries such as Jest and React Testing Library to make it easy to test components and services.
+
+#### Architecture
+
+- React is a more flexible framework and it can be used in a variety of environments, including web, mobile, and desktop applications.
+- React Native allows developers to build native mobile apps using React, which can save time and improve code reusability. The app development process can be simplified with React Native by utilizing a single Javascript library for both Android and IOS apps.
+- React's component-based architecture makes it well-suited for building single-page applications, progressive web applications, and mobile apps.
+
+### Considerations when starting a new project
+
+As a developer starting a new project, the choice between Angular and React will depend on your specific requirements and the preferences of your team. Both frameworks have their own set of features and benefits, and both are suitable for building web applications.
+
+#### Attracting talent
+
+If you're trying to attract new developers to your team, it's important to consider the popularity and familiarity of the framework among potential candidates. React is currently more popular among developers. It's also been around for a shorter period of time, but it's been widely adopted by many companies and start-ups.
+
+##### React is flexible
+
+React is also more flexible than Angular, and it can be used in a variety of environments, including web, mobile, and desktop applications. This makes it easier to attract developers who have experience with different types of projects.
+
+Additionally, React's component-based architecture, virtual DOM, and JSX make it easy to learn and understand, which can make it more attractive to new developers.
+
+##### Angular has more features and is older
+
+On the other hand, Angular is a comprehensive framework that provides a wide range of features for building web applications, and it has been around for a longer time.
+
+It's used by many large companies such as IBM, Microsoft, and Google, and it's well-suited for building enterprise applications. Angular also has built-in support for testing, which can make it more attractive to developers who value good testing practices.
+
+##### Comparison
+
+If you're trying to attract new developers to your team and want a framework that is popular and flexible, React might be a better choice. However, if you are building an enterprise application and want a framework that comes with a wide range of features and good testing practices, Angular might be more suitable.
+
+Both frameworks have a large and active community, and both are suitable for building web applications, but React may be more popular among developers and start-ups while Angular may be more popular among large companies.
+
+#### Learning Curve
+
+The learning curve for Angular and React can vary depending on a developer's prior experience and the specific requirements of a project. Here are some of the differences in terms of the learning curve between Angular and React:
+
+##### Angular
+
+Angular has a steeper learning curve compared to React because it provides a lot of built-in functionality and has its own specific set of concepts and terms such as modules, components, directives, services, and dependency injection. Additionally, Angular uses TypeScript which can be challenging for developers who are familiar with JavaScript.
+
+##### React
+
+React uses a component-based architecture and virtual DOM, which are concepts that are easy to understand for developers familiar with web development. React also uses JSX, which allows for a more intuitive and expressive way of describing the UI, making it easier for developers to understand the codebase.
+
+##### Comparison
+
+To sum up, Angular has a steeper learning curve because it has a lot of built-in functionality and it uses its own set of concepts and terms, whereas React has a smaller learning curve because it focuses on building user interfaces and uses concepts that are easy to understand for developers familiar with web development.
+
+However, it's worth noting that, regardless of the learning curve, both Angular and React are widely used and have large and active communities, which means that there are many resources available to help developers learn and work with these frameworks.
+
+Both Angular and React can be challenging to master, but once the concepts are understood, the actual implementation can be relatively simple.
+
+## Conclusion
+
+In conclusion, Angular and React are both popular and widely used web development frameworks. Each framework has its own set of features and benefits, and the choice of which one to use will depend on the specific requirements of your project.
+
+Angular is a comprehensive framework that provides a wide range of features for building web applications, including a component-based architecture, two-way data binding, a template system, built-in directives and services, dependency injection, and routing. Angular is well-suited for building enterprise applications and has built-in support for testing. It's also popular among large companies such as IBM, Microsoft, and Google.
+
+React is a JavaScript library for building user interfaces, it's more flexible and can be used in a variety of environments, including web, mobile, and desktop applications. React's component-based architecture and virtual DOM allow for building highly interactive and responsive user interfaces. It's also popular among developers and start-ups and has a large and active community.
+
+Both frameworks have their own set of features, and both have a large and active community, and both are suitable for building web applications, but React may be more popular among developers and start-ups while Angular may be more popular among large companies. It's important to consider the popularity and familiarity of the framework among potential candidates if you're trying to attract new developers to your team. Additionally, you should also consider the specific requirements of your project, and the preferences of your team, to decide which framework to use.

@@ -29,10 +29,10 @@ toHeading: 5
 
 There are too many other programming languages in the world to go into any significant depth on them all. The best choice depends on the specific needs and preferences of the developer. Some of the most popular programming languages include:
 
-- \***\*Java\*\***: Java is a popular choice for a wide range of purposes, including web development, mobile development, and enterprise applications. It is a compiled language that is known for its strong typing and object-oriented principles.
-- \***\*C++\*\***: C++ is a popular choice for low-level programming tasks, such as operating systems, drivers, and games. It is a compiled language that is known for its performance and efficiency.
-- \***\*C#\*\***: C# is a popular choice for building Windows applications and games, as it is supported by the .NET framework. It is a compiled language that is known for its strong typing and object-oriented principles.
-- \***\*JavaScript\*\***: JavaScript is a popular choice for web development, as it is the primary language used for building web applications and interactive elements on the web. It is supported by a wide range of libraries and frameworks, such as React and Angular.
+- **Java**: Java is a popular choice for a wide range of purposes, including web development, mobile development, and enterprise applications. It is a compiled language that is known for its strong typing and object-oriented principles.
+- **C++**: C++ is a popular choice for low-level programming tasks, such as operating systems, drivers, and games. It is a compiled language that is known for its performance and efficiency.
+- **C#**: C# is a popular choice for building Windows applications and games, as it is supported by the .NET framework. It is a compiled language that is known for its strong typing and object-oriented principles.
+- **JavaScript\***: JavaScript is a popular choice for web development, as it is the primary language used for building web applications and interactive elements on the web. It is supported by a wide range of libraries and frameworks, such as React and Angular.
 
 It's a trap to think that any one of these other programming languages is inherently "better" than another in all ways. However, it's worth noting that Python is consistently considered one of the most popular languages. It's the equal of the above examples in many ways.
 
@@ -63,11 +63,11 @@ Python has consistently ranked as one of the top languages in terms of market sh
 
 Python is one of the most popular programming languages for a few reasons:
 
-- \***\*Simplicity and Readability\*\***: Python is known for its simple and readable syntax, which makes it easy to learn and understand, even for beginners. Its code is organized into blocks using indentation, which makes it easier to read and maintain.
-- \***\*Versatility\*\***: Python is a versatile language that can be used for a wide range of purposes, such as web development, data analysis, scientific computing, artificial intelligence, game development, and more. This makes it a great choice for developers who want to work in different fields or industries.
-- \***\*Strong Community\*\***: Python has a large and active community of developers, who contribute to its development and provide resources and support for users. This makes it easy to find help and resources when needed.
-- \***\*Popularity\*\***: Python is widely used by companies and organizations in various industries, such as finance, data science, and artificial intelligence. This has contributed to its popularity and made it a sought-after skill for developers.
-- \***\*Libraries and Frameworks\*\***: Python has a wide range of libraries and frameworks that make it easier to develop applications and perform tasks, such as NumPy for scientific computing, Pandas for data analysis, and Django for web development.
+- **Simplicity and Readability**: Python is known for its simple and readable syntax, which makes it easy to learn and understand, even for beginners. Its code is organized into blocks using indentation, which makes it easier to read and maintain.
+- **Versatility**: Python is a versatile language that can be used for a wide range of purposes, such as web development, data analysis, scientific computing, artificial intelligence, game development, and more. This makes it a great choice for developers who want to work in different fields or industries.
+- **Strong Community**: Python has a large and active community of developers, who contribute to its development and provide resources and support for users. This makes it easy to find help and resources when needed.
+- **Popularity**: Python is widely used by companies and organizations in various industries, such as finance, data science, and artificial intelligence. This has contributed to its popularity and made it a sought-after skill for developers.
+- **Libraries and Frameworks**: Python has a wide range of libraries and frameworks that make it easier to develop applications and perform tasks, such as NumPy for scientific computing, Pandas for data analysis, and Django for web development.
 
 Overall, Python's simplicity, versatility, strong community, popularity, and the availability of libraries and frameworks make it a popular choice for developers around the world.
 
@@ -77,9 +77,9 @@ Python is being taught in schools as a programming language and is becoming incr
 
 Python is being used in schools at all levels, from elementary school to college, for a wide range of purposes, such as:
 
-- \***\*Introducing students to programming\*\***: Python is a great language for introducing students to programming, as its simple syntax and clear structure make it easy to understand and learn.
-- \***\*Teaching computer science principles\*\***: Python is a powerful language that is used in various fields, such as data science, artificial intelligence, and web development. This makes it a great choice for teaching computer science principles and concepts to students.
-- \***\*Creating educational tools and resources\*\***: Python is a popular choice for creating educational tools and resources, such as simulations, games, and interactive exercises, which can help students learn and engage with course material.
+- **Introducing students to programming**: Python is a great language for introducing students to programming, as its simple syntax and clear structure make it easy to understand and learn.
+- **Teaching computer science principles**: Python is a powerful language that is used in various fields, such as data science, artificial intelligence, and web development. This makes it a great choice for teaching computer science principles and concepts to students.
+- **Creating educational tools and resources**: Python is a popular choice for creating educational tools and resources, such as simulations, games, and interactive exercises, which can help students learn and engage with course material.
 
 Because Python is already known by so many younger developers, it continues to increase in popularity when compared to other languages.
 
@@ -87,11 +87,11 @@ Because Python is already known by so many younger developers, it continues to i
 
 Python is a popular language that is used by companies and organizations around the world to build a wide range of software applications. Here are some well-known examples of software that are written in Python:
 
-- \***\*Google\*\***: Google uses Python extensively in its web search and advertising systems, as well as in other internal projects.
-- \***\*Instagram\*\***: Instagram is a popular social media platform that is built using Python, as well as other technologies, such as Django and Cassandra.
-- \***\*Netflix\*\***: Netflix uses Python for tasks such as data analysis and machine learning, as well as for building and deploying microservices.
-- \***\*Dropbox\*\***: Dropbox is a popular file storage and sharing service that is built using Python, as well as other technologies, such as Cassandra and Memcached.
-- \***\*Spotify\*\***: Spotify is a popular music streaming service that uses Python for tasks such as data analysis and machine learning.
+- **Google**: Google uses Python extensively in its web search and advertising systems, as well as in other internal projects.
+- **Instagram**: Instagram is a popular social media platform that is built using Python, as well as other technologies, such as Django and Cassandra.
+- **Netflix**: Netflix uses Python for tasks such as data analysis and machine learning, as well as for building and deploying microservices.
+- **Dropbox**: Dropbox is a popular file storage and sharing service that is built using Python, as well as other technologies, such as Cassandra and Memcached.
+- **Spotify**: Spotify is a popular music streaming service that uses Python for tasks such as data analysis and machine learning.
 
 These are just a few examples of well-known software applications that are built using Python, which demonstrates the versatility and popularity of the language in the software industry.
 
@@ -187,9 +187,9 @@ This code will create a web server that listens on port 8000 and serves a simple
 
 There are a few main differences between Python and Java for web development:
 
-- \***\*Syntax\*\***: As mentioned before, Python is known for its simple and readable syntax, while Java has a more verbose syntax that follows object-oriented principles.
-- \***\*Frameworks\*\***: Python has a wide range of frameworks for web development, such as Django and Flask, which provide powerful features and make it easier to develop web applications. Java also has a wide range of frameworks, such as Spring and JSF, which offer similar features and benefits.
-- \***\*Execution\*\***: Python is an interpreted language, which means that the code is executed as it is written. Java is a compiled language, which means that the code is first compiled into bytecode, and then executed by the Java Virtual Machine (JVM).
+- **Syntax**: As mentioned before, Python is known for its simple and readable syntax, while Java has a more verbose syntax that follows object-oriented principles.
+- **Frameworks**: Python has a wide range of frameworks for web development, such as Django and Flask, which provide powerful features and make it easier to develop web applications. Java also has a wide range of frameworks, such as Spring and JSF, which offer similar features and benefits.
+- **Execution**: Python is an interpreted language, which means that the code is executed as it is written. Java is a compiled language, which means that the code is first compiled into bytecode, and then executed by the Java Virtual Machine (JVM).
 
 Overall, both Python and Java are popular choices for web development, and which one is the best choice depends on the specific needs and preferences of the developer.
 
@@ -353,9 +353,9 @@ This code will create a simple desktop application with a main window, and run t
 
 While Python is a versatile language that can be used for a wide range of purposes, there are some areas where it is not typically used. Here are some examples of what Python is not commonly used for:
 
-- \***\*Low-level programming tasks\*\***: Python is not typically used for low-level programming tasks, such as operating systems, drivers, and games, as it is an interpreted language that is not as fast or efficient as compiled languages, such as C++ or C.
-- \***\*Mobile development\*\***: Python is not commonly used for mobile development, as it is not natively supported on most mobile platforms. While there are libraries and frameworks, such as Kivy, that allow developers to build mobile applications using Python, these applications tend to be slower and less efficient than native applications.
-- \***\*Hardware programming\*\***: Python is not typically used for programming hardware, such as microcontrollers or sensors, as it is not as fast or efficient as languages that are designed specifically for these purposes, such as C or Assembly.
+- **Low-level programming tasks**: Python is not typically used for low-level programming tasks, such as operating systems, drivers, and games, as it is an interpreted language that is not as fast or efficient as compiled languages, such as C++ or C.
+- **Mobile development**: Python is not commonly used for mobile development, as it is not natively supported on most mobile platforms. While there are libraries and frameworks, such as Kivy, that allow developers to build mobile applications using Python, these applications tend to be slower and less efficient than native applications.
+- **Hardware programming**: Python is not typically used for programming hardware, such as microcontrollers or sensors, as it is not as fast or efficient as languages that are designed specifically for these purposes, such as C or Assembly.
 
 So, while Python is a versatile language that can be used for a wide range of purposes, it is not typically used for low-level programming tasks, mobile development, or hardware programming.
 

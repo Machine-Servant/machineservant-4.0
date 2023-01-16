@@ -14,7 +14,7 @@ const config: GatsbyConfig = {
     },
     image: 'images/logo.jpg',
     author: '@MachineServant',
-    phone: '(330)-285-3015',
+    phone: '(330)-808-6557',
     navigation: [
       {
         name: 'Services',

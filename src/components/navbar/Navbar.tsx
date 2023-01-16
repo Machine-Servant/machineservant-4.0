@@ -35,11 +35,9 @@ export const Navbar: React.FC = () => {
             {navigation?.map(
               (nav) =>
                 nav?.path && (
-                  <Link to={nav.path}>
-                    <li key={nav?.name} className="px-2 sm:px-4">
-                      {nav?.name}
-                    </li>
-                  </Link>
+                  <li key={nav?.name} className="px-2 sm:px-4">
+                    <Link to={nav.path}>{nav?.name}</Link>
+                  </li>
                 )
             )}
           </ul>

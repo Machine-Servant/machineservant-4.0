@@ -7,10 +7,15 @@ export default BlogPost;
 
 export const pageQuery = graphql`
   query BlogPostPage($id: String!, $relatedPosts: [String]!) {
-    markdownRemark(id: { eq: $id }) {
+    mdx(id: { eq: $id }) {
       id
-      html
+      fields {
+        timeToRead {
+          minutes
+        }
+      }
       excerpt(pruneLength: 160)
+      tableOfContents
       parent {
         ... on File {
           id
@@ -37,10 +42,9 @@ export const pageQuery = graphql`
         title
         tags
       }
-      timeToRead
     }
-    relatedPosts: allMarkdownRemark(
-      filter: { fileAbsolutePath: { in: $relatedPosts } }
+    relatedPosts: allMdx(
+      filter: { internal: { contentFilePath: { in: $relatedPosts } } }
     ) {
       edges {
         node {
@@ -72,13 +76,13 @@ export const pageQuery = graphql`
 
 export const Head: HeadFC<Queries.BlogPostPageQuery, unknown> = ({ data }) => {
   const imgUrl =
-    data.markdownRemark?.frontmatter?.featuredImage?.childImageSharp
-      ?.gatsbyImageData.images.fallback?.src;
+    data.mdx?.frontmatter?.featuredImage?.childImageSharp?.gatsbyImageData
+      .images.fallback?.src;
 
   return (
     <CustomHead
-      title={data.markdownRemark?.frontmatter?.title || ''}
-      description={data.markdownRemark?.excerpt || ''}
+      title={data.mdx?.frontmatter?.title || ''}
+      description={data.mdx?.excerpt || ''}
       image={imgUrl}
       article
     />

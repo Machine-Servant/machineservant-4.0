@@ -1,15 +1,14 @@
+import { MDXProvider } from '@mdx-js/react';
 import { DiscussionEmbed } from 'disqus-react';
 import { PageProps } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
-import React, { useEffect, useState } from 'react';
-import rehypeParse from 'rehype-parse';
-import rehypeReact from 'rehype-react';
-import { unified } from 'unified';
+import React from 'react';
 import { components, MainContent } from '../../components/blog-post';
 import { ByLine } from '../../components/by-line';
 import { Layout } from '../../components/layout';
 import { Tag } from '../../components/tag';
 import { RelatedPost } from './components/related-post';
+import { TableOfContents } from './components/table-of-contents';
 
 function isParentWithRelativeDirectory(
   parent?: any
@@ -20,53 +19,34 @@ function isParentWithRelativeDirectory(
 
 export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
   data,
+  children,
 }) => {
-  const [PageContent, SetPageContent] = useState<React.ReactElement | null>(
-    null
-  );
-
-  console.log(data.relatedPosts);
-
-  const featuredImage = data.markdownRemark?.frontmatter?.featuredImage
-    ? getImage(data.markdownRemark.frontmatter.featuredImage.childImageSharp)
+  const featuredImage = data.mdx?.frontmatter?.featuredImage
+    ? getImage(data.mdx.frontmatter.featuredImage.childImageSharp)
     : null;
 
-  useEffect(() => {
-    if (data.markdownRemark?.html) {
-      unified()
-        .use(rehypeParse, { fragment: true })
-        .use(rehypeReact, {
-          createElement: React.createElement,
-          components,
-          Fragment: React.Fragment,
-        })
-        .process(data.markdownRemark.html)
-        .then((file) => SetPageContent(file.result));
-    }
-  }, [data]);
-
-  if (!isParentWithRelativeDirectory(data.markdownRemark?.parent)) return null;
+  if (!isParentWithRelativeDirectory(data.mdx?.parent)) return null;
 
   const disqusConfig = {
     shortname: 'machineservant',
     config: {
-      identifier: data?.markdownRemark?.parent.relativeDirectory,
-      title: data?.markdownRemark?.frontmatter?.title || '',
+      identifier: data?.mdx?.parent.relativeDirectory,
+      title: data?.mdx?.frontmatter?.title || '',
     },
   };
 
   return (
     <Layout
       image={featuredImage}
-      imageAlt={data?.markdownRemark?.frontmatter?.imageAlt || 'Featured Image'}
-      imageCredits={data?.markdownRemark?.frontmatter?.imageCredits}
-      imageCreditsUrl={data.markdownRemark?.frontmatter?.imageCreditsUrl}
+      imageAlt={data?.mdx?.frontmatter?.imageAlt || 'Featured Image'}
+      imageCredits={data?.mdx?.frontmatter?.imageCredits}
+      imageCreditsUrl={data.mdx?.frontmatter?.imageCreditsUrl}
       isLargeImage
       content={
         <>
           <div className="container mx-auto flex h-full items-end justify-center py-12">
             <div className="z-20 text-center text-4xl font-bold uppercase text-white">
-              {data?.markdownRemark?.frontmatter?.title}
+              {data?.mdx?.frontmatter?.title}
             </div>
           </div>
           <div className="absolute top-0 left-0 z-10 h-full w-full bg-gray-900 opacity-30" />
@@ -75,18 +55,23 @@ export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
     >
       <MainContent>
         <div className="mb-8 flex items-center text-sm font-extralight">
-          <ByLine author={data?.markdownRemark?.frontmatter?.author} />
+          <ByLine author={data?.mdx?.frontmatter?.author} />
           <span className="mx-2">&bull;</span>
-          <span className="">{data?.markdownRemark?.frontmatter?.date}</span>
-          <span className="mx-2">&bull;</span>
-          <span className="mr-2">
-            {data?.markdownRemark?.timeToRead} min read
-          </span>
+          <span className="">{data?.mdx?.frontmatter?.date}</span>
+          {data.mdx?.fields?.timeToRead?.minutes && (
+            <>
+              <span className="mx-2">&bull;</span>
+              <span className="">
+                {Math.ceil(data.mdx?.fields?.timeToRead.minutes)} min
+              </span>
+            </>
+          )}
         </div>
-        {PageContent}
+        <TableOfContents data={data.mdx?.tableOfContents} />
+        <MDXProvider components={components}>{children}</MDXProvider>
         <hr className="mb-4" />
         <div className="flex flex-wrap justify-between">
-          {data?.markdownRemark?.frontmatter?.tags?.map((tag) => (
+          {data?.mdx?.frontmatter?.tags?.map((tag) => (
             <Tag value={tag} key={tag} />
           ))}
         </div>

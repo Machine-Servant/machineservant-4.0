@@ -7,7 +7,7 @@ export default BlogList;
 
 export const query = graphql`
   query BlogPaginated($skip: Int!, $limit: Int!) {
-    posts: allMarkdownRemark(
+    posts: allMdx(
       limit: $limit
       skip: $skip
       sort: { frontmatter: { date: DESC } }
@@ -17,6 +17,11 @@ export const query = graphql`
         node {
           id
           excerpt(pruneLength: 160)
+          fields {
+            timeToRead {
+              minutes
+            }
+          }
           parent {
             ... on File {
               id
@@ -34,11 +39,10 @@ export const query = graphql`
             title
             tags
           }
-          timeToRead
         }
       }
     }
-    tagsGroup: allMarkdownRemark(
+    tagsGroup: allMdx(
       limit: 2000
       filter: { frontmatter: { published: { eq: true } } }
     ) {

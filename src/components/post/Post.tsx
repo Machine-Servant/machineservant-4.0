@@ -12,7 +12,7 @@ function isParentWithRelativeDirectory(
 
 export const Post: React.FC<
   Queries.BlogPaginatedQuery['posts']['edges'][0]['node']
-> = ({ frontmatter, timeToRead, excerpt, parent }) => {
+> = ({ frontmatter, fields, excerpt, parent }) => {
   if (!isParentWithRelativeDirectory(parent)) return null;
 
   const image = frontmatter?.featuredImage
@@ -38,7 +38,10 @@ export const Post: React.FC<
                 <ByLine author={frontmatter?.author} />
               </span>
               <span className="text-xs">
-                {frontmatter?.date} &bull; {timeToRead} min
+                {frontmatter?.date} &bull;{' '}
+                {fields?.timeToRead?.minutes && (
+                  <span>{Math.ceil(fields?.timeToRead?.minutes)} min</span>
+                )}
               </span>
             </div>
           </div>

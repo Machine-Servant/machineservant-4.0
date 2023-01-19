@@ -58,7 +58,6 @@ const config: GatsbyConfig = {
         icon: 'src/images/logo-small.png',
       },
     },
-    'gatsby-plugin-mdx',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
@@ -85,10 +84,10 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: 'gatsby-plugin-mdx',
       options: {
-        excerpt_separator: '<!-- end -->',
-        plugins: [
+        extensions: ['.md', '.mdx'],
+        gatsbyRemarkPlugins: [
           'gatsby-remark-images',
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-autolink-headers',

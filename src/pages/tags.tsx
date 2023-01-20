@@ -12,7 +12,7 @@ export const TagsPage: React.FC<PageProps<Queries.TagsPageQuery>> = ({
     ? getImage(data.blogImage.childImageSharp)
     : null;
 
-  const sortedTags = [...data.allMarkdownRemark.group].sort(
+  const sortedTags = [...data.allMdx.group].sort(
     (a, b) => b.totalCount - a.totalCount
   );
 
@@ -54,7 +54,7 @@ export const pageQuery = graphql`
         gatsbyImageData(layout: FULL_WIDTH)
       }
     }
-    allMarkdownRemark(filter: { frontmatter: { published: { eq: true } } }) {
+    allMdx(filter: { frontmatter: { published: { eq: true } } }) {
       group(field: { frontmatter: { tags: SELECT } }) {
         fieldValue
         totalCount

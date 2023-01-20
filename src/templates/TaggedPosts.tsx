@@ -7,7 +7,7 @@ export default BlogList;
 
 export const pageQuery = graphql`
   query TaggedPosts($tag: String) {
-    posts: allMarkdownRemark(
+    posts: allMdx(
       limit: 2000
       sort: { frontmatter: { date: DESC } }
       filter: { frontmatter: { tags: { in: [$tag] }, published: { eq: true } } }
@@ -34,7 +34,6 @@ export const pageQuery = graphql`
             title
             tags
           }
-          timeToRead
         }
       }
     }

@@ -2,17 +2,21 @@ import { CreateNodeArgs, CreatePagesArgs } from 'gatsby';
 import { createFilePath } from 'gatsby-source-filesystem';
 import { kebabCase } from 'lodash';
 import path from 'path';
+import readingTime from 'reading-time';
 
 exports.onCreateNode = ({ node, actions, getNode }: CreateNodeArgs) => {
   const { createNodeField } = actions;
 
-  if (node.internal.type === 'MarkdownRemark') {
-    const value = createFilePath({ node, getNode });
-
+  if (node.internal.type === 'Mdx') {
     createNodeField({
       name: 'slug',
       node,
-      value,
+      value: createFilePath({ node, getNode }),
+    });
+    createNodeField({
+      name: 'timeToRead',
+      node,
+      value: readingTime(node.body as string),
     });
   }
 };
@@ -36,17 +40,21 @@ exports.createPages = async ({
 
   const result = await graphql<Queries.GatsbyNodeQuery>(`
     query GatsbyNode {
-      allMarkdownRemark(
+      allMdx(
         sort: { frontmatter: { date: DESC } }
         filter: { frontmatter: { published: { eq: true } } }
       ) {
         nodes {
           id
+          body
           fields {
             slug
           }
           frontmatter {
             relatedPosts
+          }
+          internal {
+            contentFilePath
           }
         }
         group(field: { frontmatter: { tags: SELECT } }) {
@@ -64,14 +72,14 @@ exports.createPages = async ({
     return;
   }
 
-  result.data?.allMarkdownRemark.nodes.forEach((node) => {
+  result.data?.allMdx.nodes.forEach((node) => {
     const relatedPosts =
       node.frontmatter?.relatedPosts?.map(
-        (rp) => `${__dirname}/src/content/${rp}/index.md`
+        (rp) => `${__dirname}/src/content/${rp}/index.mdx`
       ) || [];
     createPage({
       path: `/blog${node.fields?.slug}`,
-      component: BlogPost,
+      component: `${BlogPost}?__contentFilePath=${node.internal.contentFilePath}`,
       context: {
         id: node.id,
         relatedPosts,
@@ -80,7 +88,7 @@ exports.createPages = async ({
     reporter.log(`Created blog post: /blog${node.fields?.slug}`);
   });
 
-  const posts = result.data?.allMarkdownRemark?.nodes || [];
+  const posts = result.data?.allMdx?.nodes || [];
   const postsPerPage = 5;
   const numPages = Math.ceil(posts.length / postsPerPage);
 
@@ -120,7 +128,7 @@ exports.createPages = async ({
     reporter.log(`Created blog paginated page: ${paginatedPath}`);
   });
 
-  result.data?.allMarkdownRemark.group.forEach((tag) => {
+  result.data?.allMdx.group.forEach((tag) => {
     if (!tag.fieldValue) return;
 
     const value = kebabCase(tag.fieldValue);

@@ -2,6 +2,7 @@ import { Link } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import React, { useMemo, useState } from 'react';
 import { useFlexSearch } from 'react-use-flexsearch';
+import { useIsSsr } from '../../hooks/is-ssr';
 import { Layout } from '../layout';
 import { Post } from '../post';
 import { Tag } from '../tag';
@@ -29,7 +30,9 @@ export const BlogList = ({
     ? getImage(data.blogPageImage.childImageSharp)
     : null;
 
-  const { search } = window.location;
+  const isSsr = useIsSsr();
+
+  const { search } = isSsr ? { search: '' } : window.location;
 
   const query = useMemo(() => {
     if (search.length === 0) return null;

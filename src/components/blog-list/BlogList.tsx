@@ -1,9 +1,11 @@
 import { Link } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
+import { useFlexSearch } from 'react-use-flexsearch';
 import { Layout } from '../layout';
 import { Post } from '../post';
 import { Tag } from '../tag';
+import { Search } from './components/search';
 
 interface PageContext {
   limit?: number;
@@ -27,7 +29,33 @@ export const BlogList = ({
     ? getImage(data.blogPageImage.childImageSharp)
     : null;
 
+  const { search } = window.location;
+
+  const query = useMemo(() => {
+    if (search.length === 0) return null;
+    return new URLSearchParams(search).get('query');
+  }, [search]);
+
+  const [searchQuery, setSearchQuery] = useState<string>(query || '');
+
+  const results = useFlexSearch(
+    searchQuery,
+    data.localSearchPosts?.index || null,
+    data.localSearchPosts?.store || null
+  );
+
+  const posts = results.length
+    ? results
+    : data.posts.edges.map((edge) => edge.node);
+
   const { currentPage, numPages, paginated, renderTagList, tag } = pageContext;
+
+  const showNavigation = useMemo(() => {
+    return paginated && searchQuery.length === 0;
+  }, [paginated, searchQuery]);
+  const showSearch = useMemo(() => {
+    return !tag;
+  }, [tag]);
 
   const canGoBack = paginated && currentPage && currentPage > 1;
   const backPath = canGoBack
@@ -77,12 +105,22 @@ export const BlogList = ({
           </Link>
         </div>
       )}
+      {showSearch && (
+        <Search
+          className="container mx-auto mt-8 flex max-w-5xl justify-center"
+          action="/blog"
+          method="get"
+          autoComplete="off"
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
+      )}
       <div className="container mx-auto pt-8 pb-12 lg:py-12">
-        {data.posts.edges.map(({ node: post }) => (
+        {posts.map((post: any) => (
           <Post key={post.id} {...post} />
         ))}
       </div>
-      {paginated && (
+      {showNavigation && (
         <div className="container mx-auto mb-12 max-w-5xl">
           <div className="flex justify-around lg:justify-between">
             {backPath ? (

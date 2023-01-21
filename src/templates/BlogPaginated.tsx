@@ -56,6 +56,10 @@ export const query = graphql`
         gatsbyImageData(layout: FULL_WIDTH)
       }
     }
+    localSearchPosts {
+      index
+      store
+    }
   }
 `;
 

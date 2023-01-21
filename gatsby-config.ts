@@ -111,6 +111,60 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-plugin-local-search',
+      options: {
+        name: 'posts',
+        engine: 'flexsearch',
+        query: `
+          {
+            allMdx(filter: { frontmatter: { published: { eq: true } } }) {
+              nodes {
+                id
+                body
+                excerpt(pruneLength: 160)
+                fields {
+                  timeToRead {
+                    minutes
+                  }
+                }
+                parent {
+                  ... on File {
+                    id
+                    relativeDirectory
+                  }
+                }
+                frontmatter {
+                  author
+                  date(formatString: "MMMM DD, YYYY")
+                  featuredImage {
+                    childImageSharp {
+                      gatsbyImageData(layout: FULL_WIDTH)
+                    }
+                  }
+                  title
+                  tags
+                }
+              }
+            }
+          }
+        `,
+        index: ['title', 'tags', 'body'],
+        store: ['id', 'parent', 'fields', 'frontmatter', 'parent', 'excerpt'],
+        normalizer: ({ data }: any) => {
+          return data.allMdx.nodes.map((node: any) => ({
+            id: node.id,
+            parent: node.parent,
+            fields: node.fields,
+            frontmatter: node.frontmatter,
+            excerpt: node.excerpt,
+            body: node.body,
+            title: node.frontmatter.title,
+            tags: node.frontmatter.tags,
+          }));
+        },
+      },
+    },
   ],
 };
 

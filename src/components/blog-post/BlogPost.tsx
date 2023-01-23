@@ -6,6 +6,7 @@ import React from 'react';
 import { components, MainContent } from '../../components/blog-post';
 import { ByLine } from '../../components/by-line';
 import { Layout } from '../../components/layout';
+import { PhotoCredits } from '../../components/photo-credits';
 import { Tag } from '../../components/tag';
 import { RelatedPost } from './components/related-post';
 import { TableOfContents } from './components/table-of-contents';
@@ -68,7 +69,9 @@ export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
           )}
         </div>
         <TableOfContents data={data.mdx?.tableOfContents} />
-        <MDXProvider components={components}>{children}</MDXProvider>
+        <MDXProvider components={{ ...components, PhotoCredits }}>
+          {children}
+        </MDXProvider>
         <hr className="mb-4" />
         <div className="flex flex-wrap justify-between">
           {data?.mdx?.frontmatter?.tags?.map((tag) => (

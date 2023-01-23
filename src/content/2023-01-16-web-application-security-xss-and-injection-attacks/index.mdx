@@ -12,129 +12,139 @@ relatedPosts:
   ['2023-01-07-cloud-services-model', '2021-01-19-what-about-security']
 ---
 
-Web application security is a critical aspect of modern digital operations. It's an extension of general application security. With the increasing use of web applications in business, education, and personal use, it is essential to protect against potential security risks.
+From business and education to personal use, web applications have become integral to our lives. As their importance rises, so does the need for robust security measures – including protection against injection attacks and cross-site Scripting (XSS). In this article, dive into these threats in more detail, learning about examples before exploring practical solutions which can help mitigate any risks they pose.
 
-These risks can include cross-site scripting (XSS) and injection attacks. There are many more, and we will explore some of them in upcoming posts. In this article, we will look closely at injection attacks and XSS, discuss examples, and discuss how one can mitigate the risks of these attacks.
+Web application security is a complex landscape of opportunities and threats, which can make every website vulnerable to attack. In this series, we’ll journey through the basics, including secure development practices, testing methods for detecting vulnerabilities, and installing firewalls, before looking deeper into advanced topics such as multi-factor authentication. Join us in exploring all levels of web app security!
 
-Web application security is an enormous topic, and this article will be scratching the surface. In future articles, we will discuss secure development practices, web application security testing, web application firewalls, multi-factor authentication, and even more web application threats.
+## Cross-site Scripting (XSS)
 
-## Cross-site scripting (XSS)
+![Guy Fawkes Mask and Red Flower on Hand](./hacker-1.jpg)
 
-Cross-Site Scripting (XSS) is a web application security vulnerability that allows attackers to inject malicious code into a web page viewed by other users. This malicious code is typically in the form of a script, such as JavaScript, and is designed to steal sensitive information from the users who view the compromised web page.
+<PhotoCredits
+  href="https://www.pexels.com/photo/guy-fawkes-mask-and-red-flower-on-hand-38275/"
+  credits="Photo by Pixabay"
+/>
+
+Cross-Site Scripting, or XSS for short, is a malicious vulnerability lurking in web applications. It can potentially compromise unsuspecting users by injecting harmful scripts like JavaScript into websites they visit - all to steal sensitive information from them!
 
 ### How XSS attacks work
 
-XSS attacks exploit a vulnerability in how an application handles user input.
+XSS Attacks are the sneakiest of cyber-attacks, using user input to exploit applications and gain access. So protecting your data is essential - make sure you’re aware of XSS threats!
 
 #### How it works
 
-When a user submits data to a web application, that data is typically displayed on a web page for other users to see. However, if the application does not properly validate or sanitize the user input, an attacker can submit data that includes malicious code. When that data is displayed on the web page, the malicious code is executed by the browser of any user who views the page, allowing the attacker to steal sensitive information such as cookies or login credentials.
+Submitting data to a web application can be as easy as typing in characters – but there’s a hidden danger. Suppose the app isn’t set up correctly. In that case, malicious code from an attacker could be slipped into that user-submitted content and unwittingly executed when another unsuspecting guest views the page - giving unfettered access to everything from login details straight through to cookies!
 
-#### Types of XSS attacks
+#### Types of xss attacks
 
 ##### Stored
 
-Stored XSS attacks occur when an attacker injects malicious code into the database, which is then displayed on the web page when viewed by other users.
+By leveraging stored XSS attacks, attackers can sneak malicious code into a database and later served to unsuspecting users. It’s an insidious dimension of the cyber security landscape that must be monitored and addressed!
 
 ##### Reflected
 
-Reflected XSS attacks occur when the malicious code is sent in a request and is immediately reflected to the user without being stored.
+Reflected XSS Attacks threaten unsuspecting users with malicious code that is unknowingly sent, received, and executed instantly. These types of attacks can cause significant damage in an instant!
 
 #### Prevention
 
-Preventing XSS attacks requires a combination of input validation and sanitization and correct encoding of user input when it is displayed. Additionally, a Content Security Policy (CSP) can help prevent XSS attacks by limiting the types of scripts that can be executed on a web page.
+The internet is a danger zone, and XSS attacks are one of the nastiest threats out there. To stay safe, you’ve gotta lock up your website tight with input validation measures that sanitize user data and secure encoding when displaying content. A Content Security Policy (CSP) can also help ramp up security levels by limiting what scripts can be embedded on web pages - because don’t we all want to keep our digital lives free from harm?
 
 ### Examples of XSS attacks
 
 Some examples of XSS attacks include:
 
-1.  **Stealing session cookies**: An attacker can use XSS to steal other users' session cookies, allowing them to impersonate those users and gain access to sensitive information or perform actions on their behalf.
-2.  **Phishing**: An attacker can use XSS to create a fake login form on a compromised web page, tricking users into entering their login credentials.
-3.  **Keylogging**: An attacker can use XSS to create a script that logs keystrokes on a compromised web page, allowing them to steal sensitive information such as passwords and credit card numbers.
-4.  **Redirecting to a malicious site**: An attacker can use XSS to redirect users to a malicious website, potentially leading to further attacks such as malware downloads.
-5.  **Social engineering attacks**: An attacker can use XSS to craft a message that appears to come from a trusted source and trick victims into clicking on a link or entering their personal information.
-6.  **Creating and executing a worm**: An attacker can use XSS to make a worm that propagates itself by replicating itself across multiple web pages, potentially causing widespread damage.
+- **Stealing session cookies**: With XSS, a malicious attacker can steal your online identity and gain access to the most personal information - even taking control of accounts you use daily. Protect yourself by understanding cross-site scripting vulnerabilities!
+- **Phishing**: Attackers can crafty create a convincing duplicate login form on hacked websites, slyly trying to snatch unsuspecting users’ credentials. Protect yourself!
+- **Keylogging**: An attacker can use XSS to create a script that logs keystrokes on a compromised web page, allowing them to steal sensitive information such as passwords and credit card numbers.
+- **Redirecting to a malicious site**: Cybercriminals have the cunning ability to take advantage of XSS vulnerabilities, maliciously redirecting unsuspecting users toward far more sinister outcomes than they could ever imagine. Not only is malware a potential risk, but personal information can also be stolen and used in devastating ways if not protected against this attack.
+- **Social engineering attacks**: An attacker can use XSS to craft a message that appears to come from a trusted source and trick victims into clicking on a link or entering their personal information.
+- **Creating and executing a worm**: An attacker can use XSS to make a worm that propagates itself by replicating itself across multiple web pages, potentially causing widespread damage.
 
-It's important to note that XSS attacks can have various forms; it's not only limited to the examples above; attackers can be creative and use different methods to exploit XSS vulnerabilities.
+It’s not enough to just be aware of the most common XSS attacks - it’s equally important for everyone to recognize that attackers can get creative and come up with diverse strategies when exploiting XSS vulnerabilities. So, stay vigilant!
 
 ### Prevention and mitigation techniques
 
-Preventing and mitigating XSS attacks requires a combination of input validation, sanitization, and correct encoding of user input when it is displayed. Some specific techniques that can be used include:
+To ward off and reduce XSS attacks, a combination of validation, sanitization, and correct encoding of user input when it is displayed must be employed. A few techniques that can prove to be effective include...
 
-1.  **Input validation**: This involves ensuring that user input is of the correct type and format before the application processes it. For example, only allowing alphanumeric characters in a field meant to contain a name.
-2.  **Input sanitization**: This involves removing any potentially harmful characters or scripts from user input before it is displayed on a web page. This can include characters such as < > " ' / and others.
-3.  **Encoding user input**: This involves converting special characters in user input into their corresponding HTML or JavaScript entities. This can prevent the browser from interpreting the input as code and instead display it as plain text.
-4.  **Content Security Policy (CSP)**: A CSP is a security feature that helps prevent XSS attacks by limiting the types of scripts executed on a web page. This can include a whitelist of approved script sources and other restrictions on the kinds of scripts that can be executed.
-5.  **Use of security libraries or frameworks**: these libraries and frameworks are designed to prevent common web application vulnerabilities such as XSS; they can be configured or used to handle input validation, sanitization, and encoding.
-6.  **Regularly testing and monitoring**: Regularly testing the application for vulnerabilities and monitoring for any suspicious activity can help to detect and prevent XSS attacks.
-
-It's worth noting that even with these techniques in place, XSS attacks can still occur, so it is important to have a response plan in place in case an attack does occur. This can include steps such as identifying the source of the attack, containing the attack to prevent it from spreading, and implementing a plan to restore the system to a secure state.
+- **Input validation**: This involves ensuring that user input is of the correct type and format before the application processes it. For example, only allowing alphanumeric characters in a field meant to contain a name.
+- **Input sanitization**: This involves removing any potentially harmful characters or scripts from user input before it is displayed on a web page. This can include characters such as < >” ‘/ and others.
+- **Encoding user input**: This involves converting special characters in user input into their corresponding HTML or JavaScript entities. This can prevent the browser from interpreting the input as code and instead display it as plain text.
+- **Content Security Policy (CSP)**: A CSP is a security feature that helps prevent XSS attacks by limiting the types of scripts executed on a web page. This can include a whitelist of approved script sources and other restrictions on the kinds of scripts that can be executed.
+- **Use of security libraries or frameworks**: these libraries and frameworks are designed to prevent common web application vulnerabilities such as XSS; they can be configured or used to handle input validation, sanitization, and encoding.
+- **Regularly testing and monitoring**: Regularly testing the application for vulnerabilities and monitoring for any suspicious activity can help to detect and prevent XSS attacks.
+  Despite our best efforts, XSS attacks can still happen. That’s why it pays to have an emergency plan ready - pinpoint where the attack originated from, contain it so that any further damage is minimized, then get your system back up and running with added security measures in place! Being prepared could be the difference between a minor hiccup or a total disaster.
 
 ## Injection attacks
 
-Injection attacks are web application security vulnerabilities that occur when an attacker can send malicious input to a web application, which is executed as a command or a query by a back-end component. The most common injection attacks are SQL, OS, and LDAP injection.
+![A Woman Typeing on the Keyboard](./hacker-2.jpg)
+
+<PhotoCredits
+  href="https://www.pexels.com/photo/a-woman-typing-on-the-keyboard-8720586/"
+  credits="Photo by cottonbro studio"
+/>
+
+Living in the digital age exposes us to a multitude of cyber adversaries. Among them, injection attacks are particularly insidious as they can give an attacker backdoor access to web applications by strategically entering malicious code through unsuspecting entryways. When executed correctly, this sinister input is capable of unleashing vengeful SQL, OS, and LDAP queries that could compromise confidential data or wreak havoc on system infrastructure!
 
 ### How injection attacks work
 
-SQL injection attacks occur when an attacker can submit malicious SQL code to a web application, which then gets executed by a database. This can allow the attacker to view, modify or delete sensitive data stored in the database.
+<img
+  src="https://imgs.xkcd.com/comics/exploits_of_a_mom.png"
+  alt="Exploits of a Mom by XKCD"
+  className="w-full"
+/>
+<PhotoCredits href="https://xkcd.com/327" credits="Comic by XKCD" />
 
-If your application has a back-end, and if your back-end uses a SQL database, or LDAP, or executes any OS commands, this attack is a web application security priority.
+Cyber-attacks using SQL injection pose an enormous threat to online businesses – they can potentially allow malicious actors access to confidential customer data and even the ability to delete or modify it. Unfortunately, you may not be aware of this dangerous vulnerability. Still, suppose your web application is connected by a backend operating with SQL databases, LDAP servers, or any OS commands. In that case, you must ensure that these pathways are protected from unauthorized intrusion!
 
-#### Types of Injection Attacks
+#### Prevention
 
-##### OS Injection
+Injection attacks can bring disaster to any online application - from data breaches to system compromises and even complete shutdowns of the entire service. The best way to guard against such events is by taking a multi-layered approach: validating user input with sanitization techniques along with parameterized queries or stored procedures, plus utilizing extra protection in the form of a Web Application Firewall (WAF). Don’t leave your systems vulnerable! Take steps today to protect yourself from injection attacks.
 
-OS injection attacks occur when an attacker can submit malicious operating system commands to a web application, which then gets executed by the server. This can allow the attacker to gain unauthorized access or execute arbitrary code on the server.
-
-##### LDAP Injection
-
-LDAP injection attacks occur when an attacker can submit malicious LDAP statements to a web application, which is executed by a Lightweight Directory Access Protocol (LDAP) server. This can allow the attacker to gain unauthorized access to the directory or to execute arbitrary code on the server.
-
-##### Prevention
-
-Preventing injection attacks requires a combination of input validation and sanitization and using parameterized queries or stored procedures. Additionally, using a Web Application Firewall (WAF) can help to detect and prevent injection attacks by analyzing web traffic for suspicious patterns.
-
-It's important to note that injection attacks can severely impact the application and the underlying systems and can lead to data breaches, system compromise, and in some cases, a complete shutdown of the systems.
-
-### Examples of injection attacks
+### Examples of Injection Attacks
 
 Some examples of injection attacks include:
 
-1.  **SQL injection**: An attacker can use SQL injection to steal sensitive information from a database, such as login credentials or credit card numbers. They can also use SQL injection to modify or delete data in a database, potentially causing widespread damage.
-2.  **OS command injection**: An attacker can use OS command injection to execute arbitrary commands on a server, potentially gaining unauthorized access or causing the server to crash.
-3.  **LDAP injection**: An attacker can use LDAP injection to manipulate or extract sensitive information from an LDAP directory, such as user passwords or group memberships.
-4.  **Code injection**: An attacker can use code injection to execute malicious code on a server, potentially gaining unauthorized access or causing the server to crash.
-5.  **File inclusion**: An attacker can use file inclusion to include remote files from a server, potentially gaining unauthorized access or executing malicious code.
-6.  **Injection in scripts and APIs**: An attacker can use injection techniques to manipulate the inputs of the scripts and APIs, potentially gaining unauthorized access or executing malicious code.
+- **SQL injection**: An attacker can use SQL injection to steal sensitive information from a database, such as login credentials or credit card numbers. They can also use SQL injection to modify or delete data in a database, potentially causing widespread damage.
+- **OS command injection**: An attacker can use OS command injection to execute arbitrary commands on a server, potentially gaining unauthorized access or causing the server to crash.
+- **LDAP injection**: An attacker can use LDAP injection to manipulate or extract sensitive information from an LDAP directory, such as user passwords or group memberships.
+- **Code injection**: An attacker can use code injection to execute malicious code on a server, potentially gaining unauthorized access or causing the server to crash.
+- **File inclusion**: An attacker can use file inclusion to include remote files from a server, potentially gaining unauthorized access or executing malicious code.
+- **Injection in scripts and APIs**: An attacker can use injection techniques to manipulate the inputs of the scripts and APIs, potentially gaining unauthorized access or executing malicious code.
 
-It's important to note that these are just a few examples of injection attacks, and attackers can be creative in finding ways to exploit injection vulnerabilities. Injection attacks can severely impact the application and the underlying systems. They can lead to data breaches, system compromise, and in some cases, a complete shutdown of the systems.
+Injection attacks are a severe threat to application and system security. With cyber criminals becoming increasingly creative in their attack methodologies, the potential damage inflicted by successfully exploiting injection vulnerabilities can be catastrophic - from data theft caused by breaches to complete systems shutdowns. So protect your network with vigilance!
 
 ### Prevention and mitigation techniques
 
-Preventing and mitigating injection attacks requires a combination of input validation and sanitization and using parameterized queries or stored procedures. Some specific techniques that can be used include:
+Avoiding injection-related security vulnerabilities isn’t a one-size fits all endeavor; it takes input validation and sanitization, as well as parameterized queries or stored procedures. So how might you ensure your data is safe? First, consider some of these specific techniques:
 
-1.  **Input validation**: This involves ensuring that user input is of the correct type and format before the web application processes it. For example, only allowing integers in a field meant to contain a numerical value.
-2.  **Input sanitization**: This involves removing potentially harmful characters or scripts from user input before the web application processes it and, for example, removing special characters such as semicolons, backslash, and others.
-3.  **Parameterized Queries**: This involves using placeholders for user input in SQL or other commands rather than concatenating user input directly into the command. This can prevent an attacker from injecting malicious code into the query.
-4.  **Stored procedures**: This involves using stored procedures that have been pre-defined and tested rather than building SQL or other types of commands on the fly using user input.
-5.  **Use of security libraries or frameworks**: these libraries and frameworks are designed to prevent common web application vulnerabilities such as injection attacks; they can be configured or used to handle input validation, sanitization, and encoding.
-6.  **Web Application Firewall (WAF):** A WAF can help detect and prevent injection attacks by analyzing web traffic for suspicious patterns, such as SQL keywords or OS commands.
-7.  **Regularly testing and monitoring**: Regularly testing the application for vulnerabilities and monitoring for any suspicious activity can help to detect and prevent injection attacks.
-
-It's worth noting that even with these techniques in place, injection attacks can still occur, so it is essential to have a response plan in place in case an attack does occur. This can include steps such as identifying the source of the attack, containing the attack to prevent it from spreading, and implementing a plan to restore the system to a secure state.
+- **Input validation**: This involves ensuring that user input is of the correct type and format before the web application processes it. For example, only allowing integers in a field meant to contain a numerical value.
+- **Input sanitization**: This involves removing potentially harmful characters or scripts from user input before the web application processes it and, for example, removing special characters such as semicolons, backslash, and others.
+- **Parameterized Queries**: This involves using placeholders for user input in SQL or other commands rather than concatenating user input directly into the command. This can prevent an attacker from injecting malicious code into the query.
+- **Stored procedures**: This involves using stored procedures that have been pre-defined and tested rather than building SQL or other types of commands on the fly using user input.
+- **Use of security libraries or frameworks**: these libraries and frameworks are designed to prevent common web application vulnerabilities such as injection attacks; they can be configured or used to handle input validation, sanitization, and encoding.
+- **Web Application Firewall (WAF)**: A WAF can help detect and prevent injection attacks by analyzing web traffic for suspicious patterns, such as SQL keywords or OS commands.
+- **Regularly testing and monitoring**: Regularly testing the application for vulnerabilities and monitoring for any suspicious activity can help to detect and prevent injection attacks.
+  No security system is foolproof, and the threat of injection attacks shouldn’t be taken lightly. It’s essential to have a plan in case an attack does occur - one that identifies its source, prevents the further spread, and restores systems to secure functioning. Being prepared ahead of time will help you manage potential risks with confidence.
 
 ## Conclusion
 
-XSS attacks involve injecting malicious code into a web page, which can steal sensitive information from users who view the compromised web page or perform actions on their behalf. This type of attack can have various forms and can lead to phishing, key logging, redirecting to a malicious site, or social engineering attacks.
+![Person Using a Computer](./hacker-3.jpg)
 
-Injection attacks involve injecting malicious input into a web application, allowing an attacker to view, modify or delete sensitive data stored in the database or execute arbitrary code on the server.
+<PhotoCredits
+  href="https://www.pexels.com/photo/person-using-computer-5380603/"
+  credits="Photo by Tima Miroshnichenko"
+/>
 
-The most common injection attacks are SQL, OS, and LDAP injection. These attacks can severely impact the application and the underlying systems and lead to data breaches, system compromise, and in some cases, a complete shutdown of the systems.
+No longer just an inconvenience, XSS attacks have become increasingly clever in stealing our secrets. By injecting malicious code into webpages, these cybercriminals can easily lift sensitive information from unwitting visitors or even perform specific actions on their behalf—from phishing and keylogging to redirecting users to dangerous sites and social engineering attempts. So stay aware of the risks!
 
-To prevent and mitigate these attacks, it's vital to implement appropriate web application security measures. For XSS, this includes input validation, sanitization, and encoding, as well as using Content Security Policy (CSP) and security libraries or frameworks.
+An injection attack is a malicious way to gain access, steal information, and inject code into an unsuspecting web application. These attacks are serious threats that allow attackers to explore confidential data or execute arbitrary scripts on your server!
 
-For injection attacks, it requires input validation, sanitization, parameterized queries or stored procedures, and a Web Application Firewall (WAF).
+In the world of cyber security, there are three injection attacks that you have to be aware of: SQL, OS, and LDAP. These common threats can cause a data breach or even lead to a complete system shutdown if not appropriately addressed - a nightmare for any organization!
 
-Additionally, regular testing and monitoring of the application for vulnerabilities and having a response plan in case of an attack are crucial for protecting against these potential threats.
+To ensure your web application is secure from XSS attacks, it’s essential to take the necessary measures. For example, implement input validation, sanitization, and encoding and leverage Content Security Policy (CSP) & security libraries or frameworks for added protection. Obtaining an extra layer of defense will put you in a strong position against potential threats!
 
-It's crucial to prioritize web application security to protect against potential threats and to keep the web application and underlying systems safe from malicious actors.
+Securing against injection-style attacks calls for a 4-part strategy: validating, sanitizing, and parameterizing data before it goes in; using stored procedures to manage queries safely; plus an extra layer of protection from Web Application Firewalls. Put them all together, and you’ve got your site prepared!
+
+Staying one step ahead of cyber attackers is essential for securing your application. That’s why ongoing testing and monitoring and having a strategy in hand if an attack occurs are necessary to stay safe from potential threats.
+
+With today’s digital landscape becoming increasingly complex, web application security should be at the top of your priority list. Taking proactive measures to secure sensitive data and thwart malicious actors is a must for keeping systems safe and running smoothly – don’t take any chances!

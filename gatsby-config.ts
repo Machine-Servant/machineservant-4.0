@@ -102,12 +102,6 @@ const config: GatsbyConfig = {
               className: 'table-of-contents',
             },
           },
-          {
-            resolve: 'gatsby-remark-prismjs',
-            options: {
-              inlineCodeMarker: '+>',
-            },
-          },
         ],
       },
     },
@@ -165,6 +159,7 @@ const config: GatsbyConfig = {
         },
       },
     },
+    'gatsby-plugin-netlify',
   ],
 };
 

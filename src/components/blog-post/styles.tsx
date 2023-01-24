@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
+import React from 'react';
 import tw from 'twin.macro';
+import PrismSyntaxHighlight from '../prism-syntax-highlight/PrismSyntaxHighlight';
 
 export const MainContent = styled.article`
   ${tw`max-w-4xl px-4 py-12 mx-auto my-12 text-black lg:border lg:border-gray-200 lg:p-12`};
@@ -16,7 +18,7 @@ export const MainContent = styled.article`
     }
 
     code.language-text {
-      ${tw`px-2`};
+      ${tw`px-2 inline-block`};
     }
 
     .table-of-contents {
@@ -77,20 +79,22 @@ export const Blockquote = styled.blockquote`
 
 export const Pre = styled.pre`
   &&& {
-    ${tw`px-12 py-4 mb-8 -mx-12 overflow-x-scroll border`};
-
-    .gatsby-highlight-code-line {
-      display: block;
-      margin-right: -3rem;
-      margin-left: -3rem;
-      padding-right: 1em;
-      padding-left: 2.7em;
-      border-left: 0.25em solid #c9ade6;
-
-      ${tw`bg-gray-700`}
-    }
+    ${tw`px-12 py-4 mb-8 -mx-12 overflow-x-scroll text-white`};
+    ${tw`bg-gray-800`}
+    ${tw`px-4 border-l-4 border-amber-500`}
   }
 `;
+
+export const Code: React.FC<
+  React.PropsWithChildren<{ className?: string }>
+> = ({ children, className }) =>
+  className ? (
+    <PrismSyntaxHighlight className={className}>
+      {children as string}
+    </PrismSyntaxHighlight>
+  ) : (
+    <code>{children}</code>
+  );
 
 export const UnorderedList = styled.ul`
   ${tw`pl-5 mb-8 list-disc`}
@@ -132,4 +136,5 @@ export const components = {
   li: ListElement,
   a: Anchor,
   blockquote: Blockquote,
+  code: Code,
 };

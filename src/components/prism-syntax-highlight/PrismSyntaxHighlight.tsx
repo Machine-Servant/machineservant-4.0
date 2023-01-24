@@ -1,6 +1,13 @@
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+import Prism from 'prism-react-renderer/prism';
 import theme from 'prism-react-renderer/themes/vsDark';
 import React from 'react';
+
+(typeof global !== 'undefined' ? (global as any) : window).Prism = Prism;
+
+require('prismjs/components/prism-java');
+require('prismjs/components/prism-python');
+require('prismjs/components/prism-typescript');
 
 interface PrismSyntaxHighlightProps {
   children: string;

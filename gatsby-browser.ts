@@ -1,3 +1,7 @@
+/* eslint-disable import/first */
+import Prism from 'prism-react-renderer/prism';
+(typeof global !== 'undefined' ? global : window).Prism = Prism;
+
 import '@fontsource/raleway/100-italic.css';
 import '@fontsource/raleway/100.css';
 import '@fontsource/raleway/200-italic.css';
@@ -16,5 +20,7 @@ import '@fontsource/raleway/800-italic.css';
 import '@fontsource/raleway/800.css';
 import '@fontsource/raleway/900-italic.css';
 import '@fontsource/raleway/900.css';
-import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-typescript';
 import './src/styles/global.css';

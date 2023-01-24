@@ -69,7 +69,12 @@ export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
           )}
         </div>
         <TableOfContents data={data.mdx?.tableOfContents} />
-        <MDXProvider components={{ ...components, PhotoCredits }}>
+        <MDXProvider
+          components={{
+            ...components,
+            PhotoCredits,
+          }}
+        >
           {children}
         </MDXProvider>
         <hr className="mb-4" />

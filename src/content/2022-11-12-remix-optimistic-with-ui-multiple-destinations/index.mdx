@@ -109,9 +109,9 @@ That's the basic setup. Next we're going to try to use some Optimistic UI to enh
 ```tsx
 export default function NotesPage() {
   const data = useLoaderData<typeof loader>();
-  // highlight-start
+
+  // Add transition tracking
   const transition = useTransition();
-  // highlight-end
 
   return (
     <div className="flex h-full min-h-screen flex-col">
@@ -148,13 +148,12 @@ export default function NotesPage() {
         </div>
 
         <div className="flex-1 p-6">
-          // highlight-start
+          // Wrap the Outlet in a loading div
           {transition.state === 'loading' ? (
             <h1 className="mx-auto text-2xl">Loading Note Details...</h1>
           ) : (
             <Outlet />
           )}
-          // highlight-end
         </div>
       </main>
     </div>
@@ -189,17 +188,16 @@ Here's some code.
 First, some edits to the `notes.tsx` page.
 
 ```tsx
-// highlight-start
+// The transition state type
 type TransitionLocationState = {
   page: 'note' | 'edit-note';
 };
-// highlight-end
 
 export default function NotesPage() {
   const data = useLoaderData<typeof loader>();
   const transition = useTransition();
 
-  // highlight-start
+  // Here's the magic
   const OptimisticUI = useMemo(() => {
     if (transition.state === 'loading') {
       const { page } =
@@ -218,7 +216,6 @@ export default function NotesPage() {
 
     return null;
   }, [transition.state, transition.location?.state]);
-  // highlight-end
 
   return (
     <div className="flex h-full min-h-screen flex-col">
@@ -255,9 +252,8 @@ export default function NotesPage() {
         </div>
 
         <div className="flex-1 p-6">
-          // highlight-start
+          // While we're loading, display the optimistic UI
           {transition.state === 'loading' ? OptimisticUI : <Outlet />}
-          // highlight-end
         </div>
       </main>
     </div>
@@ -290,9 +286,8 @@ First, the edits to the `notes.tsx` page:
               `block border-b p-4 text-xl ${isActive ? 'bg-white' : ''}`
             }
             to={note.id}
-            // highlight-start
+            // We add some state so we can figrure out what UI to show
             state={{ page: 'note' }}
-            // highlight-end
           >
             📝 {note.title}
           </NavLink>
@@ -321,34 +316,30 @@ interface NoteProps {
 }
 
 export const Note: React.FC<NoteProps> = ({ data }) => {
+  // We make sure that our component can handle null or undefined data
   return (
     <div>
       <h3 className="text-2xl font-bold">
-        // highlight-start
         {data ? (
           <>{data?.note.title}</>
         ) : (
           <span className="text-gray-500">Note</span>
         )}
-        // highlight-end
       </h3>
       <p className="py-6">
-        // highlight-start
         {data ? (
           <>{data?.note.body}</>
         ) : (
           <span className="text-gray-500">Loading...</span>
         )}
-        // highlight-end
       </p>
       <hr className="my-4" />
       <div className="flex items-center gap-4">
         <Link
           className="rounded bg-green-500 py-2 px-4 text-white hover:bg-green-600 focus:bg-green-400"
           to={`/notes/${data?.note.id}/edit`}
-          // highlight-start
+          // And we make sure we add state so we know what optimistic UI to show
           state={{ page: 'edit-note' }}
-          // highlight-end
         >
           Edit
         </Link>
@@ -372,17 +363,17 @@ This pattern can be extended to cover lots of different use cases. You can slap 
 ```tsx
 type TransitionLocationState = {
   page: 'note' | 'edit-note';
-  // highlight-start
+  // Add more meta, because meta is fun!
   meta?: {
     [key: string]: string;
   }
-  // highlight-end
 };
 
 // Inside the OptimisticUI memo
 const { meta } = transition.location?.state as TransitionLocationState || {}
 switch (page) {
   case 'note': {
+    // We can use the meta here
     return <Note id={meta?.noteId} />;
   }
   case 'edit-note': {

@@ -1,0 +1,191 @@
+---
+date: '2023-01-26'
+title: 'Remix: The React framework you should check out in 2023'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Macro Photography of Dragonfly on Plant'
+imageCredits: 'Photo by Kelly'
+imageCreditsUrl: 'https://www.pexels.com/photo/macro-photography-of-dragonfly-on-plant-2918152/'
+tags: ['Remix', 'React', 'Tech', 'Web Development']
+published: true
+relatedPosts:
+  [
+    '2022-11-11-remix-musings',
+    '2022-11-12-remix-optimistic-with-ui-multiple-destinations',
+  ]
+---
+
+The Remix React Framework, an open-source framework released late in 2021, is winning fans with its minimalist approach and impressive power. It's simple to use yet robust enough for professional applications – I can attest as my team has built several successful projects using it. Get excited about this powerful new technology!
+
+With Remix, developers can take advantage of the speed and power of React for both their backend and front-end development. Instead of getting data on the client side before rendering it to screen as with vanilla React, users are served HTML directly from server-side rendered (SSR) data fetching - minimizing JavaScript usage while still providing an optimized user experience!
+
+## What is Remix?
+
+The Remix React Framework is a new full-stack web framework that lets you code the front and back together in an innovative way, combining React syntax with TypeScript (or JavaScript, if you're a heathen) for building components – and defining route handlers for the back end.
+
+As a web developer, you can stop thinking about writing a user interface and start thinking about writing entire web applications.
+
+## Why should I use Remix?
+
+In my personal experience, Remix delivers a suite of valuable features that make it an incredibly satisfying experience for developers and teams. Let's dive into a few of my favorites.
+
+### Filesystem-based routing with nested routes
+
+Remix harnesses the power of React Router 6 as its foundation and makes app routing a breeze! Simply drop files into the routes folder, and they'll be transformed into navigable paths in your application via Remix's route module.
+
+Nested routes allow you to craft an intricate and powerful routing system for your web application, giving your project a formidable structure.
+
+Take a look at this example filesystem layout for routes in a Remix app.
+
+```
+/routes
+  /blog
+    $postId.tsx
+    tags.tsx
+    index.tsx
+  index.tsx
+```
+
+This setup will provide you with a comprehensive suite of pages, including an index and blog page to list posts, as well as a tag list and post-specific views. It's robust yet streamlined!
+
+### React Router 6 is a built-in feature
+
+Also, because Remix is built with React Router 6, you can leverage the `<Outlet />` element to create layout routes. Here's an example of that.
+
+```typescript
+// routes/blog.tsx
+import { Outlet } from '@remix-run/react';
+import { Navigation } from './components/navigation';
+export default function BlogLayout() {
+  return (
+    <div className="blog-page-layout">
+      <Navigation />
+      <Outlet />
+    </div>
+  )
+}
+
+// routes/blog/index.tsx
+export default function BlogList() {
+  return (
+    // list of blog posts
+  )
+}
+
+// routes/blog/$postId.tsx
+export async function loader({ request, params }: LoaderArgs) {
+  const { postId } = params
+  const post = await getPostById(request, postId);
+  return json({ post })
+}
+
+export default function BlogPost() {
+  // the loader function above will provide the data below
+  const { post } = useLoaderData<typeof loader>();
+  return (
+    <h1>{post.title}</h1>
+    <PostBody body={post.body} />
+  )
+}
+```
+
+The layout route `/routes/blog.tsx` defines a scaffolding that all nested routes will be inserted into via the `<Outlet />` element. In the above example, all the child routes will live on a page with a `<Navigation />` element at the top of the page.
+
+### Form handling
+
+Remix stands out from the competition by eschewing JavaScript on the client side, opting instead for a clean design architecture that relies heavily on convention and native browser features.
+
+Remix provides exceptional data flow, where information is quickly and effortlessly transmitted between the front end and back end.
+
+Remix turns browser functionality into an efficient web development tool, utilizing classic standards and web fundamentals for crafting HTML forms. When building a remix app, the "action" and "loader" functions, Remix handles everything.
+
+Here's a brief example of a simple form submission and handler in Remix.
+
+```typescript
+import type { ActionArgs } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { Form } from '@remix-run/react';
+import { getUserByName } from './user.service';
+
+export async function action({ request, params }: ActionArgs) {
+  // extract the form data
+  const { name } = params;
+  const user = await getUserByName(name);
+  return json({ user });
+}
+
+export default function UserPage() {
+  const { user } = getActionData<typeof action>();
+  return (
+    <div>
+      {user && <h1>User is {user.name}</h1>}
+      // the form method issues a post request to hit the `action` function above
+      <Form method="post">
+        <label>Name</label>
+        <input type="text" name="name" />
+        <button>Submit</button>
+      </Form>
+    </div>
+  );
+}
+```
+
+That's all the front-end and back-end code for a form that submits a user's name, finds the user based on that input, and then refreshes with the user's name displayed once it's been found. It's so simple that it actually makes you think it can't work like that, but it does.
+
+You can design forms, such as this example's design, with minimal effort on your part - no bindings or click handlers are needed. And the best part? It'll still work without JavaScript enabled! All of this comes together to create a uniquely resilient user experience.
+
+### Transitions and Optimistic UI
+
+Remix makes it easy for you to create a smooth page-to-page transition experience in your server-side rendered app. With the help of Remix, communication between the front and back end is seamless so that when moving from one page to another, loading can be shown while waiting instead of just leaving users hanging!
+
+Remix's Optimistic UI strategy optimizes the user experience by enabling fast navigation within an app. It creates a single-page-app feel with smoother loading times, all while maintaining server-side rendering capabilities! I actually [wrote a post](https://www.machineservant.com/blog/2022-11-12-remix-optimistic-with-ui-multiple-destinations/) about Remix's Optimistic UI a while ago; you should check it out if you're curious.
+
+### All the state in one place
+
+React apps often struggle with managing state, prompting the development of powerful tools like Redux and React Context. Fortunately for users of Remix, however, these solutions are generally unnecessary.
+
+Remix makes state management a breeze! On multiple occasions, I've found myself frustrated at bugs related to how my code handled data - yet each time it was due to me fighting against Remix and not with it. In such situations, trusting in its intuitive design would have saved hours of troubleshooting headaches.
+
+### Error boundary handling
+
+Handling errors in a React project is a pain. With Remix, error boundary handling is built right in. Any route can define a simple error handler function that will display itself if an error would otherwise crash the app. Combine this with nested routes, and you get an app that only shows errors where they occur without breaking any other part of the user interface.
+
+It's a powerful feature and one I wish other frameworks would adopt. Knowing that a simple error inside a component or nested route won't break your entire application is a breath of fresh air.
+
+## Why should I avoid Remix?
+
+Remix is still young. Full stop.
+
+Remix is a relatively fresh entry into the web framework arena, with veteran frameworks like NextJS and GatsbyJS having paved an already-dominant path for SSG (Static Site Generation) and SSR (Server Side Rendering). It will be interesting to observe how Remix fares against its seasoned competitors.
+
+But, Remix is growing and developing at a break-neck speed - bugs are being addressed quickly, while new features designed to make software development easier keep emerging. Thanks to this steady advancement in the last few months, my personal experience has become smoother as I encounter fewer pesky issues that had caused me trouble before!
+
+## Who is using Remix?
+
+Remix is young, but it is growing in popularity. Right now, there's one big company that has doubled down on its confidence in Remix: Shopify. [Shopify acquired Remix](https://remix.run/blog/remixing-shopify) in 2022 with the intention of deeply integrating it into its expansive online store platform.
+
+For me, personally, Remix has been a great asset for production-ready projects. Despite the odd bug, its fantastic community and prompt release schedule mean that issues are sorted out quickly with minimal disruption to workflow. For those seeking assurances before embarking on their project, though, allowing Remix some time to mature may prove prudent.
+
+## How is Remix different from NextJS?
+
+Let's address the elephant in the room: NextJS.
+
+While there are other frameworks based on React, NextJS is very popular, and Remix and NextJS appear very similar. And they are, in many ways. There are some differences, however.
+
+Possibly the best people to talk about this are the [Remix team themselves](https://remix.run/blog/remix-vs-next).
+
+But, to summarize very briefly:
+
+- Remix is as fast or faster than NextJS at serving static and dynamic content.
+- Remix has automatic error handling built directly in.
+- Remix's design philosophy doesn't actually require client-side JavaScript.
+- Remix embraces web fundamentals and browser-based functionality.
+- (Arguably) Remix's data interaction layer is easier to understand and use.
+
+When deciding between Remix and Next.js, it's essential to consider the age of each framework. While Remix is a relatively new kid on the block (shiny!), its older counterpart has had time for an impressive array of performance optimizations like image optimization, inline font loading, and more - adding up to make Next the wiser choice if you need stability in your application feature set.
+
+## Conclusion
+
+Overall, Remix is a great asset for production-ready projects. although it may be a bit young for your risk tolerance. It has some advantages over other frameworks, such as NextJS, and allows developers to quickly build apps with minimal effort without requiring client-side JavaScript.
+
+While it's still relatively new, its active community of contributors ensures that any issues are addressed promptly. Whether you're looking for an advanced framework or want something quick and easy to use, Remix may be the right solution for your project needs. With Shopify continuing to invest in Remix’s development, there will likely be more features added soon - so keep an eye out!

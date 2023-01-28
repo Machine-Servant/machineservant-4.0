@@ -31,106 +31,82 @@ published: true
 relatedPosts: ['2020-11-02-storybook', '2023-01-25-storybook-vs-bit']
 ---
 
-If you haven't already read [my post about
-_Storybook_](https://machineservant.com/blog/2020-11-02-storybook), then go ahead
-and read it if you aren't sure what _Storybook_ is.
+Are you looking for an efficient way to create and manage a component library? If so, Storybook and Bit are two great tools that can help. Both of these powerful tools offer unique features that make them ideal for building reusable components.
+
+With Storybook, you can develop your components in isolation, manage your library, and document their functionality. And with Bit, you can easily version control and share those components between projects. In this article, we'll explore how combining the power of both the Bit and Storybook design systems together makes it even easier to create a robust component library!
+
+> **There's a** [**storybook vs bit**](/blog/2023-01-25-storybook-vs-bit) **(or bit vs storybook, if you prefer) post available now. Check it out if you're looking for a deep dive and comparison of these two outstanding tools.**
+
+If you haven't already read [my post about *Storybook*](https://machineservant.com/blog/2020-11-02-storybook), then go ahead and read it if you aren't sure what *Storybook* is.
 
 Ready? Great!
 
-## Storybook Recap
+## **Storybook Recap**
 
 Since you've already read my other blog post, I'll be brief:
 
-_Storybook_ is a tool that lets you create and manage your component library
-in an isolated environment. It's a great way to build such a library because
-it makes you start thinking about developing modular and descriptive
-components while providing a fantastic playground and documentation site.
+*Storybook* is an open-source tool, design system, testing platform, and development environment that lets you develop and manage components in an isolated environment. You'll write "stories" in "story files" representing your component. Those stories are then available to view and play with inside a dedicated environment (which you can host as a website if it pleases you).
 
-## What Storybook is Missing
+Developers can collaborate on each component in tandem with designers and product managers. _Storybook_'s suite of add-ons enhances the developers' experience with added functionality.
 
-While _Storybook_ is very good at what it does, and it performs with
-distinction when you add it to a single project as a way to create that
-project's library of components, if you want to share that library among
-multiple projects then you'll need to augment its capabilities where it
-falls short.
+It's a great tool for building a library because it makes you start thinking about developing modular and descriptive components while providing a fantastic playground and documentation site.
 
-### Versioning
+## **What Storybook is Missing**
 
-If you are keeping a component library completely separate from any other
-project then you may want a way to keep track of the versions of each of your
-components. With Storybook there's not really a way to do that out of the
-box. You have to manage package.json files manually and it's very easy for
-package interdependencies to become complex and for things to slip.
+While *Storybook* is very good at what it does, and it performs with distinction when you add it to a single project as a way to create that project's library of components if you want to share that library among multiple projects. You'll need to augment its capabilities where it falls short.
 
-### Package Management
+### **Versioning**
 
-Hand in hand with versioning is package management. Obviously, if you're
-creating a component library to share between projects then you'll need a way
-to package your components up and deliver them to your projects. _Storybook_
-does not do this for you.
+If you are keeping a library of UI components completely separate from any other project, then you may want a way to keep track of the versions of each of your components. With Storybook, there's not really a way to do that out of the box. You have to manage package.json files manually, and it's very easy for package interdependencies to become complex and for things to slip.
 
-## Enter "Bit"
+### **Package Management**
 
-_Bit_ is a system that allows you to create collections of components
-(libraries) and share them between teams. Think of it as a combination of
-`git` and the `npm` registry.
+Hand in hand with versioning is package management. Obviously, if you're creating a library of UI components to share, then you'll need a way to package your components up and deliver them. *Storybook* does not do this for you.
 
-### Bit Basics
+Once you have many projects, each using shared components from your library, Storybook (as a design system) isn't enough.
 
-Using _Bit_ is pretty easy. You just install a CLI and start adding
-components to your collection. You can do this inline with your project and
-essentially create `npm` packages out of your components that can then be
-shared between all your other projects.
+## **Enter "Bit"**
 
-Classically, you'd add your components from wherever they were originally
-created. This is fine but at _MachineServant_ we have created a specialized
-project to house all our shared components just to keep everything in one
-place.
+*Bit* is a system that allows you to create collections of UI components (libraries) and share components between teams. Think of it as a combination of git and the npm registry. It's a cool way to share code between your apps.
 
-The point is, _Bit_ doesn't really care where you define your components, it
-will store your collection just fine if you keep the code in one place or
-distribute it across multiple projects.
+### **Bit Basics**
 
-### Dependency Tracking
+Using *Bit* is pretty easy. You install a CLI and start adding components to your collection. You can do this inline with your project and essentially create npm packages out of your UI components that can then be shared between all your other projects.
 
-When you add a component to _Bit_ and build it, _Bit_ will automatically
-determine the dependencies of that component and manage them via a
-`package.json` file.
+Classically, you'd add your components from wherever they were originally created. This is fine, but at *MachineServant,* we have created a specialized bit workspace to house all our shared components to keep everything in one place.
 
-What's really nice is that if you have inter-dependencies between your own
-components, those dependencies are tracked as well and any change to a
-dependency you control will cascade down to any components that use it.
+The point is, *Bit* doesn't really care where you define your UI components; it will store your collection just fine if you keep the code in one place or distribute it across multiple targets.
 
-### Versioning
+### **Dependency Tracking**
 
-Every time you make a change to a component tracked by _Bit_ you can
-automatically bump the version of that component. _Bit_ keeps track of each
-version and you can easily view the different versions through its UI.
+When you add a component to *Bit* and build it, *Bit* will automatically determine the dependencies of that component and manage them via a package.json file.
 
-Also, as mentioned above, if you bump the version of a component, then any
-other components that depend upon it will be bumped as well! There's no need
-to manually update the dependant packages.
+What's really nice is that if you have inter-dependencies between your own components in your bit workspace, those dependencies are tracked as well. Any change to a dependency you control will cascade down to any components that use it.
 
-### Package Management
+### **Versioning**
 
-When you add a component, build it, tag it, and export it to your collection,
-you have just created a package tracked by and available from _Bit_.
+Every time you make a change to a component tracked by *Bit,* you can automatically bump the version of that component. *Bit* keeps track of each version, and you can easily view the different versions through its UI.
 
-You can then import that component into any project you like via `npm`.
+Also, as mentioned above, if you bump the version of a component, then any other components that depend upon it will be bumped as well! There's no need to manually update the dependent packages.
 
-For example, one of _MachineServant_'s components, `timed-carousel` is
-available from _Bit_ by installing it with an `npm i @bit/machineservant.ms-components.timed-carousel` command.
+### **Package Management**
 
-## Bringing it All Together
+When you add a component, build it, tag it, and export it to your collection, you have just created a package tracked by and available from *Bit*.
 
-If you read the previous post about _Storybook_ then you're familiar with
-_MachineServant_'s component library project. Adding _Bit_ to the mix is as
-simple as adding each component in that project to _Bit_ via their CLI and
-then tracking and tagging any changes.
+You can then import that component into any project you like via npm.
 
-Essentially, with _Storybook_ you can develop your components in isolation,
-manage your library, and document their functionality. With _Bit_ you can
-manage versioning and distribute those components across projects.
+For example, one of *MachineServant*'s React components, `timed-carousel`, is available from *Bit* by installing it with an `npm i @bit/machineservant.ms-components.timed-carousel` command.
 
-You can see _MachineServant_'s _Bit_ component collection
-[here](https://bit.dev/machineservant/ms-components).
+## **Bringing it All Together**
+
+If you read the previous post about *Storybook,* then you're familiar with *MachineServant*'s component library project. Adding *Bit* to the mix is as simple as adding each component in that project to *Bit* via their CLI and then tracking and tagging any changes.
+
+Essentially, with *Storybook,* you can develop your components in isolation, manage your library, and document their functionality. With *Bit,* you can manage versioning and distribute those components across projects. With _Bit_ and _Storybook_, you can leverage the best of both worlds.
+
+You can see *MachineServant*'s *Bit* component collection [here](https://bit.dev/machineservant/ms-components). It's a small collection of React components that we've used in a few projects.
+
+## **Conclusion**
+
+By combining Storybook and Bit, developers can create a powerful library of UI components that are easy to manage, version control, and distribute across multiple projects. This makes it easier for teams to collaborate on shared components without having to manually update the dependencies each time something changes.
+
+With tools like these available today, building complex user interfaces has never been simpler or more efficient. If you’re looking for an effective way to build out your component libraries quickly and collaboratively with minimal effort, then consider leveraging the power of both Storybook and Bit in your next project.

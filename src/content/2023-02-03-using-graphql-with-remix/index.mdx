@@ -1,0 +1,331 @@
+---
+date: '2023-02-02'
+title: 'Using GraphQL with the Remix React Framework'
+author: 'Evan Stern'
+featuredImage: './featured.jpg'
+imageAlt: 'Photo of the outdoors'
+imageCredits: 'Photo by Ezra Comeau'
+imageCreditsUrl: 'https://www.pexels.com/photo/landscape-photography-of-mountain-and-body-of-water-2387418/'
+tags: ['Remix', 'React', 'Tech', 'Web Development']
+published: true
+relatedPosts:
+  [
+    '2023-01-26-remix-react-framework-2023',
+    '2022-11-12-remix-optimistic-with-ui-multiple-destinations',
+  ]
+---
+
+GraphQL is a modern and flexible data query language that was developed by Facebook. It provides an efficient and powerful alternative to traditional REST APIs and has become increasingly popular in recent years. The Remix React Framework is a new and innovative approach to building React applications that offers a number of unique features and benefits.
+
+In this blog post, we will explore the process of integrating GraphQL with the Remix React Framework. We will cover how to set up the project, add a GraphQL API to the mix, and create both Queries and Mutations to fetch and manipulate data. By the end of this article, you will have a clear understanding of how to use GraphQL in a Remix React application, and you will see why this is an excellent choice for building modern, scalable, and efficient React applications.
+
+[Skip to the code!](#setting-up-the-remix-project)
+
+## **What is GraphQL?**
+
+GraphQL is a query language for APIs that was developed by Facebook in 2012. It provides a more efficient and flexible alternative to traditional REST APIs. In a REST API, each endpoint returns a fixed data set determined by the API design. This can lead to over, or under-fetching of data, as well as increased latency, as multiple round trips to the server may be required to retrieve all the necessary information.
+
+GraphQL solves these issues by allowing the client to specify precisely what data it needs and receiving only that data in a single request. This results in less data being transferred over the network, reduced latency, and a better developer experience, as the client can retrieve all the necessary data in a single request.
+
+Other benefits of using GraphQL include:
+
+- **Strong typing**: GraphQL uses a type system to define the structure of data that is returned from the server, making it easier to catch bugs early in the development process.
+- **Interactivity**: GraphQL provides a powerful way for clients to explore and test the capabilities of the API.
+- **Strong community and tooling**: GraphQL has a large and growing community of developers, and there are many open-source tools and libraries available for building and working with GraphQL APIs.
+- **Versatility**: GraphQL can be used to fetch data from multiple sources, including databases, microservices, and third-party APIs.
+
+Consequently, GraphQL's advantages make it the prime pick for building robust and efficient APIs that are fit for modern use.
+
+## **What is Remix?**
+
+See my [article about Remix](https://www.machineservant.com/blog/2023-01-26-remix-react-framework-2023/) for a more detailed breakdown.
+
+The Remix React Framework is a new and innovative approach to building React applications. It provides a set of tools and libraries that make it easier to build and manage complex applications while also offering a number of unique features that set it apart from other React frameworks.
+
+Remix utilizes Server Side Rendering (SSR), a powerful rendering paradigm that moves page content rendering to the back end, cutting down on page latency and client-side bottlenecks. This technology allows Remix to manage the application state more efficiently as well.
+
+### **Loaders and Actions in Remix**
+
+In the Remix React Framework, "Loaders" and "Actions" are essential functions that are used to manage the state and behavior of your application.
+
+A Loader function is designed to retrieve and store information from external sources like APIs. This function can be defined on your route for easy access when responding to GET requests in order to get the data you need for server-side rendering.
+
+In contrast, action functions are used to control the behavior of your application and can be employed to cause side effects like sending an API request or transitioning to another part of the application. Action functions designated on a route will reply mainly when "modifying" HTTP verbs such as "POST", "PATCH", or "DELETE" are invoked. Typically, these functions are utilized for making modifications in either the app's state or its underlying data structure.
+
+Loaders and Actions work together to provide a straightforward and user-friendly approach to organizing the state and functionality of your application. Furthermore, these tools allow you to concentrate on developing the core business logic instead of wasting time managing data retrieval or worrying about state management complexities. Utilizing Loaders and Actions makes it easier than ever before to create sophisticated yet easily scalable applications!
+
+## **How Remix Routes are different from Single Page App Routes**
+
+Remix Routes and Single Page App (SPA) routes are two different approaches to routing in React applications.
+
+In a traditional SPA, routes are managed on the client side and are typically defined using a library such as React Router. When a user navigates to a different part of the application, the client-side router updates the URL and re-renders the relevant components. This results in a seamless and fast experience for the user but can also result in more complex code, as the client-side routing logic needs to be managed and maintained.
+
+In contrast, Remix App Routes are managed on the server side and use a unique approach to routing that differs from traditional SPA routes. When a user navigates to a different part of the application, the server generates a new HTML page, and the browser navigates to the new URL. This results in a slightly slower navigation experience but provides a number of benefits, including better SEO, improved performance for first-time users, and better accessibility for users with slow or unreliable internet connections.
+
+### **Why does this matter for a Remix GraphQL application?**
+
+In a traditional SPA, a React component that needs data from a GraphQL API endpoint would use something like the Apollo GraphQL client to retrieve data. The component would most likely define the "useQuery" hook to manage retrieving the data when the component is mounted and rendered on the client side.
+
+The following code is an example of a classic React app using the apollo client to fetch data from GraphQL.
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
+
+const GET_USERS = gql`
+  query {
+    users {
+      id
+      name
+      email
+    }
+  }
+`;
+
+const Users = () => {
+  const { loading, error, data } = useQuery(GET_USERS);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setUsers(data.users);
+    }
+  }, [data]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error!</p>;
+
+  return (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>
+          {user.name} ({user.email})
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default Users;
+```
+
+In contrast to a traditional React SPA, Remix applications require fetching data and page rendering to be delegated on the server side. Although loading data in the client is an option for this application, it's typical practice with Remix to leave these tasks up to the server by defining loaders and actions on the application app routes.
+
+As we seek to incorporate GraphQL into our remix app, this presents an intricate test. We must integrate GraphQL with the loader function or action function in our routes for successful SSR flow when making GraphQL requests.
+
+## **Setting up the Remix project**
+
+We are utilizing the Blues Stack template from Remix as our jumping-off point. This gives us a head start with a plethora of boilerplate code, comprising an application for taking notes, plus a Prisma schema and REST-like endpoints. However, to tailor it to our needs, we will be modifying those REST-like endpoints into GraphQL requests and modifying how we extract data via loader and action functions.
+
+Let's create the project!
+
+### **Create the remix app**
+
+Open up a terminal and type in the following command. Then answer the questions as detailed in the example below.
+
+```sh
+❯ npx create-remix@latest --template remix-run/blues-stack
+? Where would you like to create your app? remix-graphql
+? TypeScript or JavaScript? TypeScript
+? Do you want me to run `npm install`? Yes
+```
+
+### **Install dependencies**
+
+In order for us to continue with our tutorial, we must install a few dependencies. Primarily, the Apollo Client and some tooling will be necessary - all of which can be accessed by running this single command from within your new project directory.
+
+    ❯ npm install @apollo/client @graphql-tools/schema @graphql-tools/utils
+
+## **Adding Apollo Client to the Remix App**
+
+Now we are going to start editing some code! Let's start with adding the GraphQL schema to our app.
+
+### **Define the schema and queries**
+
+To start, create a directory labeled 'graphql' in the `app` folder. Then add a file named `schema.server.ts`, where all of your GraphQL queries and schema will be defined!
+
+> The `.server.ts` suffix acts as a hint to the Remix project, indicating that it should exclude this file during client-side code bundling, thus ensuring these files are solely operated on the server side of your application.
+
+```tsx
+// ~/graphql/schema.server.ts
+import { gql } from '@apollo/client';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { resolvers } from './resolvers.server';
+
+const typeDefs = gql`
+  type Note {
+    id: String
+    title: String
+    body: String
+    createdAt: String
+    updatedAt: String
+    userId: String
+  }
+
+  type Query {
+    notes(userId: String!): [Note]
+  }
+`;
+
+export const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
+```
+
+In order to gain access to a user's notes, we declared the `Note` GraphQL schema type and built the `notes` query that requires a `userId`.
+
+### **Define the resolvers**
+
+Next, we must create an extra file in the "graphql" directory entitled `resolvers.server.ts`. This is where our resolver functions will be established.
+
+```tsx
+// ~/graphql/resolver.server.ts
+import type { IResolvers } from '@graphql-tools/utils';
+import { prisma } from '../db.server';
+
+export const resolvers: IResolvers = {
+  Query: {
+    notes: async (_: any, { userId }: { userId: string }) => {
+      return prisma.note.findMany({
+        where: { userId },
+        orderBy: { updatedAt: 'desc' },
+      });
+    },
+  },
+};
+```
+
+This is where the `notes` resolver function gets defined. It will be executed whenever we make a `notes` query call. If you take a look at the existing `~models/note.server.ts`, you'll notice that this code looks quite similar to what's in the `getNoteListItems` function. This isn't a mistake, as all we had to do was move it over here and delete any unnecessary code like the "select" parameter since everything should come back (GraphQL decides which fields need to be returned).
+
+### **Create the Apollo Client**
+
+Now, we arrive at the `client.server.ts` file that is responsible for assembling all of our components together and defining an Apollo Client instance with the Schema Link system from the Apollo Client package.
+
+```tsx
+// ~/graphql/client.server.ts
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { SchemaLink } from '@apollo/client/link/schema';
+import { schema } from './schema.server';
+
+export const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  ssrMode: true,
+  link: new SchemaLink({ schema }),
+});
+```
+
+Utilizing the client we created, our queries can now be successfully executed on the server side.
+
+### **Use the client to fetch data from the server-side API**
+
+Next, let's modify an API call to incorporate the GraphQL queries we designed earlier.
+
+```tsx
+// ~/models/note.server.ts
+...
+export function getNoteListItems({ userId }: { userId: User["id"] }) {
+  return client.query<{ data: { notes: { id: string; title: string }[] } }>({
+    query: gql`
+      query getNotes($userId: String!) {
+        notes(userId: $userId) {
+          id
+          title
+        }
+      }
+    `,
+    variables: { userId },
+  });
+}
+...
+```
+
+### **Display the data**
+
+Lastly, we will amend the `notes.tsx` route to effectively use the retrieved data.
+
+```tsx
+// ~/routes/notes.tsx
+import type { LoaderArgs } from '@remix-run/node';
+import { json } from '@remix-run/node';
+import { Form, Link, NavLink, Outlet, useLoaderData } from '@remix-run/react';
+
+import { getNoteListItems } from '~/models/note.server';
+import { requireUserId } from '~/session.server';
+import { useUser } from '~/utils';
+
+export async function loader({ request }: LoaderArgs) {
+  const userId = await requireUserId(request);
+  const noteListItems = await getNoteListItems({ userId });
+  return json({ noteListItems });
+}
+
+export default function NotesPage() {
+  const data = useLoaderData<typeof loader>();
+  const user = useUser();
+
+  return (
+    <div className="flex h-full min-h-screen flex-col">
+      <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
+        <h1 className="text-3xl font-bold">
+          <Link to=".">Notes</Link>
+        </h1>
+        <p>{user.email}</p>
+        <Form action="/logout" method="post">
+          <button
+            type="submit"
+            className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+          >
+            Logout
+          </button>
+        </Form>
+      </header>
+
+      <main className="flex h-full bg-white">
+        <div className="h-full w-80 border-r bg-gray-50">
+          <Link to="new" className="block p-4 text-xl text-blue-500">
+            + New Note
+          </Link>
+
+          <hr />
+
+          {data.noteListItems.data.notes.length === 0 ? (
+            <p className="p-4">No notes yet</p>
+          ) : (
+            <ol>
+              {data.noteListItems.data.notes.map((note) => (
+                <li key={note.id}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `block border-b p-4 text-xl ${isActive ? 'bg-white' : ''}`
+                    }
+                    to={note.id}
+                  >
+                    📝 {note.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+
+        <div className="flex-1 p-6">
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+There is no need to alter the notes page loader function at all! The only thing we needed to do was make some slight modifications to the data accessor logic because of a minor change in the data's structure.
+
+## **Where to go from here**
+
+That was just the beginning. As of now, we have modified Remix to utilize GraphQL with a single GraphQL query. You may also expand on this by adding more queries for individual `Note`s and mutations to create or edit them as needed. Additionally, you can also experiment with logging in and out via GraphQL queries and mutations if desired! There is still plenty left that could be done, but this should serve as an excellent starting point.
+
+I would also suggest the following resources for additional information on the topic of GraphQL/Remix integration. I found them very helpful.
+
+- [A quick field guide to using Remix with Apollo GraphQL](https://usecsv.com/community/remix-apollo-graphql) (useCSV)
+- [Creating a Remix app with GraphQL](https://blog.logrocket.com/creating-remix-app-graphql) (LogRocket)

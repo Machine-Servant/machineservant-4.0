@@ -160,6 +160,72 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-plugin-netlify',
+    {
+      resolve: 'gatsby-plugin-feed',
+      options: {
+        query: `
+        {
+          site {
+            siteMetadata {
+              title
+              siteUrl
+            }
+          }
+        }
+        `,
+        feeds: [
+          {
+            output: '/rss.xml',
+            title: 'MachineServant Blog RSS Feed',
+            match: '^/blog/',
+            serialize: ({ query: { site, allMdx } }: { query: any }) => {
+              return allMdx.nodes.map((node: any) => {
+                return Object.assign({}, node.frontmatter, {
+                  description: node.excerpt,
+                  date: node.frontmatter.date,
+                  url: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}`,
+                  guid: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}`,
+                  enclosure: node.frontmatter.featuredImage?.childImageSharp
+                    ?.gatsbyImageData
+                    ? {
+                        url: `${site.siteMetadata.siteUrl}${node.frontmatter.featuredImage.childImageSharp.gatsbyImageData.images.fallback?.src}`,
+                        type: 'image/jpeg',
+                      }
+                    : undefined,
+                });
+              });
+            },
+            query: `
+              {
+                allMdx(filter: { frontmatter: { published: { eq: true } } }, sort: { frontmatter: { date: DESC }}) {
+                  nodes {
+                    id
+                    excerpt(pruneLength: 160)
+                    parent {
+                      ... on File {
+                        id
+                        relativeDirectory
+                      }
+                    }
+                    frontmatter {
+                      author
+                      date(formatString: "MMMM DD, YYYY")
+                      title
+                      tags
+                      featuredImage {
+                        childImageSharp {
+                          gatsbyImageData(layout: FULL_WIDTH)
+                        }
+                      }
+                    }
+                  }
+                }
+              } 
+            `,
+          },
+        ],
+      },
+    },
   ],
 };
 

@@ -88,9 +88,9 @@ export const BlogList = ({
     >
       {tag && (
         <>
-          <h1 className="mt-12 mb-4 text-center text-3xl font-medium">
+          <h2 className="mt-12 mb-4 text-center text-3xl font-medium">
             All posts tagged <pre className="inline">#{tag}</pre>
-          </h1>
+          </h2>
           <div className="text-center">
             <Link className="underline" to="/blog">
               Back to all posts

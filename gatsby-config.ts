@@ -174,7 +174,6 @@ const config: GatsbyConfig = {
           }
         }
         `,
-        link: 'https://www.machineservant.com',
         feeds: [
           {
             output: '/rss.xml',

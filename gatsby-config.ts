@@ -169,6 +169,7 @@ const config: GatsbyConfig = {
             siteMetadata {
               title
               siteUrl
+              site_url: siteUrl
             }
           }
         }

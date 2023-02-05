@@ -55,6 +55,7 @@ export const Head: HeadFC = () => {
     <CustomHead
       title="Form Success"
       description="Thank you for your submission"
+      noindex
     />
   );
 };

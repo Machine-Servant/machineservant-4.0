@@ -174,12 +174,12 @@ const config: GatsbyConfig = {
           }
         }
         `,
+        link: 'https://www.machineservant.com',
         feeds: [
           {
             output: '/rss.xml',
             title: 'MachineServant Blog RSS Feed',
             match: '^/blog/',
-            link: 'https://www.machineservant.com',
             serialize: ({ query: { site, allMdx } }: { query: any }) => {
               return allMdx.nodes.map((node: any) => {
                 return Object.assign({}, node.frontmatter, {

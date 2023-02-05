@@ -11,9 +11,10 @@ interface CustomHeadProps {
   canonicalUrl?: string;
   nonCanonical?: boolean;
   author?: string;
+  noindex?: boolean;
 }
 
-export const CustomHead: React.FC<CustomHeadProps> = ({
+export const CustomHead: React.FC<React.PropsWithChildren<CustomHeadProps>> = ({
   description: propDescription,
   lang: propLang,
   title: propTitle,
@@ -22,6 +23,8 @@ export const CustomHead: React.FC<CustomHeadProps> = ({
   canonicalUrl: propCanonicalPath,
   nonCanonical = false,
   author: propAuthor,
+  noindex = false,
+  children,
 }) => {
   const {
     title: siteTitle,
@@ -67,6 +70,8 @@ export const CustomHead: React.FC<CustomHeadProps> = ({
           <meta name="twitter:card" content="summary" />
         </>
       )}
+      {noindex && <meta name="googlebot" content="noindex, nofollow" />}
+      {children}
     </>
   );
 };

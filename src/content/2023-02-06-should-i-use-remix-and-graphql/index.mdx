@@ -1,0 +1,183 @@
+---
+date: '2023-02-06'
+title: 'Should I Use Remix and GraphQL Together?'
+author: 'Evan Stern'
+featuredImage: './featured.jpg'
+imageAlt: 'Bali, Indonesia. Forest, cliffs, and waterfall'
+imageCredits: 'Photo by Alesia Kozik'
+imageCreditsUrl: 'https://www.pexels.com/photo/river-in-the-middle-of-forest-6004828/'
+tags: ['Remix', 'React', 'GraphQL', 'Tech', 'Web Development']
+published: true
+relatedPosts:
+  [
+    '2023-02-03-using-graphql-with-remix',
+    '2023-01-26-remix-react-framework-2023',
+  ]
+---
+
+I recently [wrote an article](https://www.machineservant.com/blog/2023-02-03-using-graphql-with-remix/) outlining how one can integrate GraphQL into a Remix app. But I failed to answer one fundamental question: "Does it make sense even to do it in the first place?"
+
+I think it's worth answering that question.
+
+## **What's good about GraphQL?**
+
+I personally like GraphQL for many reasons.
+
+First, I like that it makes pulling data from an API for client-side consumption simple and intuitive.
+
+Second, I like the schema-based approach to API development.
+
+Third, I'm a big fan of reducing the number of calls being made to get data to save bandwidth, reduce network requests, and declutter the API.
+
+Finally (but not exhaustively), I like how reducers and mutations isolate the business logic from the rest of the API layer.
+
+GraphQL is also an excellent choice for developers and teams working in an agile environment, as it allows for quick iterations when making changes to an API.
+
+## **What's not so good about GraphQL?**
+
+GraphQL is challenging to work with in some regards.
+
+### My rule of thumb
+
+I have a general rule about working on a project with GraphQL: If you have a dedicated team that can handle the intricacies of creating an effective GraphQL back-end, and you have some need for the benefits that justify the overhead, then it's a perfect solution.
+
+But, in a lot of cases, GraphQL can be overkill. I've worked on projects where another developer and I used GraphQL as an API and decided that a simple RESTful API would have saved us a lot of trouble.
+
+GraphQL takes a lot more effort to implement and adds layers of complexity to the architecture that a RESTful API doesn't. Therefore, building a GraphQL API would not be my first suggestion for a small team that needs to execute quickly.
+
+## **Where do we stand so far?**
+
+Well, there are pros and cons to using GraphQL, regardless of the front-end framework you choose to pair it with. GraphQL itself has benefits and drawbacks.
+
+### **Pros**
+
+- Querying for data is intuitive and easy.
+- Through the GraphQL Schema, the API is mainly self-documenting and straightforward to understand.
+- The number of requests to the back end is reduced.
+- You can query for just what you need, which makes client-side development easier and reduces bandwidth requirements.
+- Reducers and mutations isolate business logic from the rest of the API and make profiling and optimization easier.
+- It makes merging 3rd party or multiple data sources into one API much more straightforward than traditional RESTful API implementations.
+
+### **Cons**
+
+- A GraphQL API can be more challenging to implement than a standard RESTful API.
+- Extra layers of indirection can make the application more complex.
+- With a small team, GraphQL can become more of a chore than a help.
+
+## **When should I consider using GraphQL?**
+
+So we should start by asking the fundamental question: "When should I use GraphQL?" For my part, I believe there are some reasons one might want to use GraphQL in a project that make it worth the effort.
+
+- You have a dedicated back-end team that can spend time building, profiling, and optimizing the GraphQL endpoints to take advantage of the architecture.
+- Your API is pulling data from multiple disparate sources, and you want to be able to merge the data into coherent, unified responses.
+- The data consumer's use cases are complicated enough to require the power of GraphQL queries and mutations. (This could be a complex user interface or a demanding API consumer)
+- I'll throw this in for good measure: You may just like GraphQL. I can't necessarily fault you for that. But keep in mind that there are tradeoffs involved.
+
+## **Does GraphQL make sense in a Remix app?**
+
+Let's briefly discuss how data flows and how Remix data loaders work in a Remix app server.
+
+When requesting data for a route in a Remix app, a loader function is executed on the server side. This loader responds to GET requests from the browser and returns data to the server-side rendering system, which then hydrates your page with that data and returns it to the browser.
+
+The result is that your page is rendered entirely on the server, and the client doesn't have to make any direct requests for data from the API.
+
+### **Server-side requests vs. client-side requests**
+
+It's worth reiterating that last point again. You'll never be requesting data from the API directly from the client. Instead, all the data is processed server-side through remix loaders. This means that one of the biggest pros in favor of using GraphQL appears to become a moot point.
+
+Because everything happens on the server side, the performance gains you'd typically expect to see are lessened. The bottleneck that GraphQL was built to address focused on a client/server architecture where the client requested data through an HTTP endpoint to get data from an externally running API.
+
+That's not the architecture we're dealing with in Remix. So, while it's not that there will be no improvement whatsoever, it's usually not going to be a game-changer, either.
+
+### **Layers of indirection**
+
+The loaders themselves aren't the end of the story, either. There's more indirection involved with GraphQL to consider.
+
+For example, take a simple use case where you need to request a list of notes from a GraphQL API. In a classic use case, you'd send a POST request from a GraphQL client to a GraphQL server which will execute the resolvers and send the data back to the client, where the response will be consumed.
+
+However, in a Remix app with GraphQL, you're likely going through an additional layer of indirection on top of your loader function by using your `<model>.server` files (or equivalent). Check out the following code from the previous article:
+
+```tsx
+// ~/models/note.server.ts
+...
+export function getNoteListItems({ userId }: { userId: User["id"] }) {
+  return client.query<{ data: { notes: { id: string; title: string }[] } }>({
+    query: gql`
+      query getNotes($userId: String!) {
+        notes(userId: $userId) {
+        id
+        title
+      }
+    }
+    `,
+    variables: { userId },
+  });
+}
+...
+
+// ~/routes/notes.tsx
+export async function loader({ request }: LoaderArgs) {
+  const userId = await requireUserId(request);
+  const noteListItems = await getNoteListItems({ userId });
+  return json({ noteListItems });
+}
+```
+
+Instead of the client just querying for the data by executing a GraphQL request directly, we're indirectly calling GraphQL through the intermediary `getNoteListItems` method.
+
+### And it gets worse
+
+Now, imagine what this will look like as our application grows and we need more and more data for different views. Eventually, you'll have dozens or hundreds of these little functions that effectively comprise your API.
+
+And unfortunately, another significant benefit of GraphQL is compromised: we no longer have a simple and easy-to-use API where we can ask for "just the data we need" and get it all back in one response.
+
+Additionally, our descriptive API defined by a GraphQL schema is no longer descriptive of our actual API. Yet another benefit goes by the wayside.
+
+## **So, should I use GraphQL in a Remix app?**
+
+Let's see where we are with our pros in favor of using GraphQL after considering what it means in a Remix app.
+
+### **Pros (with Remix)**
+
+- <delete>Querying for data is intuitive and easy.</delete>
+
+  > Due to the indirection involved, querying is no longer guaranteed to be easy to understand or maintain.
+
+- <delete>
+    Through the GraphQL schema, the API is mainly self-documenting and
+    straightforward to understand.
+  </delete>
+
+  > Again, the schema is somewhat hidden due to the indirection, and the actual API becomes the functions defined in the `.server.ts` files.
+
+- <delete>The number of requests to the back end is reduced.</delete>
+
+  > All the requests happen on the back end to begin with. While you will still, in theory, be able to reduce the number of requests the server makes, that will rely more on how you define your resolvers than how you define a query.
+
+- <delete>
+    You can query for just what you need, which makes client-side development
+    easier and reduces bandwidth requirements.
+  </delete>
+
+  > Again, the client has nothing to do with what happens in GraphQL in Remix. So, this point isn't valid.
+
+- <delete>
+    Reducers and mutations isolate business logic from the rest of the API and
+    make profiling and optimization easier.
+  </delete>
+
+  > This is half true, still. The business logic can be isolated inside the resolvers and mutations. Still, due to the indirection above, it's difficult to guarantee this will be the case as the functions defined `.server.ts` files begin to become the actual API.
+
+- It makes merging 3rd party or multiple data sources into one API much more straightforward than traditional RESTful API implementations.
+
+  > Yes! This is still true! And it may be the best reason for using GraphQL in any project, let alone a Remix project.
+
+And it's worth noting that the cons against using GraphQL haven't changed when we add Remix.
+
+## **The final verdict**
+
+I do love working with GraphQL. Even though I avoid it for a lot of reasons when I'm starting a new project. If I find an excuse to use it, I like it.
+
+That said, I think that in Remix, you're not going to use GraphQL to its full extent due to how Remix wants to interact with the data layer. So it adds complexity without really adding much value.
+
+So, I recommend avoiding GraphQL in a Remix project unless you've done a lot of evaluation and decided that you need it. Or, if you love GraphQL so much that you have to use it no matter what, at least I wrote a blog post about how to do that!

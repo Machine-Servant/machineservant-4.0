@@ -6,18 +6,21 @@ featuredImage: './featured.jpg'
 imageAlt: 'Photo of the outdoors'
 imageCredits: 'Photo by Ezra Comeau'
 imageCreditsUrl: 'https://www.pexels.com/photo/landscape-photography-of-mountain-and-body-of-water-2387418/'
-tags: ['Remix', 'React', 'Tech', 'Web Development']
+tags: ['Remix', 'React', 'Tech', 'Web Development', 'GraphQL']
 published: true
 relatedPosts:
   [
     '2023-01-26-remix-react-framework-2023',
     '2022-11-12-remix-optimistic-with-ui-multiple-destinations',
+    '2023-02-06-should-i-use-remix-and-graphql',
   ]
 ---
 
 GraphQL is a modern and flexible data query language that was developed by Facebook. It provides an efficient and powerful alternative to traditional REST APIs and has become increasingly popular in recent years. The Remix React Framework is a new and innovative approach to building React applications that offers a number of unique features and benefits.
 
 In this blog post, we will explore the process of integrating GraphQL with the Remix React Framework. We will cover how to set up the project, add a GraphQL API to the mix, and create Queries to fetch data. By the end of this article, you will have a clear understanding of how to use GraphQL in a Remix React application, and you will see why this is an excellent choice for building modern, scalable, and efficient React applications.
+
+> Update 02-06-2023: I just [uploaded a new post](https://www.machineservant.com/blog/2023-02-06-should-i-use-remix-and-graphql) that questions why you would want to use Remix and GraphQL together in the first place. It's worth a read!
 
 [Skip to the code!](#setting-up-the-remix-project)
 
@@ -135,7 +138,9 @@ Open up a terminal and type in the following command. Then answer the questions 
 
 In order for us to continue with our tutorial, we must install a few dependencies. Primarily, the Apollo Client and some tooling will be necessary - all of which can be accessed by running this single command from within your new project directory.
 
-    ❯ npm install @apollo/client @graphql-tools/schema @graphql-tools/utils
+```sh
+❯ npm install @apollo/client @graphql-tools/schema @graphql-tools/utils
+```
 
 ## **Adding Apollo Client to the Remix App**
 

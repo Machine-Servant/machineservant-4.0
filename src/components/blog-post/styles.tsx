@@ -44,6 +44,10 @@ export const MainContent = styled.article`
         ${tw`list-none mb-0`}
       }
     }
+
+    delete {
+      ${tw`text-lg line-through`}
+    }
   }
 `;
 
@@ -113,8 +117,12 @@ export const OrderedList = styled.ol`
 `;
 
 export const ListElement = styled.li`
+  ${tw`text-lg`}
   > p {
     ${tw`mb-0`};
+  }
+  > blockquote {
+    ${tw`mt-4`}
   }
 `;
 

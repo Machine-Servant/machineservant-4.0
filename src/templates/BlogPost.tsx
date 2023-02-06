@@ -14,7 +14,7 @@ export const pageQuery = graphql`
           minutes
         }
       }
-      excerpt(pruneLength: 160)
+      excerpt(pruneLength: 159)
       tableOfContents
       parent {
         ... on File {
@@ -49,7 +49,7 @@ export const pageQuery = graphql`
       edges {
         node {
           id
-          excerpt(pruneLength: 160)
+          excerpt(pruneLength: 159)
           parent {
             ... on File {
               id

@@ -53,7 +53,7 @@ export default FormSuccessPage;
 export const Head: HeadFC = () => {
   return (
     <CustomHead
-      title="Form Success"
+      title="Form Success | MachineServant"
       description="Thank you for your submission"
       noindex
     />

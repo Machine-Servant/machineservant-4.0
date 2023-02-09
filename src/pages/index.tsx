@@ -291,5 +291,5 @@ export const pageQuery = graphql`
 `;
 
 export const Head: HeadFC = () => {
-  return <CustomHead title="Home" />;
+  return <CustomHead title="Home | MachineServant" />;
 };

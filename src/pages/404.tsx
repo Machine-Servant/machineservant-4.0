@@ -56,7 +56,7 @@ export default Error404Page;
 export const Head: HeadFC = () => {
   return (
     <CustomHead
-      title="Page not found"
+      title="Page not found | MachineServant"
       description="The requested page was not found"
       nonCanonical
     />

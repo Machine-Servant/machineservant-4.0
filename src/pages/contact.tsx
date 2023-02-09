@@ -110,7 +110,7 @@ export const pageQuery = graphql`
 export const Head: HeadFC = () => {
   return (
     <CustomHead
-      title="Contact Us"
+      title="Contact Us | MachineServant"
       description="Want a great website or application? Call, email, or send us a message!"
     />
   );

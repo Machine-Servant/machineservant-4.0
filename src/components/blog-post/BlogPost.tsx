@@ -8,7 +8,7 @@ import { ByLine } from '../../components/by-line';
 import { Layout } from '../../components/layout';
 import { PhotoCredits } from '../../components/photo-credits';
 import { Tag } from '../../components/tag';
-import { RelatedPost } from './components/related-post';
+import { RelatedPost } from '../related-post';
 import { TableOfContents } from './components/table-of-contents';
 
 function isParentWithRelativeDirectory(

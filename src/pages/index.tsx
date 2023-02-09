@@ -14,6 +14,7 @@ import {
 } from '../components/icons';
 import { InnovationIcon } from '../components/icons/innovation-icon';
 import { Layout } from '../components/layout';
+import { RelatedPost } from '../components/related-post';
 import { SectionHeader } from '../components/section-header';
 import { Testimonial } from '../components/testimonial';
 import { useSiteMetadata } from '../hooks/use-site-metadata';
@@ -239,6 +240,18 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
           </div>
         </div>
       </FullSection>
+      <FullSection className="bg-gray-100">
+        <div className="mx-auto lg:max-w-5xl">
+          <div className="mb-12 text-center">
+            <SectionHeader>Recommended Posts</SectionHeader>
+          </div>
+          <div className="grid gap-4 px-4 lg:grid-cols-3 lg:px-0">
+            {data.recommendedPosts?.edges.map((edge) => (
+              <RelatedPost key={edge.node.id} post={edge.node} />
+            ))}
+          </div>
+        </div>
+      </FullSection>
     </Layout>
   );
 };
@@ -285,6 +298,44 @@ export const pageQuery = graphql`
     contactUs: file(relativePath: { eq: "contact-us.jpg" }) {
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
+    recommendedPosts: allMdx(
+      filter: {
+        fields: {
+          slug: {
+            in: [
+              "/2023-02-08-web-application-development-guide/"
+              "/2022-11-12-remix-optimistic-with-ui-multiple-destinations/"
+              "/2023-01-26-remix-react-framework-2023/"
+            ]
+          }
+        }
+      }
+    ) {
+      edges {
+        node {
+          id
+          excerpt(pruneLength: 159)
+          parent {
+            ... on File {
+              id
+              relativeDirectory
+            }
+          }
+          frontmatter {
+            author
+            date(formatString: "MMMM DD, YYYY")
+            fromNow: date(fromNow: true)
+            featuredImage {
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
+              }
+            }
+            imageAlt
+            title
+          }
+        }
       }
     }
   }

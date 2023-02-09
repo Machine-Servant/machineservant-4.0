@@ -1,8 +1,8 @@
 import { Link } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { ByLine } from '../../../by-line';
+import { ByLine } from '../by-line';
 
 function isParentWithRelativeDirectory(
   parent?: any
@@ -10,8 +10,26 @@ function isParentWithRelativeDirectory(
   if (!parent) return false;
   return !!(parent as any).relativeDirectory;
 }
+
 interface RelatedPostProps extends React.HTMLAttributes<HTMLDivElement> {
-  post: Queries.BlogPostPageQuery['relatedPosts']['edges'][0]['node'];
+  post: {
+    parent?: {
+      id?: string;
+      relativeDirectory?: string;
+    } | null;
+    frontmatter?: {
+      featuredImage: {
+        readonly childImageSharp: {
+          readonly gatsbyImageData: IGatsbyImageData | null;
+        } | null;
+      } | null;
+      imageAlt?: string | null;
+      author?: string | null;
+      date?: string | null;
+      title?: string | null;
+    } | null;
+    excerpt?: string | null;
+  };
 }
 
 export const RelatedPost: React.FC<RelatedPostProps> = ({

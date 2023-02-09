@@ -66,7 +66,7 @@ export const pageQuery = graphql`
 export const Head: HeadFC = () => {
   return (
     <CustomHead
-      title="Post tags"
+      title="Post tags | MachineServant"
       description="All the tags for all the posts"
     />
   );

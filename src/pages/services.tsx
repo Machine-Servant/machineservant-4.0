@@ -163,6 +163,9 @@ export const pageQuery = graphql`
 
 export const Head: HeadFC = () => {
   return (
-    <CustomHead title="Services" description="Your Vision. Our Solutions." />
+    <CustomHead
+      title="Services | MachineServant"
+      description="Your Vision. Our Solutions."
+    />
   );
 };

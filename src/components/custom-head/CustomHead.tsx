@@ -36,7 +36,7 @@ export const CustomHead: React.FC<React.PropsWithChildren<CustomHeadProps>> = ({
 
   const { pathname } = useLocation();
   const defaultCanonicalPath = `${siteUrl}${pathname}`;
-  const title = `${propTitle} | ${siteTitle}`;
+  const title = propTitle;
   const description = propDescription || siteDescription || '';
   const canonicalUrl = propCanonicalPath || defaultCanonicalPath;
   const siteName = siteTitle || 'MachineServant';

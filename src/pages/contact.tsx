@@ -86,9 +86,9 @@ const ContactPage: React.FC<PageProps<Queries.ContactPageQuery>> = ({
         </div>
       </FullSection>
       <FullSection>
-        <h1 className="mb-8 text-center text-3xl font-medium uppercase lg:mb-0">
+        <h2 className="mb-8 text-center text-3xl font-medium uppercase lg:mb-0">
           Schedule a consultation
-        </h1>
+        </h2>
         <CalendlyEmbed account="machineservant" eventName="30min" />
       </FullSection>
     </Layout>

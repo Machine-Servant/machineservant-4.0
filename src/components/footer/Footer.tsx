@@ -20,18 +20,18 @@ export const Footer: React.FC = () => {
               src="../../images/logo-small.png"
               alt={title || 'MachineServant'}
             />
-            <h1 className="text-xl font-bold uppercase text-black sm:text-xl">
+            <span className="text-xl font-bold uppercase text-black sm:text-xl">
               {title}
-            </h1>
+            </span>
           </div>
           <div className="text-center sm:text-left">
-            <h2>Akron, Ohio</h2>
-            <h2>
+            <span className="block">Akron, Ohio</span>
+            <span className="block">
               <a rel="noreferrer" target="_blank" href={`tel:${phone}`}>
                 {phone}
               </a>
-            </h2>
-            <h2>
+            </span>
+            <span className="block">
               <a
                 className="underline"
                 rel="noreferrer"
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
               >
                 {contact}
               </a>
-            </h2>
+            </span>
           </div>
         </div>
         <div className="text-center sm:text-left">

@@ -3,6 +3,7 @@ import { createFilePath } from 'gatsby-source-filesystem';
 import { kebabCase } from 'lodash';
 import path from 'path';
 import readingTime from 'reading-time';
+import { BlogPageContext, TaggedPostsContext } from './src/types';
 
 exports.onCreateNode = ({ node, actions, getNode }: CreateNodeArgs) => {
   const { createNodeField } = actions;
@@ -94,7 +95,7 @@ exports.createPages = async ({
 
   if (posts.length === 0) {
     reporter.warn('No posts found');
-    createPage({
+    createPage<BlogPageContext>({
       path: '/blog',
       component: BlogPaginated,
       context: {
@@ -112,7 +113,7 @@ exports.createPages = async ({
 
   Array.from({ length: numPages }).forEach((_, i) => {
     const paginatedPath = i === 0 ? '/blog' : `/blog/${i + 1}`;
-    createPage({
+    createPage<BlogPageContext>({
       path: paginatedPath,
       component: BlogPaginated,
       context: {
@@ -134,7 +135,7 @@ exports.createPages = async ({
     const value = kebabCase(tag.fieldValue);
     const taggedPostPath = `/tag/${value}`;
 
-    createPage({
+    createPage<TaggedPostsContext>({
       path: taggedPostPath,
       component: TaggedPosts,
       context: {

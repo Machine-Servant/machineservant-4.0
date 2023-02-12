@@ -1,7 +1,9 @@
 import { graphql, HeadFC } from 'gatsby';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BlogList } from '../components/blog-list';
 import { CustomHead } from '../components/custom-head';
+import { useSiteMetadata } from '../hooks/use-site-metadata';
+import { BlogPageContext } from '../types';
 
 export default BlogList;
 
@@ -63,11 +65,24 @@ export const query = graphql`
   }
 `;
 
-export const Head: HeadFC = () => {
+export const Head: HeadFC<Queries.BlogPaginatedQuery, BlogPageContext> = ({
+  pageContext,
+}) => {
+  const { title } = useSiteMetadata();
+
+  const pageTitle = useMemo(() => {
+    const { currentPage } = pageContext;
+    if (currentPage === 1) {
+      return `Blog | ${title}`;
+    }
+    return `Blog page ${currentPage} | ${title}`;
+  }, [pageContext, title]);
+
   return (
     <CustomHead
-      title="Blog"
+      title={pageTitle}
       description="Ideas, discoveries, and technical musings from machineservant.com"
+      noindex={pageContext.currentPage !== 1}
     />
   );
 };

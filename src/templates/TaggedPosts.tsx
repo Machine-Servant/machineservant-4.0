@@ -39,6 +39,11 @@ export const pageQuery = graphql`
         }
       }
     }
+    blogPageImage: file(relativePath: { eq: "blog.jpg" }) {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
   }
 `;
 

@@ -45,22 +45,16 @@ const config: GatsbyConfig = {
     },
     'gatsby-plugin-image',
     {
-      resolve: 'gatsby-plugin-advanced-sitemap',
+      resolve: 'gatsby-plugin-sitemap',
       options: {
-        exclude: [
-          '/form-success',
-          '/404',
-          '404.html',
-          /tag\/.+/,
-          /blog\/[0-9]+\//,
-        ],
+        excludes: ['/form-success', '/tag/**'],
       },
     },
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         host: 'https://www.machineservant.com',
-        sitemap: 'https://www.machineservant.com/sitemap.xml',
+        sitemap: 'https://www.machineservant.com/sitemap-index.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },

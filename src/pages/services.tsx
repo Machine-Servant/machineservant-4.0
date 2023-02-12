@@ -165,7 +165,7 @@ export const Head: HeadFC = () => {
   return (
     <CustomHead
       title="Services | MachineServant"
-      description="Your Vision. Our Solutions."
+      description="At MachineServant, we offer a wide variety of services you and your project deserve. Your vision. Our solutions."
     />
   );
 };

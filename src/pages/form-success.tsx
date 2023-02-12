@@ -54,7 +54,7 @@ export const Head: HeadFC = () => {
   return (
     <CustomHead
       title="Form Success | MachineServant"
-      description="Thank you for your submission"
+      description="Thank you for your submission. We appreciate you reaching out. We look at all our communications and we will respond shortly."
       noindex
     />
   );

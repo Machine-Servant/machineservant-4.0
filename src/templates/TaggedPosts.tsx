@@ -54,7 +54,7 @@ export const Head: HeadFC<Queries.TaggedPostsQuery, TaggedPostsContext> = ({
   return (
     <CustomHead
       title={`Blogs tagged "${pageContext.tag}" | ${title}`}
-      description="Ideas, discoveries, and technical musings from machineservant.com"
+      description="We're big tech nerds at MachineServant and we think about this kind of stuff all day. Sometimes we think cool things then we write about them."
       noindex
     />
   );

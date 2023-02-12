@@ -81,7 +81,7 @@ export const Head: HeadFC<Queries.BlogPaginatedQuery, BlogPageContext> = ({
   return (
     <CustomHead
       title={pageTitle}
-      description="We're big tech nerds at MachineServant and we think about this kind of stuff all day. Sometimes we think cool things then we write about it."
+      description="We're big tech nerds at MachineServant and we think about this kind of stuff all day. Sometimes we think cool things then we write about them."
       noindex={pageContext.currentPage !== 1}
     />
   );

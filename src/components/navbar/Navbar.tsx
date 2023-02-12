@@ -26,9 +26,9 @@ export const Navbar: React.FC = () => {
             height={35}
             width={35}
           />
-          <h1 className="text-xl font-bold uppercase transition-colors duration-500 hover:text-gray-600">
+          <span className="text-xl font-bold uppercase transition-colors duration-500 hover:text-gray-600">
             {title}
-          </h1>
+          </span>
         </Link>
         <nav className="flex w-full items-center justify-between text-sm sm:w-auto">
           <ul className="flex justify-between px-2 sm:px-0">

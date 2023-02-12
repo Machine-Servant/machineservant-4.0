@@ -37,13 +37,13 @@ const ServicesPage: React.FC<PageProps<Queries.ServicesPageQuery>> = ({
         <div className="container mx-auto flex">
           <div className="w-full text-center text-white">
             <h1 className="text-4xl font-bold uppercase">Services</h1>
-            <h2 className="text-xl">Your Vision. Our Solutions</h2>
+            <span className="text-xl">Your Vision. Our Solutions</span>
           </div>
         </div>
       }
     >
       <FullSection className="text-center font-medium" container>
-        <h1 className="mb-4 text-4xl uppercase">What we offer</h1>
+        <h2 className="mb-4 text-4xl uppercase">What we offer</h2>
         <p className="mx-auto max-w-xl leading-relaxed">
           We design, build, and manage your web site or web application. Our
           team of experts will work with you one on one to bring your vision to

@@ -93,9 +93,9 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
               alt={title || 'MachineServant'}
             />
           </div>
-          <span className="text-xl font-bold uppercase text-black sm:text-5xl lg:text-3xl">
+          <h1 className="text-xl font-bold uppercase text-black sm:text-5xl lg:text-3xl">
             {title}
-          </span>
+          </h1>
         </div>
         <div className="mx-auto sm:flex sm:max-w-4xl sm:items-center sm:justify-center">
           <div className="sm:mr-8 sm:w-96">

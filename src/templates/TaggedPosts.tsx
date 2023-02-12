@@ -2,6 +2,8 @@ import { graphql, HeadFC } from 'gatsby';
 import React from 'react';
 import { BlogList } from '../components/blog-list';
 import { CustomHead } from '../components/custom-head';
+import { useSiteMetadata } from '../hooks/use-site-metadata';
+import { TaggedPostsContext } from '../types';
 
 export default BlogList;
 
@@ -40,11 +42,15 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head: HeadFC = () => {
+export const Head: HeadFC<Queries.TaggedPostsQuery, TaggedPostsContext> = ({
+  pageContext,
+}) => {
+  const { title } = useSiteMetadata();
   return (
     <CustomHead
-      title="Blog"
+      title={`Blogs tagged "${pageContext.tag}" | ${title}`}
       description="Ideas, discoveries, and technical musings from machineservant.com"
+      noindex
     />
   );
 };

@@ -3,28 +3,18 @@ import { getImage } from 'gatsby-plugin-image';
 import React, { useMemo, useState } from 'react';
 import { useFlexSearch } from 'react-use-flexsearch';
 import { useIsSsr } from '../../hooks/is-ssr';
+import { BlogPageContext } from '../../types';
 import { Layout } from '../layout';
 import { Post } from '../post';
 import { Tag } from '../tag';
 import { Search } from './components/search';
-
-interface PageContext {
-  limit?: number;
-  skip?: number;
-  numPages?: number;
-  currentPage?: number;
-  totalCount?: number;
-  paginated?: boolean;
-  renderTagList?: boolean;
-  tag?: string;
-}
 
 export const BlogList = ({
   data,
   pageContext,
 }: {
   data: Queries.BlogPaginatedQuery;
-  pageContext: PageContext;
+  pageContext: BlogPageContext;
 }) => {
   const blogPageImage = data.blogPageImage
     ? getImage(data.blogPageImage.childImageSharp)

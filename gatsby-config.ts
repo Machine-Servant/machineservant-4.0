@@ -44,7 +44,18 @@ const config: GatsbyConfig = {
       },
     },
     'gatsby-plugin-image',
-    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-advanced-sitemap',
+      options: {
+        exclude: [
+          '/form-success',
+          '/404',
+          '404.html',
+          /tag\/.+/,
+          /blog\/[0-9]+\//,
+        ],
+      },
+    },
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {

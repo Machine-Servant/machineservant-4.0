@@ -3,7 +3,8 @@ import type { GatsbyConfig } from 'gatsby';
 const config: GatsbyConfig = {
   siteMetadata: {
     title: 'MachineServant',
-    description: 'Let us bring your vision to reality',
+    description:
+      'MachineServant is here to help build your online solution. With decades of experience building websites and applications, let us bring your vision to reality.',
     siteUrl: 'https://www.machineservant.com',
     contact: 'contact@machineservant.com',
     social: {

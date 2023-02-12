@@ -67,7 +67,8 @@ export const Head: HeadFC = () => {
   return (
     <CustomHead
       title="Post tags | MachineServant"
-      description="All the tags for all the posts"
+      description="All of the tags for all of the posts on the MachineServant Blog. Take a look and see if something catches your eye!"
+      noindex
     />
   );
 };

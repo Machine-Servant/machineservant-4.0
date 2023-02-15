@@ -184,14 +184,17 @@ const config: GatsbyConfig = {
           {
             output: '/rss.xml',
             title: 'MachineServant Blog RSS Feed',
+            description:
+              'Mobile development tips, tutorials, and information articles with a focus on JavaScript and TypeScript',
+            language: 'en',
             match: '^/blog/',
             serialize: ({ query: { site, allMdx } }: { query: any }) => {
               return allMdx.nodes.map((node: any) => {
                 return Object.assign({}, node.frontmatter, {
                   description: node.excerpt,
                   date: node.frontmatter.date,
-                  url: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}`,
-                  guid: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}`,
+                  url: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}/`,
+                  guid: `${site.siteMetadata.siteUrl}/blog/${node.parent.relativeDirectory}/`,
                   enclosure: node.frontmatter.featuredImage?.childImageSharp
                     ?.gatsbyImageData
                     ? {

@@ -1,0 +1,432 @@
+---
+date: '2023-02-18 01:00:00'
+title: 'Building a GatsbyJS Blog: Creating the Project'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Mountain in the distance across a lake in Fujikawaguchiko, Yamanashi, Japan'
+imageCredits: 'Photo by Liger Pham'
+imageCreditsUrl: 'https://www.pexels.com/photo/mt-fuji-japan-1108701/'
+tags:
+  [
+    'Tech',
+    'Web Development',
+    'Framework',
+    'React',
+    'GatsbyJS',
+    'GatsbyJS Blog Series',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-02-11-progressive-web-application-development-overview',
+    '2023-02-08-web-application-development-guide',
+  ]
+---
+
+Are you looking to create a blazingly fast and secure blog? If so, then you're in the right place. In this series, I'm going to walk you through the process of creating a GatsbyJS blog from scratch. I've been using GatsbyJS for some time now and have found it to be an excellent choice for creating static sites. It leverages technologies like React and GraphQL, which are some of my favorite technologies to work with in a project.
+
+This series, titled "Building a GatsbyJS Blog," is going to be a step-by-step guide, starting with the basics of creating a GatsbyJS project, all the way through to deploying the blog online. We'll go into a lot of depth in each post, so you'll be able to follow along even if you're new to GatsbyJS.
+
+In this first post, we'll focus on creating the GatsbyJS project itself. This is a crucial step, as it sets the foundation for your blog. We'll cover everything you need to know, from installation to setting up the project's structure.
+
+> **NOTE**: I have opted not to use any themes or templates for this post. Instead, we're going to set this up from scratch! I think this gives a better fine-grain control over the project and will help promote a better understanding of Gatsby and the surrounding plugin ecosystem. But, if you want to use a starter template, that's great too!
+
+> **NOTE**: This article assumes you have a basic to advanced understanding of Node, React, Git, and JavaScript/TypeScript. So, I won't be spending any time explaning how to set up your development environment. If you need a refresher or more information about setting things up, check the [official documentation from GatsbyJS](https://www.gatsbyjs.com/docs/tutorial/part-0/) for a detailed walkthrough.
+
+> **NOTE**: At the time of writing (Feb. of 2023), GatsbyJS is on version 5. Eventually, this series will become out of date as new versions of Gatsby are released. I will do my best to update these articles to make note of any changes to the framework. If you notice something out of date or wrong, please don't hesitate to let me know in the comments!
+
+## Install GatsbyJS and create the initial project
+
+Let's get started!
+
+### Install gatsby-cli
+
+The very first thing we need to do is install the `gatsby-cli` globally:
+
+```bash
+npm install -g gatsby-cli
+```
+
+### Create a basic project
+
+Next, we will create a basic project in GatsbyJS. You'll run the `gatsby new` command and then answer the questions as outlined below.
+
+Select the following options:
+
+- **Name of site**: My Gatsby Blog
+- **Location of project**: (use the default)
+- **JavaScript or TypeScript**: TypeScript
+- **CMS?**: No
+- **Styling Systems**: Emotion
+- **Additional Plugins**: Responsive Images, Manifest, and Markdown with MDX
+
+> I am going opt in to TypeScript, and Emotion for styling. You don't have to do this but it will make following this tutorial much easier if you keep in sync with what I do.
+
+```bash
+gatsby new
+What would you like to call your site?
+✔ · My Gatsby Blog
+What would you like to name the folder where your site will be created?
+✔ blog-related-repos/ my-gatsby-blog
+✔ Will you be using JavaScript or TypeScript?
+· TypeScript
+✔ Will you be using a CMS?
+· No (or I'll add it later)
+✔ Would you like to install a styling system?
+· Emotion
+✔ Would you like to install additional features with other plugins?
+· Add responsive images
+· Generate a manifest file
+
+Thanks! Here's what we'll now do:
+
+    🛠  Create a new Gatsby site in the folder my-gatsby-blog
+    🎨 Get you set up to use Emotion for styling your site
+    🔌 Install gatsby-plugin-image, gatsby-plugin-manifest, gatsby-plugin-mdx
+
+```
+
+### Start the development server
+
+Change directories into the newly created project directory and run `gatsby develop` to start the development server.
+
+> The development server is awesome! It will automatically reload your app for you as you make changes (hot reloading) and does some other optimizations on the fly to allow you to develop your project seamlessly.
+
+```bash
+cd my-gatsby-blog
+gatsby develop
+```
+
+And now you should be able to see the site running by navigating to http://localhost:8000.
+
+## Set up Linting and Formatting
+
+Maintaining clean and organized code is crucial for any project, including your blog. To achieve this, I recommend using tools like "prettier" and "eslint" to format and lint your code. Prettier can help ensure consistent formatting across your codebase, while eslint can help catch syntax errors and other issues before they become problematic.
+
+In the following sections, I'll walk you through how to set up these tools for our blog.
+
+### Prettier code formatter
+
+Prettier is a code formatter that helps ensure consistent code style and formatting across your entire codebase. It can automatically format code in a variety of programming languages, including JavaScript, HTML, CSS, and more.
+
+#### Install Prettier dependencies
+
+First, we'll want to install a few dependencies:
+
+```bash
+npm install -D prettier prettier-plugin-tailwindcss
+```
+
+> The `prettier-plugin-tailwindcss` module will help keep our tailwind classes organized!
+
+#### Configure Prettier
+
+Next, we need to configure Prettier.
+
+##### .prettierrc.json
+
+Create a new file named `.prettierrc.json` in the root folder.
+
+```bash
+touch .prettierrc.json
+```
+
+Then add the following content to the file:
+
+```json
+// .prettierrc.json
+{
+  "singleQuote": true,
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
+
+> If you don't like using single quotes for your quote marks, you can omit the `singleQuote` setting
+
+##### .prettierignore
+
+We want to ignore a few folders and files. So, create a file named `.prettierignore` in the root folder.
+
+```bash
+touch .prettierignore
+```
+
+Then add the following content to the file:
+
+```txt
+// .prettierignore
+node_modules
+package.json
+package-lock.json
+tsconfig.json
+src/styles/global.css
+.cache
+public
+```
+
+#### Update package.json
+
+It's a good idea to have a script in your `package.json` file that will execute Prettier formatting on demand.
+
+Open up your `package.json` file and add a `"format"` script;
+
+```json
+// package.json
+"scripts": {
+  "develop": "gatsby develop",
+  "start": "gatsby develop",
+  "build": "gatsby build",
+  "serve": "gatsby serve",
+  "clean": "gatsby clean",
+  "typecheck": "tsc --noEmit",
+  "format": "prettier --write ." // <-- Add this
+},
+```
+
+#### Run Prettier!
+
+Now it's time to run the formatter on the project for the first time. This should clean up the existing codebase.
+
+```bash
+npm run format
+```
+
+### Eslint code linter
+
+ESLint is a code linter that helps identify and report issues with code syntax and style. It can catch common errors and enforce coding standards across your entire codebase, helping to ensure that your code is clean and maintainable.
+
+#### Install Eslint dependencies
+
+We're going to need a few dependencies to get eslint working the way we want it to for this blog project.
+
+Install the following dependencies:
+
+```bash
+npm install -D eslint eslint-config-prettier eslint-config-react-app
+```
+
+##### .eslintrc.js
+
+Next we need to create the main configuration file for Eslint in our project root folder.
+
+```bash
+touch .eslintrc.js
+```
+
+Then add the following content to that file:
+
+```js
+// .eslintrc.js
+module.exports = {
+  globals: {
+    __PATH_PREFIX__: true,
+  },
+  extends: ['react-app', 'prettier'],
+};
+```
+
+##### .eslintignore
+
+There are some files and folders we want Eslint to ignore, so let's set that up as well.
+
+Create the ignore file in the project root folder:
+
+```bash
+touch .eslintignore
+```
+
+And then add the following content to that file:
+
+```txt
+src/styles/global.css
+public
+```
+
+#### Update package.json
+
+As with Prettier, it's good practice to have a script in the `package.json` file that automates running Eslint for your project.
+
+Open the `package.json` file back up and add the `"lint"` and `"lint:fix"` scripts:
+
+```json
+// package.json
+"scripts": {
+  "develop": "gatsby develop",
+  "start": "gatsby develop",
+  "build": "gatsby build",
+  "serve": "gatsby serve",
+  "clean": "gatsby clean",
+  "typecheck": "tsc --noEmit",
+  "format": "prettier --write .",
+  "lint": "eslint . --ext ts,tsx,js,jsx", // <-- Add this
+  "lint:fix": "eslint . --ext ts,tsx,js,jsx --fix" // <-- Add this
+},
+```
+
+> The --fix flag will tell Eslint automatically fix any errors it sees if it can.
+
+## Add Fonts
+
+Adding fonts to GatsbyJS is fairly straightforward. In the past, I used some Gatsby plugins to pull assets from Google Fonts directly, but those plugins appear to have become stale and languish without updates. No matter! I found a better way.
+
+### Install @fontsource
+
+The '@fontsource' module is an npm module that allows you to easily install and use open source fonts in your project. It provides a simple way to add custom fonts to your website, without the need for a third-party provider.
+
+> For this blog, we'll use the "roboto" font. Feel free to use any other font you like from `@fontsource`, just install the appropriate module and then update your `gatsby-browser.ts` file appropriately.
+
+First, install the dependency:
+
+```bash
+npm install @fontsource/roboto
+```
+
+Then we have to create the `gatsby-browser.ts` file and add the fonts we want to use.
+
+> The `gatsby-browser.ts` provides an entry point to your various pages. It wraps your page components with a global set of imports and API methods. We'll only be taking advantage of it to load global CSS files. But [there's a lot it can do](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-browser/).
+
+```bash
+touch gatsby-browser.ts
+```
+
+Add the following content to the file:
+
+```typescript
+// gatsby-browser.ts
+import '@fontsource/roboto/100-italic.css';
+import '@fontsource/roboto/100.css';
+import '@fontsource/roboto/300-italic.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400-italic.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500-italic.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700-italic.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/900-italic.css';
+import '@fontsource/roboto/900.css';
+```
+
+## Add Styling
+
+Styling and style systems are essential for any website project. I tend to prefer using `tailwindcss` for my projects, and I don't think that's a particularly controversial choice, but you can choose whatever style system you like. If you prefer something else, feel free to go off script!
+
+Tailwind CSS is a utility-first CSS framework that provides a set of pre-designed classes to help streamline the process of styling a website. It aims to simplify the development process by reducing the need for custom CSS and offering a consistent design system that can be easily customized.
+
+> I love it.
+
+### Install tailwindcss dependencies
+
+The first thing we need to do is install tailwindcss and some associated dependencies.
+
+```bash
+npm install -D tailwindcss autoprefixer postcss gatsby-plugin-postcss
+npm install twin.macro tailwind-merge
+```
+
+> The `twin.macro` utility helps us integrate the Emotion plugin (which we opted to use when creating the project) with tailwindcss. The `tailwind-merge` plugin is a super useful utility that lets us merge together tailwind classes in an intelligent manner and avoids class name collisions; you'll see how we use them later.
+
+### Configure Tailwind
+
+Next, we are going to initialize the tailwind configuration:
+
+```bash
+npx tailwindcss init -p
+```
+
+This will create a `tailwind.config.js` file and a `postcss.config.js` file in the project root.
+
+### Edit the configuration file
+
+Now we want to edit that newly created configuration file and set it up to work with Gatsby.
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,jsx,ts,tsx}',
+    './src/components/**/*.{js,jsx,ts,tsx}',
+    './src/templates/**/*.{js,jsx,ts,tsx}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+This setup tells Tailwind where to find our source code and sets the default "sans" font for our application to the "Roboto" font we added to our `gatsby-browser.ts` file above.
+
+### Create a global CSS file
+
+We are going to create a global CSS file and import the Tailwind directives into it.
+
+```bash
+mkdir src/styles
+touch src/styles/global.css
+```
+
+Add the following content to the `global.css` file:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+```
+
+### Update `gatsby-browser.ts`
+
+Now we need to add the global CSS file to `gatsby-browser.ts` so every page can use the beautiful tailwind styles we love so much.
+
+```typescript
+// gatsby-browser.ts
+
+// ... (other styles)
+import './src/styles/global.css';
+```
+
+### Restart the development server
+
+In order for any of this to take effect, we should restart the development server.
+
+> _First, kill any existing `gatsby develop` processes_
+
+```bash
+gatsby develop
+```
+
+At this point, you probably won't notice much difference because the default pages are all styled with CSS in JS by default. But, if you want, you can tinker with the `pages/index.tsx` page and add some tailwind classes. Something like this might be a good test:
+
+> We'll be doing something different with this file in the next part of this article, so don't get too attached to this very basic look.
+
+```typescript
+import type { HeadFC, PageProps } from 'gatsby';
+import * as React from 'react';
+
+const IndexPage: React.FC<PageProps> = () => {
+  return (
+    <main className="font-sans font-light">
+      <div className="container mx-auto px-4 lg:px-0">
+        <h1 className="my-8 text-4xl font-bold lg:text-5xl">My Gatsby Blog</h1>
+        <span className="text-lg">This is my Gatsby Blog home page!</span>
+      </div>
+    </main>
+  );
+};
+
+export default IndexPage;
+
+export const Head: HeadFC = () => <title>Home Page</title>;
+```
+
+## Conclusion
+
+In this post, we covered the fundamental steps of setting up a GatsbyJS project. We walked through the process of creating the project, setting up code formatting and linting with "prettier" and "eslint," adding open source fonts using the "@fontsource" module, and configuring Tailwind CSS to simplify the styling process. With these tools in place, we've laid a solid foundation for building our blog.
+
+Stay tuned for the next post in this series, "Building a GatsbyJS Blog: Layout and Pages," where we'll dive into creating the layout and structure of our blog pages.

@@ -6,8 +6,8 @@ import React from 'react';
 import { components, MainContent } from '../../components/blog-post';
 import { ByLine } from '../../components/by-line';
 import { Layout } from '../../components/layout';
-import { PhotoCredits } from '../../components/photo-credits';
 import { Tag } from '../../components/tag';
+import { GatsbyBlogSeriesNavigation, PhotoCredits } from '../mdx-components';
 import { RelatedPost } from '../related-post';
 import { TableOfContents } from './components/table-of-contents';
 
@@ -73,6 +73,7 @@ export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
           components={{
             ...components,
             PhotoCredits,
+            GatsbyBlogSeriesNavigation,
           }}
         >
           {children}

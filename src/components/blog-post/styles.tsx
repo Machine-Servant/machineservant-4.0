@@ -21,6 +21,10 @@ export const MainContent = styled.article`
       ${tw`px-2 inline-block`};
     }
 
+    .highlight-line {
+      ${tw`bg-gray-600`}
+    }
+
     .table-of-contents {
       ${tw`pb-8`}
 
@@ -83,7 +87,7 @@ export const Blockquote = styled.blockquote`
 
 export const Pre = styled.pre`
   &&& {
-    ${tw`px-12 py-4 mb-8 -mx-12 overflow-x-scroll text-white`};
+    ${tw`px-12 py-4 mb-8 -mx-4 sm:mx-0 overflow-x-scroll text-white`};
     ${tw`bg-gray-800`}
     ${tw`px-4 border-l-4 border-amber-500`}
   }

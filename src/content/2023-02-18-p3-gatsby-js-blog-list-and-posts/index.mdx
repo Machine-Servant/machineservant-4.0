@@ -453,10 +453,9 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
 }) => {
   return (
     <PageLayout>
-      // ↓ Add This
+      // ↓ Add This // highlight-start
       <MainContent>
-        {' '}
-        // highlight-line
+        // highlight-end
         <h1 className="mb-8 text-4xl font-bold sm:text-5xl">
           {data.mdx?.frontmatter?.title}
         </h1>
@@ -466,7 +465,8 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
           </span>
         </div>
         // ↓ Update This
-        <MDXProvider components={components}>{children}</MDXProvider> // highlight-line
+        <MDXProvider components={components}>{children}</MDXProvider> //
+        highlight-line
       </MainContent>
     </PageLayout>
   );

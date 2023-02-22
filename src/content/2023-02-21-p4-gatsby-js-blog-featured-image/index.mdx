@@ -114,8 +114,9 @@ import { getImage } from 'gatsby-plugin-image'; // highlight-line
 import * as React from 'react';
 import { PageLayout } from '../components/page-layout';
 
+// highlight-start
 const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
-  // highlight-line
+  // highlight-end
   // highlight-start
   const image = data.headerImage
     ? getImage(data.headerImage.childImageSharp)
@@ -123,9 +124,9 @@ const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
   // highlight-end
 
   return (
+    // highlight-start
     <PageLayout image={image} title="My Gatsby Blog">
-      {' '}
-      // highlight-line
+      // highlight-end
       <div className="container mx-auto px-4 lg:px-0">
         <span className="text-lg">This is my Gatsby Blog home page!</span>
       </div>

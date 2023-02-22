@@ -43,19 +43,39 @@ const PrismSyntaxHighlight: React.FC<PrismSyntaxHighlightProps> = ({
             .replace('//highlight-line', '');
         }
 
+        /*
+         * Something strange is going on when a line is inside a "`" (backtick)
+         * mark (grqphql queries, for example).
+         *
+         * The line is split so that we see ['//', 'highlight', '-', 'start']
+         * rather than simply '// highlight-start'.
+         *
+         * By removing the forward slashes, dashes, and spaces, we are able to make this work.
+         *
+         * !!! NOTE
+         * However, when highlighting inside backticks, you have to use
+         * '// highlightstart' or '// highlightend' (no dash).
+         * Also, you can't use '// highlight-line' inside backticks...
+         * !!!
+         */
+
         // stop highlighting with "// highlight-end"
         if (
           !!highlightStart &&
-          content.replace(/\s/g, '') === '//highlight-end'
+          content.replace(/[\s-/]/g, '') === 'highlightend'
         ) {
           highlightStart.current = false;
           shouldExclude = true;
         }
 
         // start highlighting after "// highlight-start"
-        if (content.replace(/\s/g, '') === '//highlight-start') {
+        if (content.replace(/[\s-/]/g, '') === 'highlightstart') {
           highlightStart.current = true;
           shouldExclude = true;
+        }
+
+        if (line.content === '//`') {
+          line.content = '`';
         }
       });
 

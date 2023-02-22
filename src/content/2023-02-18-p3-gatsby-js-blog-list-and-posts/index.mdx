@@ -88,7 +88,6 @@ const config: GatsbyConfig = {
       },
       __key: 'pages',
     },
-    // ↓ Add This
     // highlight-start
     {
       resolve: 'gatsby-source-filesystem',
@@ -99,7 +98,9 @@ const config: GatsbyConfig = {
     },
     // highlight-end
     // ↓ REMOVE THIS
+    // highlight-start
     'gatsby-plugin-mdx', // highlight-line
+    // highlight-end
     // ↓ Add This
     // highlight-start
     {
@@ -443,7 +444,6 @@ Now we can add these styles to our `BlogPostTemplate` component's `MdxProvider`:
 import { MDXProvider } from '@mdx-js/react';
 import { graphql, PageProps } from 'gatsby';
 import React from 'react';
-// ↓ Add This
 import { components, MainContent } from '../components/mdx-components'; // highlight-line
 import { PageLayout } from '../components/page-layout';
 
@@ -453,7 +453,7 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
 }) => {
   return (
     <PageLayout>
-      // ↓ Add This // highlight-start
+      // highlight-start
       <MainContent>
         // highlight-end
         <h1 className="mb-8 text-4xl font-bold sm:text-5xl">
@@ -464,9 +464,9 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
             By {data.mdx?.frontmatter?.author} on {data.mdx?.frontmatter?.date}
           </span>
         </div>
-        // ↓ Update This
-        <MDXProvider components={components}>{children}</MDXProvider> //
-        highlight-line
+        // highlight-start
+        <MDXProvider components={components}>{children}</MDXProvider>
+        // highlight-end
       </MainContent>
     </PageLayout>
   );

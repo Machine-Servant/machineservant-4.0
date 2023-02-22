@@ -8,6 +8,7 @@ export interface BlogPageContext {
   readonly totalCount?: number;
   readonly paginated?: boolean;
   readonly renderTagList?: boolean;
+  readonly tag?: string;
 }
 
 export interface TaggedPostsContext {

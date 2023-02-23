@@ -67,6 +67,7 @@ export const query = graphql`
 
 export const Head: HeadFC<Queries.BlogPaginatedQuery, BlogPageContext> = ({
   pageContext,
+  data,
 }) => {
   const { title } = useSiteMetadata();
 
@@ -78,10 +79,14 @@ export const Head: HeadFC<Queries.BlogPaginatedQuery, BlogPageContext> = ({
     return `Blog page ${currentPage} | ${title}`;
   }, [pageContext, title]);
 
+  const imgUrl =
+    data.blogPageImage?.childImageSharp?.gatsbyImageData.images.fallback?.src;
+
   return (
     <CustomHead
       title={pageTitle}
       description="We're big tech nerds at MachineServant and we think about this kind of stuff all day. Sometimes we think cool things then we write about them."
+      image={imgUrl}
       noindex={pageContext.currentPage !== 1}
     />
   );

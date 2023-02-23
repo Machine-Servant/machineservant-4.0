@@ -7,6 +7,7 @@ import {
   GithubIcon,
   InstagramIcon,
   LinkedinIcon,
+  TwitterIcon,
 } from '../icons';
 
 export const Navbar: React.FC = () => {
@@ -30,18 +31,20 @@ export const Navbar: React.FC = () => {
             {title}
           </span>
         </Link>
-        <nav className="flex w-full items-center justify-between text-sm sm:w-auto">
-          <ul className="flex justify-between px-2 sm:px-0">
+        <nav className="flex w-full items-center justify-center gap-8 text-sm sm:w-auto sm:justify-between">
+          <ul className="flex justify-between gap-8 px-2 sm:px-0">
             {navigation?.map(
               (nav) =>
                 nav?.path && (
-                  <li key={nav?.name} className="px-2 sm:px-4">
-                    <Link to={nav.path}>{nav?.name}</Link>
+                  <li key={nav?.name}>
+                    <Link to={nav.path} className="text-lg sm:text-base">
+                      {nav?.name}
+                    </Link>
                   </li>
                 )
             )}
           </ul>
-          <ul className="flex justify-between gap-1">
+          <ul className="hidden justify-between gap-1 sm:flex">
             {social?.linkedIn && (
               <li>
                 <a
@@ -75,6 +78,18 @@ export const Navbar: React.FC = () => {
                   title="Instagram"
                 >
                   <InstagramIcon className="h-6 w-6 fill-gray-800" />
+                </a>
+              </li>
+            )}
+            {social?.twitter && (
+              <li>
+                <a
+                  href={social.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Twitter"
+                >
+                  <TwitterIcon className="h-6 w-6 fill-gray-800" />
                 </a>
               </li>
             )}

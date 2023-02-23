@@ -18,6 +18,7 @@ export const useSiteMetadata = () => {
             facebook
             linkedIn
             instagram
+            twitter
             github
           }
           navigation {

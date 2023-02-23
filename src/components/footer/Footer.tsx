@@ -2,7 +2,12 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 import GithubButton from 'react-github-btn';
 import { useSiteMetadata } from '../../hooks/use-site-metadata';
-import { FacebookIcon, InstagramIcon, LinkedinIcon } from '../icons';
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  TwitterIcon,
+} from '../icons';
 
 export const Footer: React.FC = () => {
   const { title, contact, social, phone } = useSiteMetadata();
@@ -78,6 +83,18 @@ export const Footer: React.FC = () => {
                   title="Instagram"
                 >
                   <InstagramIcon className="h-6 w-6 fill-gray-800" />
+                </a>
+              </li>
+            )}
+            {social?.twitter && (
+              <li className="px-2">
+                <a
+                  href={social.twitter}
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Twitter"
+                >
+                  <TwitterIcon className="h-6 w-6 fill-gray-800" />
                 </a>
               </li>
             )}

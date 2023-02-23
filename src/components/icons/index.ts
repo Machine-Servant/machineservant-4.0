@@ -6,4 +6,5 @@ export * from './linkedin-icon';
 export * from './money-box-icon';
 export * from './phone-icon';
 export * from './time-icon';
+export * from './twitter-icon';
 export * from './types';

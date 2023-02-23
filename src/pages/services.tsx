@@ -161,10 +161,13 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head: HeadFC = () => {
+export const Head: HeadFC<Queries.ServicesPageQuery, unknown> = ({ data }) => {
+  const imgUrl =
+    data.servicesPage?.childImageSharp?.gatsbyImageData.images.fallback?.src;
   return (
     <CustomHead
       title="Services | MachineServant"
+      image={imgUrl}
       description="At MachineServant, we offer a wide variety of services you and your project deserve. Your vision. Our solutions."
     />
   );

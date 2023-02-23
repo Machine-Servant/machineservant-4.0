@@ -12,8 +12,9 @@ const config: GatsbyConfig = {
       facebook: 'https://www.facebook.com/MachineServant/',
       instagram: 'https://www.instagram.com/machineservant/',
       github: 'https://github.com/machine-servant/',
+      twitter: 'https://twitter.com/MachineServant',
     },
-    image: 'images/logo.jpg',
+    image: 'logo.jpg',
     author: '@MachineServant',
     phone: '(330)-808-6557',
     navigation: [

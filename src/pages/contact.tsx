@@ -80,7 +80,7 @@ const ContactPage: React.FC<PageProps<Queries.ContactPageQuery>> = ({
               </div>
             </div>
           </div>
-          <div className="mt-8 w-full pr-6 lg:mt-0 lg:w-1/2 lg:pr-0">
+          <div className="mt-8 w-full sm:pr-6 lg:mt-0 lg:w-1/2 lg:pr-0">
             <ContactForm />
           </div>
         </div>
@@ -107,10 +107,13 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head: HeadFC = () => {
+export const Head: HeadFC<Queries.ContactPageQuery, unknown> = ({ data }) => {
+  const imgUrl =
+    data.contactImage?.childImageSharp?.gatsbyImageData.images.fallback?.src;
   return (
     <CustomHead
       title="Contact Us | MachineServant"
+      image={imgUrl}
       description="Want a great website or application? Call, email, or send us a message!"
     />
   );

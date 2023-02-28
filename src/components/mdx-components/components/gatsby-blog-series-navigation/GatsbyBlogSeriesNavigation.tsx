@@ -6,6 +6,7 @@ export enum GatsbyBlogSeriesPage {
   P2_LAYOUT_AND_PAGES = 'LAYOUT_AND_PAGES',
   P3_BLOG_PAGES = 'BLOG_PAGES',
   P4_FEATURED_IMAGES = 'FEATURED_IMAGES',
+  P5_SEO = 'SEO',
 }
 
 interface GatsbyBlogSeriesNavigationProps {
@@ -35,6 +36,11 @@ export const GatsbyBlogSeriesNavigation: React.FC<
       page: GatsbyBlogSeriesPage.P4_FEATURED_IMAGES,
       url: '2023-02-21-p4-gatsby-js-blog-featured-image',
       label: 'Part 4: Featured Images',
+    },
+    {
+      page: GatsbyBlogSeriesPage.P5_SEO,
+      url: '2023-02-22-p5-gatsby-js-blog-seo',
+      label: 'Part 5: SEO',
     },
   ];
 

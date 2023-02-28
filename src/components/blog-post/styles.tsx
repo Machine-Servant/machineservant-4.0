@@ -52,6 +52,10 @@ export const MainContent = styled.article`
     delete {
       ${tw`text-lg line-through`}
     }
+
+    strong {
+      ${tw`font-semibold`}
+    }
   }
 `;
 

@@ -1,5 +1,5 @@
 ---
-date: '2023-02-22 01:00:00'
+date: '2023-02-26 01:00:00'
 title: 'Building a GatsbyJS Blog: Search Engine Optimization'
 author: 'Evan Stern'
 featuredImage: ./featured.jpg
@@ -24,20 +24,386 @@ relatedPosts:
   ]
 ---
 
-Welcome to part five of "Building a GatsbyJS Blog!" In this post, we'll be taking our blog to the next level by discussing search engine optimization (SEO) techniques. SEO is essential for any website, and it's no different for our GatsbyJS blog. By optimizing our blog for search engines, we can increase our visibility, drive traffic to our site, and grow our audience.
+import { GatsbyBlogSeriesPage } from '../../components/mdx-components';
 
-In this post, we'll be covering the basics of SEO for our GatsbyJS blog. We'll start by discussing the importance of metadata, and we'll show you how to add metadata to your blog. We'll also cover sitemaps, robots.txt files, and other essential tools for optimizing your blog's SEO.
+**Welcome to part five of "Building a GatsbyJS Blog!"** In this post, we'll take our blog to the next level by discussing search engine optimization (SEO) techniques. SEO is essential for any website and is no different for our GatsbyJS blog. Optimizing our blog for search engines can increase our visibility, drive traffic to our site, and grow our audience.
 
-Finally, we'll take a look at Open Graph (OG) tags, which are crucial for optimizing your blog's social media presence. With these techniques, you'll be able to make your blog more visible, more accessible, and more successful. So let's dive into the world of SEO and take our GatsbyJS blog to the next level!
+**This post will cover SEO basics for our GatsbyJS blog. We'll start by discussing the importance of metadata and show you how to add metadata to your blog. We'll also cover sitemaps, robots.txt files, and other essential tools for optimizing your blog's SEO.**
 
-## Custom metatags
+So let's dive into the world of SEO and take our GatsbyJS blog to the next level!
 
-### Update siteMetadata
+<GatsbyBlogSeriesNavigation currentPage={GatsbyBlogSeriesPage.P5_SEO} />
+
+## Metadata and Meta tags
+
+Meta tags may not be the most glamorous part of web development, but **they play a crucial role in how your website appears in search engine results and how users interact with your content**. These snippets of HTML code, placed in the head section of an HTML document, provide important information to web crawlers and browsers about your website.
+
+One of the most common types of meta tag is the meta description tag, which provides a brief summary of the page's content. Think of it as a mini advertisement for your page that appears in search engine results. A well-written and engaging meta description can entice users to click through your website and explore your content further.
+
+In addition to the meta description tag, many other meta tags can be used to improve your website's search engine optimization and user experience. For example, while no longer used by most search engines, the meta keywords tag can still provide a list of relevant keywords for your content. The meta robots tag, on the other hand, is used to control how web crawlers index and follow links on your page.
+
+So, while they may seem small and unimportant, meta tags are vital to effective website development. **By using them correctly, you can improve the visibility of your website in search engine results and provide a better user experience for your audience**.
+
+### Find a default image for your website
+
+**One of the things we need is an image that we can use as a default image for social media posts on our pages.**. We can reuse the image we're currently displaying on the home page since that's about as close to a default image as we now have.
+
+Just copy the image to the `./src/static/` directory and name it `featured.jpg`
+
+```bash
+mkdir ./src/static
+cp ./src/images/header.jpg ./src/static/featured.jpg
+```
+
+> **TIP**: Anything you put in the `./src/static` directory will become available in your website's `/static` folder. So, in the above example, you can find the image at `localhost:8000/static/featured.jpg`.
+
+> **NOTE**: While the default image isn't **strictly** necessary, it will protect you if you still need to define an image for a page.
+
+### Update siteMetadata in gatsby-config.ts
+
+Now we'll add a default description and a reference to our image in the `siteMetadata` section of the `gatsby-config.ts` file.
+
+```typescript
+const config: GatsbyConfig = {
+  siteMetadata: {
+    title: `My Gatsby Blog`,
+    siteUrl: `https://www.yourdomain.tld`,
+    author: 'John Smith',
+    // highlight-start
+    description:
+      'Follow my journey building a stunning and performant blog with GatsbyJS! Get tips and insights on web development, design, and more.',
+    image: 'featured.jpg'
+    // highlight-end
+    navigation: [
+      {
+        name: 'About',
+        path: '/about',
+      },
+      {
+        name: 'Blog',
+        path: '/blog',
+      },
+    ],
+  },
+  // ...
+};
+```
 
 ### Add a CustomHead component
 
-### Apply the CustomHead component
+**Each page route can export a `Head` component that Gatsby will use when constructing the page's `head` tag.** Whatever that component exports is imported into the `head` tag.
+
+Since our pages will have many of the same meta tags but with some variation to the values, it makes sense to create a **reusable component** to handle the duplication.
+
+Here's our `CustomHead` component:
+
+```bash
+touch ./src/components/CustomHead.tsx
+```
+
+```tsx
+// ./src/components/CustomHead.tsx
+import { useLocation } from '@reach/router';
+import React from 'react';
+import { useSiteMetadata } from '../../hooks/use-site-metadata';
+
+interface CustomHeadProps {
+  description?: string;
+  lang?: string;
+  title?: string;
+  image?: string;
+  article?: boolean;
+  canonicalUrl?: string;
+  nonCanonical?: boolean;
+  author?: string;
+  noindex?: boolean;
+}
+
+export const CustomHead: React.FC<React.PropsWithChildren<CustomHeadProps>> = ({
+  description: propDescription,
+  lang: propLang,
+  title: propTitle,
+  image,
+  article,
+  canonicalUrl: propCanonicalPath,
+  nonCanonical = false,
+  author: propAuthor,
+  noindex = false,
+  children,
+}) => {
+  const {
+    title: siteTitle,
+    description: siteDescription,
+    image: siteImage,
+    siteUrl,
+    author: siteAuthor,
+  } = useSiteMetadata();
+
+  // By default, we will construct the canonical path ourselves, but this can
+  // be overwritten via the component properties
+  const { pathname } = useLocation();
+  const defaultCanonicalPath = `${siteUrl}${pathname}`;
+  const canonicalUrl = propCanonicalPath || defaultCanonicalPath;
+
+  const siteName = siteTitle || 'My Gatsby Blog';
+  const title = propTitle;
+  const description = propDescription || siteDescription || '';
+  const lang = propLang || 'en_US';
+  const author = propAuthor || siteAuthor || '';
+
+  return (
+    <>
+      <title>{title}</title>
+      {!nonCanonical && <link rel="canonical" href={canonicalUrl} />}
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={article ? 'article' : 'website'} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content={lang} />
+      <meta name="twitter:creator" content={author} />
+      <meta name="twitter:site" content={author} />
+      <meta name="tiwtter:url" content={canonicalUrl} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      {image ? (
+        <>
+          <meta property="og:image" content={`${siteUrl}${image}`} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </>
+      ) : (
+        <>
+          <meta property="og:image" content={`${siteUrl}/${siteImage}`} />
+          <meta name="twitter:card" content="summary" />
+        </>
+      )}
+      {noindex && <meta name="googlebot" content="noindex, nofollow" />}
+      {children}
+    </>
+  );
+};
+```
+
+This is pretty much what I use at [machineservant.com](https://www.machineservant.com/) for all my pages and blog articles.
+
+> **NOTE**: Take special notice of how we pass image data around. The image is a `string`, not a Gatsby image data object. So we're going to reference the image's location via a URL. This is what the meta tags expect.
+
+Let's talk briefly about each meta tag and other attributes we defined in the `CustomHead` component for completeness.
+
+#### Canonical link
+
+**A canonical link tag is an HTML element used to specify the preferred URL of a web page in situations where the same content can be accessed from multiple URLs.**
+
+If multiple URLs can be used to hit the same page, you need to tell search engines which URL is the "preferred" URL they should index. This happens more than you might think.
+
+And sometimes, you may even do this intentionally. There are **some situations where intentionally creating a non-canonical link in a web page can be appropriate**, such as **when creating a print-friendly or mobile-friendly version of a page that has a different URL**, or when **redirecting users to a localized version of a page based on their location or language preference**. Additionally, if you want to track clicks on a specific link separately from the canonical version, you could create a non-canonical link with unique tracking parameters.
+
+```typescript
+  const { pathname } = useLocation();
+  const defaultCanonicalPath = `${siteUrl}${pathname}`;
+  const canonicalUrl = propCanonicalPath || defaultCanonicalPath;
+
+  return (
+    // ...
+    {!nonCanonical && <link rel="canonical" href={canonicalUrl} />}
+    // ...
+  )
+```
+
+#### OG and twitter meta tags
+
+**OG (Open Graph) and Twitter meta tags are special types of meta tags used to control how your website's content appears when it is shared on social media platforms like Facebook, Twitter, and other social media sites.**
+
+OG meta tags are used by Facebook to create rich, interactive previews of shared links, including a title, description, and image. Twitter meta tags serve a similar purpose, allowing you to specify the title, description, and image used when your content is shared on the platform.
+
+By including OG and Twitter meta tags in your website's code, you can ensure that your shared content is displayed in the most attractive and informative way possible on social media, increasing engagement and driving more traffic to your site.
+
+```tsx
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={lang} />
+<meta name="twitter:creator" content={author} />
+<meta name="twitter:site" content={author} />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{image ? (
+  <>
+    <meta property="og:image" content={`${siteUrl}${image}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </>
+) : (
+  <>
+    <meta property="og:image" content={`${siteUrl}/${siteImage}`} />
+    <meta name="twitter:card" content="summary" />
+  </>
+)}
+```
+
+> **NOTE**: The "og" and "twitter" tags used above are just a subset of all the tags available. But, for our purposes, this is good.
+
+#### The googlebot, noindex tag
+
+**Sometimes, you should ensure that Google doesn't index your page.** For example, a **search result page**, or a **form submission confirmation page**. You don't necessarily want Google picking those pages up and indexing them, so we add this meta tag to ensure that doesn't happen:
+
+```tsx
+{
+  noindex && <meta name="googlebot" content="noindex, nofollow" />;
+}
+```
+
+> **NOTE**: We will also use the sitemap and robots.txt files to help inform search engines what to index. The above method is useful as a failsafe when the sitemap or robots.txt methods are difficult to define (paginated blog pages).
+
+### Update the pages to use the CustomHead component
+
+Let's make use of the `CustomHead` component on our pages.
+
+**For our "home", "about", and "blog" pages, we can do this very quickly.**
+
+```tsx
+// ./src/pages/index.tsx
+
+export const Head: HeadFC = () => (
+  <CustomHead
+    title="Home | My Gatsby Blog"
+    description="This is the home page to my blog. You should write a better description."
+  />
+);
+```
+
+Follow the same pattern for the "about" and "blog" page routes, and you should be all set.
+
+**The individual blog posts require more configuration** since they are dynamically created.
+
+Open up the `./src/templates/BlogPostTemplate.tsx` file and make the following changes:
+
+```tsx
+const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
+  data,
+  children,
+}) => {
+  // ...
+};
+
+export default BlogPostTemplate;
+
+export const query = graphql`
+  query BlogPost($id: String!) {
+    mdx(id: { eq: $id }) {
+      //highlightstart
+      excerpt(pruneLength: 159)
+      //highlightend
+      frontmatter {
+        title
+        author
+        date(formatString: "MMMM DD, YYYY")
+        featuredImage {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH)
+          }
+        }
+      }
+    }
+  }
+`;
+
+// highlight-start
+export const Head: HeadFC<Queries.BlogPostQuery, unknown> = ({ data }) => {
+  const imageUrl =
+    data.mdx?.frontmatter?.featuredImage?.childImageSharp?.gatsbyImageData
+      .images.fallback?.src;
+
+  return (
+    <CustomHead
+      title={data.mdx?.frontmatter?.title || ''}
+      description={data.mdx?.excerpt || ''}
+      image={imageUrl}
+      article
+    />
+  );
+};
+// highlight-end
+```
+
+> **NOTE**: Defining the image URL by drilling into the frontmatter's `featuredImage` export like this may not be the most efficient way to do this, but in my experience, it has worked very well. **If you have another way to do this, I'd love to hear about it**.
+
+> **NOTE**: If you try to test how your pages might look as links to social media using a browser plugin or other utility, **you will find that your images are not showing up**. This is because your images are pointing to as-yet unhosted URLs. **Once the site is published and hosted, those links should resolve and display correctly**.
 
 ## Add a sitemap file
 
+**A sitemap file is a file that provides a list of URLs for a website, usually in XML format. The purpose of a sitemap file is to help search engines discover and index all the pages on a website and provide additional information about each page, such as its last update date, priority, and change frequency.**
+
+Sitemap files are essential for ensuring that all of the content on a website is discoverable by search engines, which can help improve the site's visibility and search engine rankings. They can also provide valuable insights into website structure and content for owners and developers. In addition, sitemap files can be submitted to search engines, such as Google and Bing, to help them crawl and index a site more efficiently.
+
+We will use the `gatsby-plugin-sitemap` module to help automate this process. For our purposes, the default configuration should be fine, **but as the blog gets more complicated, we will return to this plugin to add more configuration**.
+
+```bash
+npm install gatsby-plugin-sitemap
+```
+
+```typescript
+// gatsby-config.ts
+const config: GatsbyConfig = {
+  plugins: [
+    // ...
+    'gatsby-plugin-sitemap', // highlight-line
+    // ...
+  ],
+};
+```
+
+After you have installed and configured the plugin, **build the site** with `gatsby build`, and you should see the `sitemap-index.xml` and `sitemap-0.xml` files in your `./public` folder.
+
+> **TIP**: Once you have deployed this site to a web host, you can add the `sitemap-index.xml` file to Google Search Console for your site. This will help Google when crawling your site and improve your search engine ranking.
+
 ## Add a robots.txt file
+
+**A robots.txt file is a file that is placed in the root directory of a website to provide instructions to web robots, also known as crawlers or spiders, about which pages or files on the site should be crawled or indexed.**
+
+The robots.txt file can contain directives that tell search engine crawlers which pages or directories should not be crawled and which pages or directories should be crawled. **This file is essential for controlling which content on a website is exposed to search engines** and can help prevent the indexing of sensitive or duplicate content.
+
+It is important to note that the robots.txt file is a public document and **does not provide any security**. While some web robots may choose to follow the directives in the file, **others may ignore it completely**, so it should not be relied upon as a way to hide sensitive information from public view.
+
+We will use the `gatsby-plugin-robots-txt` module to auto-generate our `robots.txt` file.
+
+```bash
+npm install gatsby-plugin-robots-txt
+```
+
+```typescript
+// gatsby-config.ts
+const config: GatsbyConfig = {
+  plugins: [
+    // ...
+    // highlight-start
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://<your-domain>',
+        sitemap: 'https://<your-domain>/sitemap-index.xml',
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+      // ...
+    ],
+    // highlight-end
+  }
+}
+```
+
+After the module has been installed and configured, rebuild the site with `gatsby build`; you should see a `robots.txt` file in the `./public` directory.
+
+> **NOTE**: You can do much more configuration, but this is all you need for a basic setup.
+
+## Conclusion
+
+In this post, we've explored some fundamental aspects of search engine optimization, including how to set up metadata, sitemaps, robots.txt files, and og tags. By implementing these techniques, you can ensure that your website is easily discoverable and properly indexed by search engines, potentially driving more traffic and increasing your online visibility.
+
+In the next post, I'll outline how you can host this site on Netlify and set up automated builds. Stay tuned!
+
+Here is the source code for this post: [MachineServant GitHub: Building a Gatsby Blog (part 5): SEO](https://github.com/Machine-Servant/build-a-gatsby-blog-series/tree/blog/p5-seo)
+
+<GatsbyBlogSeriesNavigation currentPage={GatsbyBlogSeriesPage.P5_SEO} />

@@ -2,11 +2,13 @@ import { Link } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import React, { useMemo, useState } from 'react';
 import { useFlexSearch } from 'react-use-flexsearch';
+import { twMerge } from 'tailwind-merge';
 import { useIsSsr } from '../../hooks/is-ssr';
 import { BlogPageContext } from '../../types';
 import { Layout } from '../layout';
 import { Post } from '../post';
 import { Tag } from '../tag';
+import { Paginator } from './components/paginator';
 import { Search } from './components/search';
 
 export const BlogList = ({
@@ -115,27 +117,39 @@ export const BlogList = ({
       </div>
       {showNavigation && (
         <div className="container mx-auto mb-12 max-w-5xl">
-          <div className="flex justify-around lg:justify-between">
-            {backPath ? (
-              <Link
-                className="w-32 bg-lochmara-500 px-4 py-2 text-center text-lg text-white"
-                to={backPath}
-              >
-                Back
-              </Link>
-            ) : (
-              <div />
-            )}
-            {nextPath ? (
-              <Link
-                className="w-32 bg-lochmara-500 px-4 py-2 text-center text-lg text-white"
-                to={nextPath}
-              >
-                Next
-              </Link>
-            ) : (
-              <div />
-            )}
+          <div className="flex items-center justify-around lg:justify-between">
+            <Link
+              className={twMerge(
+                'w-32 bg-lochmara-500 px-4 py-2 text-center text-lg text-white',
+                !backPath && 'cursor-not-allowed opacity-20'
+              )}
+              to={backPath || '#'}
+              onClick={(e) => {
+                if (!backPath) {
+                  e.preventDefault();
+                }
+              }}
+            >
+              Back
+            </Link>
+            <Paginator
+              numPages={numPages || 0}
+              currentPage={currentPage || 0}
+            />
+            <Link
+              className={twMerge(
+                'w-32 bg-lochmara-500 px-4 py-2 text-center text-lg text-white',
+                !nextPath && 'cursor-not-allowed opacity-20'
+              )}
+              to={nextPath || '#'}
+              onClick={(e) => {
+                if (!nextPath) {
+                  e.preventDefault();
+                }
+              }}
+            >
+              Next
+            </Link>
           </div>
         </div>
       )}

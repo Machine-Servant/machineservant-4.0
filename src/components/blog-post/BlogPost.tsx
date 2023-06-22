@@ -7,7 +7,11 @@ import { components, MainContent } from '../../components/blog-post';
 import { ByLine } from '../../components/by-line';
 import { Layout } from '../../components/layout';
 import { Tag } from '../../components/tag';
-import { GatsbyBlogSeriesNavigation, PhotoCredits } from '../mdx-components';
+import {
+  GatsbyBlogSeriesNavigation,
+  PhotoCredits,
+  ReactNativeNavigationSeriesNavigation,
+} from '../mdx-components';
 import { RelatedPost } from '../related-post';
 import { TableOfContents } from './components/table-of-contents';
 
@@ -74,6 +78,7 @@ export const BlogPost: React.FC<PageProps<Queries.BlogPostPageQuery>> = ({
             ...components,
             PhotoCredits,
             GatsbyBlogSeriesNavigation,
+            ReactNativeNavigationSeriesNavigation,
           }}
         >
           {children}

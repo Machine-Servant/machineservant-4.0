@@ -1,0 +1,91 @@
+---
+date: '2023-06-23 05:00:00'
+title: 'React Native Navigation Guide Part 5: Advanced Navigation Concepts'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Field of wild growing grass'
+imageCredits: 'Photo by Dapur Melodi'
+imageCreditsUrl: 'https://www.pexels.com/photo/macro-photography-of-green-grass-699422/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p4-react-native-navigation',
+    '2023-06-23-p6-react-native-navigation',
+  ]
+---
+
+In the previous sections, we've covered the fundamental navigation structures in React Navigation: Stack, Tab, and Drawer navigators. However, navigation in complex applications often involves intricate structures and operations that combine these navigators. We also encounter other UI patterns such as modals, overlays, and deep linking. In this section, we'll delve into these advanced navigation concepts, providing examples to help you create more dynamic and interactive applications.
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P5}
+/>
+
+## Nested navigators: Combining stack, tab, and drawer navigators
+
+You can nest navigators to create a complex navigation structure. For instance, you could have a stack navigator inside a tab navigator:
+
+```tsx
+<Tab.Navigator>
+  <Tab.Screen name="Home" component={HomeStack} />
+  <Tab.Screen name="Settings" component={SettingsStack} />
+</Tab.Navigator>
+
+// Where HomeStack and SettingsStack are separate stack navigators
+```
+
+## Modals and overlays: Creating modal screens and overlays
+
+Sometimes, you may need to display a screen or an overlay on top of all other content. You can create a modal screen using the mode prop in Stack.Navigator:
+
+```tsx
+<Stack.Navigator mode="modal">
+  <Stack.Screen name="Home" component={HomeScreen} />
+  <Stack.Screen name="MyModal" component={ModalScreen} />
+</Stack.Navigator>
+```
+
+## Deep linking: Handling URLs and external deep linking
+
+Deep linking lets you open your app to specific screens from a URL. You can configure deep linking by providing a linking prop to the NavigationContainer:
+
+```tsx
+const linking = {
+  prefixes: ['demo://app'],
+  config: {
+    screens: {
+      Home: 'home',
+      Profile: 'profile/:id',
+    },
+  },
+};
+
+<NavigationContainer linking={linking}>
+  {/* rest of your app */}
+</NavigationContainer>;
+```
+
+## FAQ
+
+1. **What is nested navigation?**
+
+Nested navigation refers to the process of embedding one navigator within another. For instance, a stack navigator can be nested within a tab navigator, allowing the application to have multiple stacks within different tabs.
+
+2. **How can I create a modal screen?**
+
+Modal screens can be created by setting the mode prop of the Stack.Navigator to "modal".
+
+3. **What is deep linking and how does it work in React Navigation?**
+
+Deep linking allows an application to be opened to a specific screen via a URL from an external source (like a web page or an email). This can be configured using the linking prop in the NavigationContainer.

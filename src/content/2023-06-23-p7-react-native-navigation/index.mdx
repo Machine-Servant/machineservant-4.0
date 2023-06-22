@@ -1,0 +1,99 @@
+---
+date: '2023-06-23 07:00:00'
+title: 'React Native Navigation Guide Part 7: Advanced Navigation Patterns'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Grazing Animals Near a Creek and Trees'
+imageCredits: 'Photo by Mabel Amber'
+imageCreditsUrl: 'https://www.pexels.com/photo/grazing-animals-near-creek-and-trees-141978/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p6-react-native-navigation',
+    '2023-06-23-p8-react-native-navigation',
+  ]
+---
+
+As we move further into the intricacies of navigation in React Native applications, we encounter several unique patterns that address specific needs. From the implementation of authentication flows to bottom tab navigation with stack screens and conditional navigation, these patterns serve to create a more dynamic and interactive user experience. In this section, we will delve into these patterns, providing examples and explanations to guide your understanding. By the end, you'll have a deeper grasp of the versatility and potential of React Navigation.
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P7}
+/>
+
+## Authentication flow: Implementing login and signup screens
+
+You can create an authentication flow using a stack navigator. Here's an example of how you can do it:
+
+```tsx
+<Stack.Navigator>
+  {isLoggedIn ? (
+    <>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      {/* other logged in screens */}
+    </>
+  ) : (
+    <>
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      {/* other logged out screens */}
+    </>
+  )}
+</Stack.Navigator>
+```
+
+## Bottom tab navigation with stack screens
+
+You can create a tab navigator with each tab containing a stack of screens:
+
+```tsx
+<Tab.Navigator>
+  <Tab.Screen name="Home" component={HomeStackScreen} />
+  <Tab.Screen name="Settings" component={SettingsStackScreen} />
+</Tab.Navigator>
+```
+
+## Conditional navigation: Navigating based on certain conditions
+
+You can navigate conditionally based on certain state or props:
+
+```tsx
+function ProfileButton({ navigation, user }) {
+  return (
+    <Button
+      title="Open profile"
+      onPress={() =>
+        user
+          ? navigation.navigate('Profile', { user })
+          : navigation.navigate('SignIn')
+      }
+    />
+  );
+}
+```
+
+## FAQ
+
+1. **How can I implement an authentication flow in my application?**
+
+You can implement an authentication flow by using a stack navigator and conditionally rendering different sets of screens based on whether the user is logged in.
+
+2. **How can I have each tab in a tab navigator contain a stack of screens?**
+
+You can have each tab contain a stack of screens by making each Screen component in your Tab.Navigator a stack navigator.
+
+3. **How can I navigate conditionally based on certain conditions?**
+
+You can navigate conditionally by calling navigation.navigate with different screen names based on your application's state or props.

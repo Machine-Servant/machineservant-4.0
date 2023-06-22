@@ -1,0 +1,110 @@
+---
+date: '2023-06-23 06:00:00'
+title: 'React Native Navigation Guide Part 6: Navigation Options and Styling'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Yellow Flowers Under a Blue Sky During the Daytime'
+imageCredits: 'Photo by Pixabay'
+imageCreditsUrl: 'https://www.pexels.com/photo/yellow-flower-field-under-blue-cloudy-sky-during-daytime-46164/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p5-react-native-navigation',
+    '2023-06-23-p7-react-native-navigation',
+  ]
+---
+
+In any application, the ability to customize the look and feel of navigation components is essential. It not only enhances the user experience but also ensures consistency with the application's overall design. This section will introduce you to the realm of customization in React Navigation, where we will discuss how to modify navigation headers, titles, and icons, as well as the theming of navigation components. By the end of this section, you should be able to create a navigation structure that is not only functional but also visually cohesive.
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P6}
+/>
+
+## Customizing navigation headers and titles
+
+You can customize headers and titles of your screens using the options prop on the Screen components:
+
+```tsx
+<Stack.Screen
+  name="Home"
+  component={HomeScreen}
+  options={{
+    title: 'My home',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  }}
+/>
+```
+
+## Adding icons, images, and other custom components to headers
+
+Adding custom elements such as icons or images to your headers can be done in a similar manner:
+
+```tsx
+<Stack.Screen
+  name="Home"
+  component={HomeScreen}
+  options={{
+    headerTitle: (props) => <LogoTitle {...props} />, // Custom component
+    headerRight: () => (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="#00cc00"
+      />
+    ),
+  }}
+/>
+```
+
+## Styling and theming navigation components
+
+React Navigation supports theming, which allows you to define a set of colors for your navigation components:
+
+```tsx
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'rgb(255, 45, 85)',
+    background: 'rgb(242, 242, 242)',
+  },
+};
+
+<NavigationContainer theme={MyTheme}>
+  {/* rest of your app */}
+</NavigationContainer>;
+```
+
+## FAQ
+
+1. **How can I customize the header of a screen?**
+
+You can customize the header of a screen using the options prop on your Screen component. This allows you to change the title, background color, tint color, and title style among other things.
+
+2. **How can I add icons or custom components to my headers?**
+
+You can add icons or custom components to your headers by defining headerTitle or headerRight/headerLeft in the options prop on your Screen component.
+
+3. **How can I style my navigation components?**
+
+You can style your navigation components by creating a custom theme and passing it to the theme prop on your NavigationContainer.

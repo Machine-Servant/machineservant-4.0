@@ -1,0 +1,115 @@
+---
+date: '2023-06-23 03:00:00'
+title: 'React Native Navigation Guide Part 3: Finessing Tab Navigation'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Green Grass Field During Sun Rise'
+imageCredits: 'Photo by Peter Fazekas'
+imageCreditsUrl: 'https://www.pexels.com/photo/green-grass-field-during-sun-rise-997121/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p2-react-native-navigation',
+    '2023-06-23-p4-react-native-navigation',
+  ]
+---
+
+As we continue our exploration of React Navigation, we now turn our attention to a feature that forms the backbone of most mobile application interfaces - the Tab Navigation. Used commonly for primary navigation within apps, Tab Navigation lets users switch between different screens or sections effortlessly. In this section, we will guide you through the process of setting up and customizing Tab Navigation, and then dive into handling various navigation events in tab screens. By the end of this section, you should be able to incorporate and control Tab Navigation effectively in your application. Let's get started!
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P3}
+/>
+
+## Configuring a tab navigator and defining tab screens
+
+Start by installing the required package:
+
+```bash
+npm install @react-navigation/bottom-tabs
+```
+
+Then, you can create a tab navigator similarly to how we created a stack navigator:
+
+```jsx
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
+  );
+}
+```
+
+## Customizing tab appearance and behavior
+
+React Navigation provides a variety of customization options for tab navigation. You can modify the appearance and behavior of your tabs by passing props to the Tab.Navigator and Tab.Screen components.
+
+For instance, you can change the label of the tabs and the color of the active tab:
+
+```tsx
+<Tab.Navigator
+  screenOptions={({ route }) => ({
+    tabBarActiveTintColor: 'tomato',
+    tabBarInactiveTintColor: 'gray',
+  })}
+>
+  <Tab.Screen
+    name="Home"
+    component={HomeScreen}
+    options={{ tabBarLabel: 'Home Page' }}
+  />
+  <Tab.Screen
+    name="Settings"
+    component={SettingsScreen}
+    options={{ tabBarLabel: 'Settings Page' }}
+  />
+</Tab.Navigator>
+```
+
+## Handling navigation events in tab screens
+
+Events like tab press can be intercepted and handled using listeners:
+
+```tsx
+<Tab.Screen
+  name="Home"
+  component={HomeScreen}
+  listeners={{
+    tabPress: (e) => {
+      // Prevent the default action
+      e.preventDefault();
+    },
+  }}
+/>
+```
+
+## FAQ
+
+1. **What are the benefits of tab navigation?**
+
+Tab navigation is a convenient way for users to switch between different screens or sections of the application. It's particularly effective for important navigation routes that need to be accessible from anywhere in the app.
+
+2. **How can I customize the appearance of the tabs?**
+
+You can customize the appearance of tabs by passing props to the Tab.Navigator and Tab.Screen components. This includes changing the label, color, and even adding icons.
+
+3. **Can I prevent navigation to a tab under certain conditions?**
+
+Yes, you can prevent tab navigation by handling the tabPress event and calling e.preventDefault() if certain conditions are met.

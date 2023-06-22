@@ -1,5 +1,5 @@
-import { Link } from 'gatsby';
 import React from 'react';
+import { SeriesLinks } from '../series-links';
 
 export enum GatsbyBlogSeriesPage {
   P1_CREATING_PROJECT = 'CREATING_PROJECT',
@@ -44,24 +44,5 @@ export const GatsbyBlogSeriesNavigation: React.FC<
     },
   ];
 
-  return (
-    <div className="mb-8">
-      <h2 className="mb-4 text-2xl font-medium">
-        Building a Gatsby Blog Series
-      </h2>
-      <ul>
-        {pageMap.map(({ page, url, label }) => (
-          <li>
-            {page === currentPage ? (
-              <p>➩ {label}</p>
-            ) : (
-              <Link to={`/blog/${url}`} className="text-lochmara-500 underline">
-                <p>{label}</p>
-              </Link>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <SeriesLinks pageMap={pageMap} currentPage={currentPage} />;
 };

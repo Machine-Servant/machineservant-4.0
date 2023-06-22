@@ -1,0 +1,122 @@
+---
+date: '2023-06-23 04:00:00'
+title: 'React Native Navigation Guide Part 4: Mastering Drawer Navigation'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Pink Flower Field'
+imageCredits: 'Photo by Pixabay'
+imageCreditsUrl: 'https://www.pexels.com/photo/pink-flower-field-414083/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p3-react-native-navigation',
+    '2023-06-23-p5-react-native-navigation',
+  ]
+---
+
+As we progress further in our comprehensive exploration of React Navigation, it's time to unfold another popular navigation pattern - the Drawer Navigation. Offering an expandable menu, Drawer Navigation is an excellent choice for housing secondary navigation options or elements not crucial to all app interactions. In this section, we will guide you through the nuances of setting up Drawer Navigation, customizing its appearance and behavior, and managing navigation events within drawer screens. By the end of this segment, you'll be well-equipped to integrate a fluid Drawer Navigation into your mobile application. Let's begin!
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P4}
+/>
+
+## Setting up a drawer navigator and configuring drawer screens
+
+Start by installing the drawer navigation package:
+
+```bash
+npm install @react-navigation/drawer
+```
+
+Next, create a drawer navigator. This is similar to creating a stack or tab navigator:
+
+```tsx
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+const Drawer = createDrawerNavigator();
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+    </Drawer.Navigator>
+  );
+}
+```
+
+## Customizing drawer appearance and behavior
+
+You can customize the appearance of your drawer and the behavior of drawer screens using various props and options:
+
+```tsx
+<Drawer.Navigator
+  initialRouteName="Home"
+  drawerType="slide"
+  drawerPosition="left"
+  drawerStyle={{
+    backgroundColor: '#c6cbef',
+    width: 240,
+  }}
+  drawerContentOptions={{
+    activeTintColor: '#e91e63',
+    itemStyle: { marginVertical: 5 },
+  }}
+>
+  <Drawer.Screen
+    name="Home"
+    component={HomeScreen}
+    options={{ drawerLabel: 'Home Page' }}
+  />
+  <Drawer.Screen
+    name="Notifications"
+    component={NotificationsScreen}
+    options={{ drawerLabel: 'Updates' }}
+  />
+</Drawer.Navigator>
+```
+
+## Handling navigation events in drawer screens
+
+You can add listeners to your drawer screens to handle different events. This is useful if you need to execute code when a drawer screen is focused or unfocused:
+
+```tsx
+<Drawer.Screen
+  name="Home"
+  component={HomeScreen}
+  listeners={{
+    focus: () => {
+      console.log('Home screen was focused');
+    },
+    blur: () => {
+      console.log('Home screen was unfocused');
+    },
+  }}
+/>
+```
+
+## FAQ
+
+1. **What are some typical use cases for drawer navigation?**
+
+Drawer navigation is usually used for secondary navigation options that don't need to be accessible all the time. It's also used for navigation options that don't fit in the bottom tab bar, such as links to settings or profile pages.
+
+2. **How can I customize the drawer's appearance?**
+
+You can customize the drawer's appearance using various props on the Drawer.Navigator component, such as drawerType, drawerPosition, drawerStyle, and drawerContentOptions.
+
+3. **How can I handle navigation events in drawer screens?**
+
+You can handle navigation events by adding listeners to your Drawer.Screen components. These listeners can react to focus and blur events.

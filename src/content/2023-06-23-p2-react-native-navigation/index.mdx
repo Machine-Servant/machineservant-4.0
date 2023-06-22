@@ -1,0 +1,110 @@
+---
+date: '2023-06-23 02:00:00'
+title: 'React Native Navigation Guide Part 2: Building with Stack Navigation'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Green trees on a hill'
+imageCredits: 'Photo by Pixabay'
+imageCreditsUrl: 'https://www.pexels.com/photo/green-trees-on-hill-269138/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p1-react-native-navigation',
+    '2023-06-23-p3-react-native-navigation',
+  ]
+---
+
+In the previous section, we established the importance of navigation and discussed the fundamentals of setting up React Navigation. As we dive further into this guide, we will now explore one of the fundamental components of mobile application navigation - the Stack Navigation. This section will take you through the anatomy of a stack navigator, illustrating the ease of screen transitions and the method to transmit parameters between screens. We hope this section clears the path for you to construct an efficient stack navigation structure for your application. Let's dive in!
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P2}
+/>
+
+## The anatomy of a stack navigator: set-up and route initialization
+
+The first step to create a stack navigation is to install the stack navigator package:
+
+```bash
+npm install @react-navigation/stack
+```
+
+Then, create a stack navigator and define initial routes. Routes are defined using the Screen component, and the navigator should wrap all Screen components.
+
+```tsx
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function MyStack() {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
+    </Stack.Navigator>
+  );
+}
+```
+
+## The art of screen transition using stack navigation
+
+You can navigate to different screens using the navigation.navigate function provided in your screen component's props.
+
+```tsx
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
+```
+
+## The practice of parameter transmission between screens
+
+You can pass parameters while navigating to screens. These parameters can be accessed through the route prop in the target screen.
+
+```tsx
+function HomeScreen({ navigation }) {
+  return (
+    <Button
+      title="Go to Details"
+      onPress={() => navigation.navigate('Details', { itemId: 86 })}
+    />
+  );
+}
+
+function DetailsScreen({ route }) {
+  const { itemId } = route.params;
+
+  return <Text>Item Id: {JSON.stringify(itemId)}</Text>;
+}
+```
+
+## FAQ
+
+1. **What is the initialRouteName prop in Stack.Navigator?**
+
+The initialRouteName prop determines which screen should be shown first when the app loads.
+
+2. **What does navigation.navigate do?**
+
+The navigation.navigate function allows you to navigate to different screens. You can pass the name of the route you want to navigate to as an argument.
+
+3. **How do I pass parameters to a screen during navigation?**
+
+You can pass parameters as a second argument to the navigation.navigate function. These parameters will be available in the route.params object in the target screen.

@@ -1,0 +1,100 @@
+---
+date: '2023-06-23 01:00:00'
+title: 'React Native Navigation Guide Part 1: Getting Started'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: 'Blue, white, and red poppy flower field'
+imageCredits: 'Photo by Kristina Paukshtite'
+imageCreditsUrl: 'https://www.pexels.com/photo/blue-white-and-red-poppy-flower-field-712876/'
+tags:
+  [
+    'Tech',
+    'Framework',
+    'React',
+    'React Native',
+    'React Native Guide',
+    'Navigation',
+    'Information',
+  ]
+published: true
+relatedPosts:
+  [
+    '2023-06-23-p2-react-native-navigation',
+    '2023-02-08-web-application-development-guide',
+  ]
+---
+
+Navigation is an integral part of any mobile application, providing a pathway for users to traverse various screens and interfaces. React Navigation, a popular choice among developers, offers a flexible and intuitive approach to implementing complex navigation patterns with relative ease.
+
+import { ReactNativeNavigationSeriesPage } from '../../components/mdx-components';
+
+<ReactNativeNavigationSeriesNavigation
+  currentPage={ReactNativeNavigationSeriesPage.P1}
+/>
+
+## Laying the Foundation for React Navigation
+
+Let's start by installing React Navigation:
+
+```bash
+npm install @react-navigation/native
+```
+
+For the Expo managed project, you will need to install additional dependencies:
+
+```bash
+expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+```
+
+## Grasping the Core of Navigation
+
+### Demystifying navigation elements: stacks, tabs, and drawers
+
+These are the three primary navigation patterns in mobile applications:
+
+- **Stack Navigation**: It follows a stack data structure where screens are stacked on top of each other. Navigating to a new screen places it on top of the stack, and you can go back by popping the screen off the stack.
+- **Tab Navigation**: It is commonly used for the app's main navigation where different sections of the app are accessible via tabs typically located at the bottom of the screen.
+- **Drawer Navigation**: It provides a sidebar drawer from the left or right of the screen, typically containing links to various sections of the app.
+
+### A primer on screens and components in the context of navigation
+
+In React Navigation, a screen corresponds to a React component. It gets displayed when that screen's route is active in the navigation stack.
+
+```tsx
+import * as React from 'react';
+import { Text, View } from 'react-native';
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+```
+
+### A peek into navigation options and parameters
+
+We can pass parameters to routes using the navigate function.
+
+```tsx
+navigation.navigate('RouteName', {
+  /* parameters goes here */
+});
+```
+
+We can also customize the appearance of a screen in the stack using navigation options.
+
+## FAQ
+
+1. **Why use React Navigation instead of other navigation libraries?**
+
+React Navigation provides a JavaScript-based navigation solution that doesn't need native code recompilation, making it a flexible and popular choice.
+
+2. **Can I use both Tab and Stack navigation in the same app?**
+
+Absolutely. You can nest different navigation patterns within each other to achieve the desired navigation flow.
+
+3. **How can I pass parameters to a screen?**
+
+Parameters can be passed as a second argument to the `navigation.navigate` function, which will be available in the screen component's props.

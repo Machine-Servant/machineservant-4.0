@@ -44,6 +44,40 @@ export const query = graphql`
         }
       }
     }
+    featuredPosts: allMdx(
+      limit: 2000
+      sort: { frontmatter: { date: DESC } }
+      filter: { frontmatter: { featured: { eq: true } } }
+    ) {
+      edges {
+        node {
+          id
+          excerpt(pruneLength: 160)
+          fields {
+            timeToRead {
+              minutes
+            }
+          }
+          parent {
+            ... on File {
+              id
+              relativeDirectory
+            }
+          }
+          frontmatter {
+            author
+            date(formatString: "MMMM DD, YYYY")
+            featuredImage {
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
+              }
+            }
+            title
+            tags
+          }
+        }
+      }
+    }
     tagsGroup: allMdx(
       limit: 2000
       filter: { frontmatter: { published: { eq: true } } }

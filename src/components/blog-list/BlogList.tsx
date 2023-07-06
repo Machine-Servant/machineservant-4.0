@@ -7,6 +7,7 @@ import { useIsSsr } from '../../hooks/is-ssr';
 import { BlogPageContext } from '../../types';
 import { Layout } from '../layout';
 import { Post } from '../post';
+import { PostVertical } from '../post-vertical';
 import { Tag } from '../tag';
 import { Paginator } from './components/paginator';
 import { Search } from './components/search';
@@ -110,10 +111,30 @@ export const BlogList = ({
           setSearchQuery={setSearchQuery}
         />
       )}
-      <div className="container mx-auto pt-8 pb-12 lg:py-12">
-        {posts.map((post: any) => (
-          <Post key={post.id} {...post} />
-        ))}
+      <div className="container mx-auto gap-8 xl:flex">
+        {data.featuredPosts && (
+          <div className="pt-8 pb-12 lg:py-12 xl:w-1/3">
+            <h2 className="mb-4 text-center text-3xl font-medium">
+              Featured Posts
+            </h2>
+            {data.featuredPosts.edges.map(({ node: post }) => (
+              <div
+                key={post.id}
+                className="mx-4 mb-8 last-of-type:mb-0 xl:mx-0"
+              >
+                <PostVertical {...post} />
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="flex-1 pt-8 pb-12 lg:py-12">
+          {!tag && (
+            <h3 className="mb-4 text-center text-3xl font-medium">All Posts</h3>
+          )}
+          {posts.map((post: any) => (
+            <Post key={post.id} {...post} />
+          ))}
+        </div>
       </div>
       {showNavigation && (
         <div className="container mx-auto mb-12 max-w-5xl">

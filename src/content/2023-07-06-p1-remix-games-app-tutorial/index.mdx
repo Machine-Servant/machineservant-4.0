@@ -1,0 +1,94 @@
+---
+date: '2023-07-06 00:00:00'
+title: "Remix Tutorial Part 1: Let's Build an App"
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt:
+imageCredits:
+imageCreditsUrl:
+tags: ['Tech', 'Framework', 'React', 'Remix', 'Tutorial']
+published: true
+relatedPosts:
+  [
+    '2023-01-26-remix-react-framework-2023',
+    '2023-02-03-using-graphql-with-remix',
+  ]
+---
+
+A few weeks ago, I was in Chicago visiting with my sisters and my nephew; Ben. Ben is 7. Ben likes video games. Ben likes old video games that I played when I was his age. Ben also enjoys computers and programming and watching me program websites.
+
+I spent a few hours with him building a small web application from scratch and taking copious screenshots of my code so he could print them out and pretend he was doing the programming himself.
+
+I ended up building him a straightforward Pokémon search application. I decided on the app concept and the [pokéapi](https://pokeapi.co/) because I didn't find a good video game API quickly enough to hold his attention (look, he's 7), and I knew about the pokéapi as I've recycled this project in a few front end development challenges I've given out to potential hires.
+
+The whole experience was a blast, and I thought: "why not build Ben something he would want to use?" So, here we are at 10:30 PM, with too much caffeine in my blood and a mission to impress my nephew with my web development abilities.
+
+And, if, on the way, I can teach someone a bit about web development and the Remix framework and kill some late-night hours, all the better!
+
+## What Are We Going To Build?
+
+**We're going to build a simple web application using the Remix framework. The basic idea is to allow my nephew to search for a video game, see some information and an image, and let him add those video games to a list of his favorite games.**
+
+### What Are The Features?
+
+Users will be able to:
+
+**Create an account, log in and out**
+
+> This is obvious, I think.
+
+**Search for a video game by name, genre, tag, etc.**
+
+> Ben likes to look for games by name, but I want to make sure he can find games by other criteria.
+
+**View a list of results from the search**
+
+> I want to make sure that Ben can find the games he wants to play.
+
+**Click on the result to see details about the game**
+
+> We have to have a way for him to learn more about the game!
+
+**Print the details about the game**
+
+> Ben likes to print things out and pretend. I want to make sure he can print out the details about the game.
+
+**Add a game to a favorites list**
+
+> Ben likes to keep track of the games he likes. I want to make sure he can do that.
+
+**View the favorites list**
+
+> I want to make sure he can see the games he likes.
+
+**Remove items from the favorites list**
+
+> Ben is fickle. I want to make sure he can remove games from his favorites list.
+
+### Other Features and Limitations
+
+I want this app to be as simple as possible. I want to make sure that Ben can use it without my help. I also want to make sure that I can build it in a reasonable amount of time. But, I also want to make sure that I can show off some of the cool features of Remix. So, with that in mind, here are some other features and limitations I'm going to impose on the application.
+
+**We're going to use the official Remix [Indie Stack](https://github.com/remix-run/indie-stack) template**
+
+> The [Indie Stack](https://github.com/remix-run/indie-stack) template is a great starting point for a Remix application like this. It has a SQLite database, authentication, and a few other things that will make building this app easier. Why reinvent the wheel?
+
+**We're going to use the [RAWG](https://rawg.io/apidocs) API**
+
+> The [RAWG](https://rawg.io/apidocs) API is a great video game API. It has a ton of information about video games, and it's free to use. It's also easy to use, and it has a lot of information about video games that I think Ben will like.
+
+**The app will be responsive**
+
+> Ben will probably use this app on his iPad, so I want to make sure it looks good on a tablet.
+
+**We are going to limit the platforms to the various Nintendo consoles**
+
+> Ben is a Nintendo fanboy. I want to make sure he can find games for his favorite consoles.
+
+**We are going to hide mature games**
+
+> Ben is 7. I don't want him to see games that are too mature for him.
+
+## Let's Build an App!
+
+So, now that we have a plan, let's get started! I've got a lot of work to do. Stay tuned as I'll be posting updates as I build the app.

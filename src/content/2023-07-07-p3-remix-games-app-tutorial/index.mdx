@@ -1,0 +1,308 @@
+---
+date: '2023-07-07 01:00:00'
+title: 'Remix Tutorial Part 3: The Side Menu'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: Green Tree on a Grass Field During Daytime
+imageCredits: Photo by Pixabay
+imageCreditsUrl: https://www.pexels.com/photo/green-tree-on-grass-field-during-daytime-53435/
+tags: ['Tech', 'Framework', 'React', 'Remix', 'Tutorial']
+published: true
+relatedPosts:
+  [
+    '2023-07-07-p2-remix-games-app-tutorial',
+    '2023-01-26-remix-react-framework-2023',
+    '2023-02-03-using-graphql-with-remix',
+  ]
+---
+
+In this tutorial, we will be adding a side menu to our app. This will allow us to navigate between the different pages of our app. We will also be adding a new "favorites" page to our app.
+
+Since Ben uses an iPad or his parent's phone a lot of the time, we want to make sure that our app is accessible on mobile devices. When the application is in mobile mode, the side menu will be hidden and a hamburger menu will be displayed. When the hamburger menu is clicked, the side menu will slide out from the right side of the screen. On larger devices, the menu will always be visible.
+
+## A Few Things First...
+
+Before we get started, there are a few things that we need to do.
+
+### 1. Create a "Favorites" page
+
+We will be adding a new "favorites" page to our app. This page will display all of the games that Ben has favorited. For now, this page is just a stub, but we will be adding functionality to it later on.
+
+```tsx
+// ~/app/routes/games.favorites.tsx
+import type { LoaderArgs } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
+import { getUserId } from '~/modules/auth';
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const userId = await getUserId(request);
+  if (!userId) return redirect('/login');
+  return json({});
+};
+
+export default function Favorites() {
+  return (
+    <div>
+      <h1 className="text-6xl font-bold">Favorites</h1>
+    </div>
+  );
+}
+```
+
+This route will be visible at `/games/favorites`.
+
+### 2. Add the "Games" Index Page
+
+In Remix, you can specify an `_index.tsx` file in a directory to be the default route for that directory. This is useful if, like us, you have a layout route ("games.tsx"), and intend to render child routes inside an `<Outlet />` component.
+
+Like the "favorites" page, this page is just a stub for now.
+
+```tsx
+// ~/app/routes/games._index.tsx
+import type { LoaderArgs } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
+import { getUserId } from '~/modules/auth';
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const userId = await getUserId(request);
+  if (!userId) return redirect('/login');
+  return json({});
+};
+
+export default function GamesPage() {
+  return (
+    <div>
+      <h1 className="text-6xl font-bold">Games</h1>
+    </div>
+  );
+}
+```
+
+### 3. Add an Outlet to the Games Layout
+
+We're going to be using the `<Outlet />` component on the main `app/routes/games.tsx` page. This component will render the child route that matches the current URL. That way we can have the main `games` page work as a layout route for all of the child routes (games, favorites, etc.).
+
+```tsx
+// ~/app/routes/games.tsx
+<main className="relative flex flex-1 bg-white">
+  <div>{/* Side Menu */}</div>
+  <div className="flex-1 p-6">
+    <Outlet />
+  </div>
+</main>
+```
+
+## Adding a Side Menu
+
+The side menu will contain navigation links to the different pages of our app. It will also let Ben log out.
+
+On mobile device sizes the menu will slide out from the left when Ben clicks a hamburger icon on the top right corner of the screen. This is a common pattern for mobile apps. On larger devices, the menu will always be visible.
+
+One of the challenges in implementing the side menu is that the menu behaves slightly differently when in mobile and desktop mode. The big problem is that we don't want slide-in or slide-out animations showing or hiding the menu when the application is in desktop mode.
+
+One solution is to create a base component that handles rendering the side menu itself and then have two child components that handle the mobile and desktop versions of the menu. This approach will let us control the side menu with finer precision. This is the approach that we will be taking.
+
+### 1. Create a Side Menu Component
+
+We will start by creating a new component called `SideNav`. This component will be responsible for rendering the side menu. There isn't any logic in this component. It just renders the common elements of the menu.
+
+Notice that we're passing in a handler for the `onItemClick` event. This will be used to close the menu when Ben clicks on a link on mobile devices.
+
+```tsx
+// ~/app/modules/games/components/sidenav/SideNav.tsx
+import type { User } from '@prisma/client';
+import { Form, Link } from '@remix-run/react';
+
+interface SideNavProps {
+  onItemClick?: () => void;
+  user: User;
+}
+
+export const SideNav: React.FC<SideNavProps> = ({ user, onItemClick }) => {
+  return (
+    <>
+      <div className="mb-auto w-full">
+        <nav className="w-full">
+          <ul className="flex flex-col">
+            <li className="w-full border-b hover:bg-gray-100">
+              <Link
+                className="block h-full w-full px-8 py-4 text-xl"
+                to="/games"
+                onClick={onItemClick}
+              >
+                Games
+              </Link>
+            </li>
+            <li className="w-full border-b hover:bg-gray-100">
+              <Link
+                className="block h-full w-full px-8 py-4 text-xl"
+                to="favorites"
+                onClick={onItemClick}
+              >
+                Favorites
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <nav className="mt-auto w-full">
+        <ul className="flex flex-col">
+          <li className="w-full border-b px-4 py-2 hover:bg-gray-100">
+            Logged in as {user.email}
+          </li>
+          <li className="w-full hover:bg-gray-100">
+            <Form method="post" action="/logout">
+              <button
+                className="w-full bg-slate-800 px-4 py-2 text-white"
+                type="submit"
+              >
+                Logout
+              </button>
+            </Form>
+          </li>
+        </ul>
+      </nav>
+    </>
+  );
+};
+```
+
+### 2. Update the Games Layout
+
+Now that we have a component that renders the side menu, we can update the `Games` layout to use it. We will also pass the `onItemClick` handler to the mobile version of the menu.
+
+```tsx
+// ~/app/routes/games.tsx
+const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+// ...
+
+return (
+  // ...
+  <div
+    style={style}
+    className="absolute inset-0 flex -translate-x-full flex-col bg-gray-300 sm:hidden"
+  >
+    <SideNav user={user} onItemClick={() => setIsMenuOpen(false)} />
+  </div>
+  <div className="hidden sm:relative sm:flex sm:w-80 sm:translate-x-0 sm:flex-col sm:border-r sm:bg-gray-50">
+    <SideNav user={user} />
+  </div>
+  <div className="flex-1 p-6">
+    <Outlet />
+  </div>
+  // ...
+)
+```
+
+You should notice that we are rendering two `<SideNav />` components. The first one is what we see on mobile devices. The second one is what we see on desktop devices. The main difference between the two is that the mobile version is hidden on desktop devices and the desktop version is hidden on mobile devices.
+
+### 3. Animate!
+
+Now that we have the side menu rendering, we can add some animations to make it look nice. We will use the `react-spring` library to handle the animations.
+
+This honestly took me a while to figure out since I don't have too much experience with animations. A lot of trial and error resulted in the following code:
+
+```tsx
+// ~/app/routes/games.tsx
+import { animated, config, useSpring } from '@react-spring/web';
+import type { LoaderArgs } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
+import { Link, Outlet } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import { HamburgerIcon } from '~/components/icons';
+import { getUserId } from '~/modules/auth';
+import { SideNav } from '~/modules/games';
+import { useUser } from '~/utils';
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const userId = await getUserId(request);
+  if (!userId) return redirect('/login');
+  return json({});
+};
+
+export default function Games() {
+  const user = useUser();
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const [style, api] = useSpring(
+    () => ({
+      config: {
+        ...config.default,
+      },
+    }),
+    []
+  );
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      api.start({
+        from: {
+          transform: 'translateX(-100%)',
+        },
+        to: {
+          transform: 'translateX(0%)',
+        },
+      });
+    } else {
+      api.start({
+        from: {
+          transform: 'translateX(0%)',
+        },
+        to: {
+          transform: 'translateX(-100%)',
+        },
+      });
+    }
+  }, [isMenuOpen, api]);
+
+  return (
+    <div className="flex h-full min-h-screen flex-col">
+      <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
+        <h1 className="text-3xl font-bold">
+          <Link to="/games">Games</Link>
+        </h1>
+        <button
+          className="block sm:hidden"
+          onClick={() => setIsMenuOpen((current) => !current)}
+        >
+          <HamburgerIcon className="h-8 w-8 fill-white" />
+        </button>
+      </header>
+
+      <main className="relative flex flex-1 bg-white">
+        <animated.div
+          style={style}
+          className="absolute inset-0 flex -translate-x-full flex-col bg-gray-300 sm:hidden"
+        >
+          <SideNav user={user} onItemClick={() => setIsMenuOpen(false)} />
+        </animated.div>
+        <div className="hidden sm:relative sm:flex sm:w-80 sm:translate-x-0 sm:flex-col sm:border-r sm:bg-gray-50">
+          <SideNav user={user} />
+        </div>
+        <div className="flex-1 p-6">
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+The main thing to note here is that we are using the `useSpring` hook to create a spring animation. We are also using the `animated` component from `react-spring` to animate the `<SideNav />` component. The animated div is what we see on mobile devices. The bare `<SideNav />` component is what we see on desktop devices since it does not require any animations.
+
+There may be better ways of doign this, but this is what I came up with. If you have any suggestions, please let me know!
+
+## A Few More Things
+
+To wrap up, I tweaked a few other things such as:
+
+- Adding a favicon to the site (I found a nice Mario icon to use).
+- Adding a title to the site (It's now called "Ben's App").
+- Fixing some small styling issues.
+
+## Conclusion
+
+We're getting there. The basic structure of the application is now complete. The next step is to add some functionality to the application. We will start with the `Games` page and then move on to the `Favorites` page.
+
+See you in the next post!

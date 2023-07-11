@@ -1,0 +1,225 @@
+---
+date: '2023-07-10 00:00:00'
+title: 'Remix Tutorial Part 5: Game Details View'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: Green Tree Near Green Plants and Moss
+imageCredits: Photo by mali maeder
+imageCreditsUrl: https://www.pexels.com/photo/green-tree-near-green-plants-142497/
+tags: ['Tech', 'Framework', 'React', 'Remix', 'Tutorial']
+published: true
+relatedPosts:
+  [
+    '2023-07-09-p4-remix-games-app-tutorial',
+    '2023-01-26-remix-react-framework-2023',
+    '2023-02-03-using-graphql-with-remix',
+  ]
+---
+
+In this tutorial, we'll be building out the game details view for our games app. As before, we'll be using the [Remix](https://remix.run) framework to build out our app. If you haven't already, I recommend reading the [first](/blog/2023-07-06-p1-remix-games-app-tutorial) article in this series and starting from there.
+
+## What Are We Building?
+
+Here's an overview of what we're about to build:
+
+- A game details view that shows the game's title, description, cover image, release date, platforms, and a few screenshots.
+- The ability to click on a game from the search list and be taken to the game details view.
+
+## First, Let's Get The Data.
+
+The first thing we will do is make sure we can access the data! We'll be using the [RAWG API](https://rawg.io/apidocs) to get our data. We'll be using the same API key we used in the [previous tutorial](/blog/2023-07-09-p4-remix-games-app-tutorial).
+
+We'll need to make two API calls to get the data we need. The first call will be to get the game details, and the second will be to get the game screenshots. We'll be using the `getGameDetails` and `getGameScreenshots` functions from the `~/app/modules/games/service.server.tsx` file.
+
+```tsx
+// ~/app/modules/games/service.server.tsx
+export async function getGameDetails(gameId: number): Promise<GameDetails> {
+  const response = await fetch(
+    `https://api.rawg.io/api/games/${gameId}?key=${process.env.RAWG_API_KEY}`,
+    {
+      method: 'GET',
+    }
+  );
+  const json = (await response.json()) as GameDetails;
+  return json;
+}
+
+export async function getGameScreenshots(gameId: number): Promise<string[]> {
+  const response = await fetch(
+    `https://api.rawg.io/api/games/${gameId}/screenshots?key=${process.env.RAWG_API_KEY}`,
+    {
+      method: 'GET',
+    }
+  );
+  const json = (await response.json()) as {
+    results: {
+      id: number;
+      image: string;
+    }[];
+  };
+  return json.results.map((screenshot) => screenshot.image);
+}
+```
+
+We'll use these functions to gather the details and screenshots for the game we display when the user clicks on a game from the search list.
+
+## Let's Build The Game Details View
+
+Now that we have the data, let's build out the game details view. We'll need to create a new route at `~/app/routes/games.$gameId.tsx` which will let us resolve routes like `/games/1` or `/games/2` and so on.
+
+```tsx
+// ~/app/routes/games.$gameId.tsx
+import { json, type LoaderArgs } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import { getGameDetails, getGameScreenshots } from '~/modules/games';
+
+export const loader = async ({ request, params }: LoaderArgs) => {
+  const { gameId } = params;
+
+  let gameDetails;
+  let screenshots: string[] = [];
+  if (gameId) {
+    gameDetails = await getGameDetails(Number.parseInt(gameId, 10));
+    screenshots = await getGameScreenshots(Number.parseInt(gameId, 10));
+  }
+
+  return json({
+    gameDetails,
+    screenshots,
+  });
+};
+
+export default function GameDetailsPage() {
+  const { gameDetails, screenshots } = useLoaderData<typeof loader>() || {};
+
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  return (
+    <div className="flex flex-1 flex-col">
+      <div className="mb-6">
+        <img
+          className="h-96 w-full sm:mx-auto sm:w-auto"
+          src={gameDetails?.background_image}
+          alt={gameDetails?.name}
+        />
+      </div>
+      <h1 className="mb-6 text-center text-3xl font-bold sm:text-6xl">
+        {gameDetails?.name}
+      </h1>
+      <h4 className="mb-6 text-center text-sm text-slate-600">
+        Released {dateFormatter.format(new Date(gameDetails?.released || ''))}
+      </h4>
+      <h2 className="mb-6 text-center text-2xl font-bold sm:text-4xl">
+        Platforms
+      </h2>
+      <div className="mb-6 flex flex-wrap items-center justify-around">
+        {gameDetails?.platforms.map((platform) => (
+          <div
+            key={platform.platform.id}
+            className="mb-2 rounded-full bg-slate-200 px-2 py-1 font-bold"
+          >
+            <h4 className="text-center text-sm text-slate-600">
+              {platform.platform.name}
+            </h4>
+          </div>
+        ))}
+      </div>
+      <h2 className="mb-6 text-center text-2xl font-bold sm:text-4xl">
+        Description
+      </h2>
+      <div
+        className="mb-6 px-4 text-lg"
+        dangerouslySetInnerHTML={{ __html: gameDetails?.description || '' }}
+      />
+      <h2 className="mb-6 text-center text-2xl font-bold sm:text-4xl">
+        Screenshots
+      </h2>
+      {screenshots.length > 0 ? (
+        <div className="mb-6 flex flex-wrap items-center justify-around">
+          {screenshots.map((screenshot) => (
+            <div
+              key={screenshot}
+              className="mb-2 overflow-hidden rounded-lg border border-slate-400"
+            >
+              <img
+                className="h-60 w-full"
+                src={screenshot}
+                alt={gameDetails?.name}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="mb-6 flex h-60 w-full items-center justify-center border border-slate-400">
+          <h3 className="text-center text-xl font-bold text-slate-600">
+            No screenshots available
+          </h3>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+There are a few things to note here:
+
+- We're gathering the game details and screenshots in the `loader` function.
+- We're using the `useLoaderData` hook to get the data we returned from the loader function.
+- We're using the `dangerouslySetInnerHTML` prop to render the game description. This is because the description is returned as HTML from the API.
+- We're using the `Intl.DateTimeFormat` class to format the release date.
+
+## Let's Add The Game Details Link
+
+Now that we have the game details view, let's add a link to it from the game search list. We'll do this by adding a `Link` component to `GameCard` component.
+
+```tsx
+// ~/app/game/components/game-card/GameCard.tsx
+import { Link } from '@remix-run/react';
+import type { Game } from '../../types';
+
+interface GameCardProps {
+  game: Game;
+}
+
+export const GameCard: React.FC<GameCardProps> = ({ game }) => {
+  return (
+    // highlight-start
+    <Link
+      to={`/games/${game.id}`}
+      className="mb-8 flex flex-col gap-4 overflow-hidden rounded-lg border border-slate-400 lg:flex-row"
+    >
+      // highlight-end
+      <div className="flex-none lg:w-96">
+        {game.background_image ? (
+          <img
+            className="h-full w-full"
+            src={game.background_image}
+            alt={game.name}
+          />
+        ) : (
+          <div className="flex h-60 w-full items-center justify-center border-b border-slate-400 lg:border-b-0 lg:border-r">
+            <h3 className="text-center text-xl font-bold text-slate-600">
+              No image available
+            </h3>
+          </div>
+        )}
+      </div>
+      <div className="flex-1 px-4 pb-4 lg:px-0 lg:py-4">
+        <h3 className="text-xl font-bold">{game.name}</h3>
+      </div>
+    </Link> // highlight-line
+  );
+};
+```
+
+## Conclusion
+
+That's it for this article. You can now click on a game in the search list and see the game details. In the next article, we'll add some OptimisticUI to the various routes!
+
+You can view the code for this post [here](https://github.com/Machine-Servant/ben-app/tree/ben-app-blog-p5)
+
+You can see the final project [here](https://ben-app.fly.dev/)

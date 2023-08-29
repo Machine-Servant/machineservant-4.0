@@ -12,6 +12,8 @@
 MachineServant
 </h1>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/892b4da0-57fb-455b-a92e-77e843528a9c/deploy-status)](https://app.netlify.com/sites/machineservant/deploys)
+
 ## 🚀 Quick start
 
 1.  **Start developing.**

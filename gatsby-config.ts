@@ -5,7 +5,7 @@ const config: GatsbyConfig = {
     title: 'MachineServant',
     description:
       'MachineServant is here to help build your online solution. With decades of experience building websites and applications, let us bring your vision to reality.',
-    siteUrl: 'https://www.machineservant.com',
+    siteUrl: 'https://machineservant.com',
     contact: 'contact@machineservant.com',
     social: {
       linkedIn: 'https://www.linkedin.com/company/machineservant/',

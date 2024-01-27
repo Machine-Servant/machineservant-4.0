@@ -253,7 +253,7 @@ These are not rules per se, but they are good patterns I've found as a developer
 
 ### Passing down HTML props like "className" and all other attributes magically.
 
-The `React.HTMLAttributes` interface contains all HTML attributes that can be passed to a React component. **This interface can pass down all HTML attributes to a React component.** You can use the destructuring syntax `...props` to gather all the HTML attributes and pass them down to the component.
+The `React.HTMLAttributes` interface contains all HTML attributes that can be passed to a React component. **This interface can pass down all HTML attributes to a React component.** You can use the `...props` syntax to gather all the HTML attributes and pass them down to the component.
 
 ```tsx
 type MyComponentProps = React.HTMLAttributes<HTMLDivElement> & {

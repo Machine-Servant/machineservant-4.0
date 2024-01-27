@@ -1,0 +1,360 @@
+---
+date: '2024-01-27 00:00:00'
+title: 'My React UI Code Guidelines'
+author: 'Evan Stern'
+featuredImage: ./featured.jpg
+imageAlt: Clear glass sphere on snow
+imageCredits: Photo by Pixabay
+imageCreditsUrl: https://www.pexels.com/photo/clear-glass-sphere-302743/
+tags: ['Tech', 'Web Development', 'React', 'Learning', 'Code Organization']
+published: true
+relatedPosts:
+  [
+    '2023-07-06-p1-remix-games-app-tutorial',
+    '2023-02-18-p1-gatsby-js-blog-starting-the-project',
+  ]
+---
+
+Everyone has their way of organizing a React app. And everyone has a preferred way of handling code linting, formatting, and naming conventions. These are my rules. I've found them to be a good balance between keeping things organized and not over-engineering things. I've also found them to be an excellent way to organize a React app for a team of developers.
+
+Every project is different, so this isn't a one-size-fits-all solution. But it's a good starting point.
+
+**You're welcome to use this as a starting point for your React apps. Or, you can ignore it completely. It's up to you.**
+
+## Why I Created This
+
+I've been doing this for a while and often lead teams of developers or architect projects from scratch. I've found that it's helpful to have a set of guidelines that I can use to get a project started quickly. It's also beneficial to have a set of guidelines that I can use to explain to other developers how I like to organize things.
+
+And, frankly, I keep getting asked what my guidelines are. So, I figured I'd write them down.
+
+## Code Style and Guidelines
+
+Code styles and guidelines are essential. **Consistency is critical.** I've found that it's best to have a set of rules everyone follows. It makes it easier to read and understand the code. It also makes it easier to work with other developers. As I mentioned above, **everyone has their own way of doing things.** I like my code style, but you do you.
+
+### Always use named exports
+
+```tsx
+/* Good */
+export const Button = () => <button>Click Me</button>;
+
+/* Bad */
+export default () => <button>Click Me</button>;
+```
+
+> _**Why?**_
+
+> For clarity of code. You can import it as `import { Button } from './Button'` when you use named exports. You can import default exports as `import MyCrazyButtonName from './Button'` when you use default exports. **It's easier to understand what's happening when you use named exports.**
+
+### Folder names are in "kebab-case"
+
+```md
+# Good
+
+/my-component
+
+# Bad
+
+/mycomponent
+
+# Bad
+
+/MyComponent
+```
+
+> _**Why?**_
+
+> It's easier to read and understand. It's also easier to type. **It's also the convention used by most npm modules.**
+
+### File names are in "kebab-case"
+
+```md
+# Good
+
+/components/my-component/some-file.ts
+
+# Bad
+
+/components/my-component/SomeFile.ts
+```
+
+> _**Why?**_
+
+> It's easier to read and understand. It's also easier to type. **It's also the convention used by most npm modules.** Additionally, we want to make React components easy to see. **React components are the only components in `PascalCase`**. See below.
+
+### Only React Components are in "PascalCase"
+
+```md
+# Good
+
+/components/my-component/MyComponent.tsx
+
+# Bad
+
+/components/my-component/my-component.tsx
+```
+
+> _**Why?**_
+
+> We want to make sure that React components are easy to identify and stand out as the most important file in the module.
+
+## Module and Component structure
+
+**A "module" is a highly cohesive and loosely coupled collection of code.** A good example would be a `Button` component and its related styles and utility functions.
+
+Each module should be easy to work with and contain only the code necessary to accomplish its task. It should also be easy to find and understand. **Refactoring should be as simple as dragging and dropping the module folder into another location and updating the import paths.**
+
+### Each module only contains one React component.
+
+```md
+# Good
+
+/components/my-component/MyComponent.tsx
+/components/my-component/index.ts
+
+# Bad
+
+/components/my-component/MyComponent.tsx
+/components/my-component/MyOtherComponent.tsx
+/components/my-component/index.ts
+```
+
+> _**Why?**_
+
+> **A module should be highly cohesive and loosely coupled.** It should be easy to understand and easy to move. It should also be easy to find. **A module should only contain the code necessary to accomplish its task.** If you have multiple React components in a module, it's a sign that you should split the module into multiple modules.
+
+### Each module contains an "index.ts" file that exports the module.
+
+```md
+# Good
+
+/components/my-component/MyComponent.tsx
+/components/my-component/utils.tsx
+/components/my-component/index.ts
+
+# Bad
+
+/components/my-component/MyComponent.tsx
+/components/my-component/utils.tsx
+```
+
+> _**Why?**_
+
+> **The `index.ts` file is the entry point for the module.** Without the `index.ts` file and without exporting the module from the `index.ts` file, importing the module would be a pain. You'd have to import the module as `import { MyComponent } from './components/my-component/MyComponent'`. That's a lot of typing. **It's easier to import the module as `import { MyComponent } from './components/my-component'`.**
+
+### The "index.ts" file is only used to export code. It does not define any code.
+
+```tsx
+/* Good */
+// /components/my-component/index.ts
+import { myFunction } from './utils';
+export { myFunction };
+export * from './MyComponent';
+
+/* Bad */
+// /components/my-component/index.ts
+export const MyComponent = () => <div />;
+export const myFunction = () => 'foo';
+```
+
+> _**Why?**_
+
+> To make the code easy to understand and clarify what file is dedicated to what concept, **the `index.ts` file is kept as minimal as possible.**
+
+### Define only one component per file
+
+```tsx
+/* Good */
+export const MyComponent = () => <div />;
+
+/* Bad */
+export const MyComponent = () => <div />;
+export const MyOtherComponent = () => <div />;
+```
+
+> _**Why?**_
+
+> **A file should only contain the code necessary to accomplish its task.** If you have multiple React components in a file, it's a sign that you should split the file into multiple files.
+
+### A component may only import from "top-level" or child folders and files, never from another component's non-exported members.
+
+```tsx
+/* Good */
+// ~/components/my-component/MyComponent.tsx
+// All of these are good because they are either top-level or child folders and files
+import { MySharedComponent } from '~/components/my-shared-component';
+import { MyChildComponent } from './components/my-child-component';
+import { myFunction } from './utils';
+
+/* Good */
+/// ~/components/my-component/MyComponent.tsx
+// This is okay because MySubComponentProps is exported from my-other-component
+import type { MyOtherComponentProps } from '~/components/my-other-component';
+
+/* Bad */
+/// ~/components/my-component/MyComponent.tsx
+// This is bad because MySubComponent is not exported from my-other-component
+import { MySubComponent } from '~/components/my-other-component/components/my-sub-component';
+```
+
+> _**Why?**_
+
+> In the above example, `MySubComponent` is a sub-component of `my-other-component`. **A sub-component is considered a private member of the module.** If the sub-component needs to be used by other components, make the sub-component a top-level component that can be shared. Exporting a member from a module via its `index.ts` file is also okay. **This is why the `index.ts` file is so important.**
+
+### Modules can contain sub-modules.
+
+**Sub-modules or sub-components are modules only used by the parent module or exported via the parent module's `index.ts` file.** In general, you won't want to export many sub-modules or sub-components. **If you find yourself exporting many sub-modules or sub-components, it's a sign that you should split the module into multiple modules.**
+
+```md
+- components
+  - my-component
+    - components
+      - my-sub-component
+        - index.ts
+        - MySubComponent.tsx
+      * index.ts
+      * MyComponent.tsx
+    * index.ts
+    * utils.ts
+```
+
+> _**Note**_
+
+> 🗒 Modules and components can nest infinitely (although, be reasonable). **Each nested module or component (sub-module or sub-component) has to follow the same rules as other modules and components**, representing a private scope from its parent. **Don't import anything into a sub-module or sub-component except from its own children or sibling modules.**
+
+### A module always contains at least these files:
+
+- A `kebab-case` named directory
+- An `index.ts` file that exports all public members of the module
+- A `PascalCase` named React component file (for React component modules)
+
+```md
+- my-component
+  - index.ts
+  - MyComponent.tsx
+```
+
+### Other common files and directories in a module:
+
+- A `components` folder that contains all of the module's sub-components
+- A `styles.ts` file that contains all of the module's styles
+- A `context` folder that contains all of the module's context files
+- A `hooks` folder that contains all of the module's hooks
+- A `utils` folder or `utils.ts` file that contains all of the module's utility functions
+- A `types` folder or `types.ts` file that contains all of the module's types
+- A `MyComponent.test.tsx` file that contains all of the module's tests
+- A `MyComponent.stories.tsx` file that contains all of the module's stories
+- A `MyComponent.md` file that contains all of the module's documentation
+
+This is not an exhaustive list. Remember that **a module should contain all the code necessary to accomplish its task.** If you find yourself adding many files to a module, it's a sign that you should split the module into multiple modules.
+
+## Common patterns
+
+These are not rules per se, but they are good patterns I've found as a developer. Take them or leave them.
+
+### Passing down HTML props like "className" and all other attributes magically.
+
+The `React.HTMLAttributes` interface contains all HTML attributes that can be passed to a React component. **This interface can pass down all HTML attributes to a React component.** You can use the destructuring syntax `...props` to gather all the HTML attributes and pass them down to the component.
+
+```tsx
+type MyComponentProps = React.HTMLAttributes<HTMLDivElement> & {
+  name: string;
+};
+
+export const MyComponent: React.FC<MyComponentProps> = ({
+  className,
+  name,
+  ...props
+}) => {
+  return (
+    <div className={className} {...props}>
+      {name}
+    </div>
+  );
+};
+
+// Usage from another component
+import { MyComponent } from '~/components/my-component';
+
+export const MyOtherComponent: React.FC = () => {
+  return (
+    <div className="w-3xl mx-auto">
+      <MyComponent
+        className="bg-red mt-4"
+        style={{ fontWeight: 400 }}
+        onClick={() => console.log('clicked')}
+        name="Philbert"
+      />
+    </div>
+  );
+};
+```
+
+> _**Note**_
+
+> 🗒 Notice that `MyComponent` can have things like `onClick` and `style` passed. **This is because `MyComponent` is a `div` under the hood.** Using this pattern to pass down HTML attributes to a component is a good idea. **It's also a good idea to use this pattern to pass down all attributes to a component.**
+
+> ⚠️ **Warning** ⚠️ This pattern does have a side effect in an IDE like VSCode. The intellisense will show all HTML attributes as available to the component. **This may not be very clear to developers.** I've found that the benefits of this pattern outweigh the drawbacks. **It's up to you if you want to use this pattern.**
+
+### Using "tailwind-merge" to merge tailwind classes
+
+If you're using Tailwind CSS, you may find yourself wanting to merge Tailwind classes. **The `tailwind-merge` package is a good way to do this.** It's a simple utility function that merges Tailwind classes. It will also allow you to add conditional classes.
+
+```tsx
+import { twMerge } from 'tailwind-merge';
+
+export const MyComponent: React.FC<{ active?: boolean }> = ({
+  active = false,
+}) => {
+  return (
+    <div
+      className={twMerge(
+        'bg-red',
+        active && 'text-white',
+        !active && 'text-black'
+      )}
+    >
+      Hello World
+    </div>
+  );
+};
+```
+
+Combining this with the pattern above, you can do something like this:
+
+```tsx
+// highlight-start
+type MyComponentProps = React.HTMLAttributes<HTMLDivElement> & {
+  active?: boolean;
+};
+// highlight-end
+
+export const MyComponent: React.FC<MyComponentProps> = ({
+  className, // highlight-line
+  active = false,
+  ...props
+}) => {
+  return (
+    <div
+      className={twMerge(
+        className, // highlight-line
+        'bg-red',
+        active && 'text-white',
+        !active && 'text-black'
+      )}
+      {...props}
+    >
+      Hello World
+    </div>
+  );
+};
+```
+
+## Conclusion
+
+These are my React UI code guidelines. I've found them to be a good balance between keeping things organized and not over-engineering things. I've also found them to be an excellent way to organize a React app for a team of developers.
+
+Every project is different, so this isn't a one-size-fits-all solution. But it's a good starting point.
+
+**You're welcome to use this as a starting point for your React apps. Or, you can ignore it completely. It's up to you.**
+
+If you're interested in seeing an example of these guidelines in action, check out the [source code for this website](https://github.com/Machine-Servant/machineservant-4.0). It's a good example of how I like to organize a React app.
